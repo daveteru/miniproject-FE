@@ -1,1 +1,6 @@
 @import "tailwindcss";
+
+
+@theme {
+  --font-krona-one: "Krona One", sans-serif;
+}
