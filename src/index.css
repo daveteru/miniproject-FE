@@ -4,3 +4,7 @@
 @theme {
   --font-krona-one: "Krona One", sans-serif;
 }
+
+h1{
+  font-family: "Krona One";
+}
