@@ -18,13 +18,14 @@ export default function Footer() {
 
   return (
     <div>
-      <div className="w-screen bg-black h-7 "></div>
-      <div className="w-screen bg-[#E6FF06] h-75 grid grid-cols-2">
+      <div className="w-full bg-[#E6FF06] h-7 "></div>
+      <div className="w-full bg-black h-75 grid grid-cols-2">
+
         {/* Footer Kiri */}
 
-        <div className="border-r border-dashed h-full border-gray-500 grid lg:grid-cols-4 p-5 ">
+        <div className="border-r border-dashed h-full border-gray-500 grid lg:grid-cols-4 p-5 text-white">
           <div className=" flex flex-col justify-end">
-            <img className="w-35" src="src/assets/Logo.svg" alt="" />
+            <img className="w-30 -translate-y-1" src="src/assets/Logo_white.svg" alt="" />
           </div>
           <div className=" flex flex-col justify-end">
             <p className="text-[12px]">Support</p>
@@ -43,12 +44,12 @@ export default function Footer() {
 
         {/* // Footer Kanan */}
 
-        <div className="grid grid-cols-2 p-5 ">
+        <div className="grid grid-cols-2 p-5 text-white ">
           <div ref={container1} className="flex flex-col justify-end">
             <img className="w-15 GSAProtate" src="src/assets/footer_icon.svg" alt=""  />
           </div>
           <div className="flex flex-col justify-end items-end gap-5">
-            <button className="py-2 px-10 text-sm border border-black rounded-full hover:bg-black hover:text-white"> Join As Organizer </button>
+            <button className="py-2 px-10 text-sm border border-white rounded-full hover:bg-[#E6FF06]  hover:text-black hover:border-none"> Join As Organizer </button>
             <small className="text-[10px]">
               2026 FRNTROW - PT Bintang Sinar Abadi. All Rights Reserved
             </small>
