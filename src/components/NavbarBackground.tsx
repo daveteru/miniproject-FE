@@ -17,14 +17,14 @@ export default function NavbarBackground() {
     <div className="fixed top-0 left-0 w-screen z-0 pointer-events-none">
       <div className="w-screen h-15 bg-[#E6FF06] grid grid-cols-4 grid-span">
         <div className="border-r-2 border-dashed w-full h-full col-span-3 lg:col-span-1 flex justify-end items-end">
-          <p className=" mr-2 mb-7 text-[12px] rotate-90 ">
+          <p className=" mr-2 mb-7 text-[8px] md:text-[12px] rotate-90 ">
             {todaydate.toLocaleDateString()}
           </p>
 
           <img
             src="src/assets/decorative_element.svg"
             alt=""
-            className="w-20 -translate-y-2 -translate-x-5 "
+            className=" w-20 -translate-y-2 -translate-x-5 "
           />
         </div>
         <div className="w-full col-span-1 lg:col-span-3 flex items-end">

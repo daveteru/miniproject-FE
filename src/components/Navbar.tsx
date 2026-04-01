@@ -36,9 +36,9 @@ const onLeave = contextSafe((e: React.MouseEvent<HTMLButtonElement>) => {
 
 
   return (
-    <nav className="h-15 relative z-10">
+    <nav className="h-15 fixed w-screen z-10">
       <div className="relative flex justify-between items-center px-5 z-1 h-full">
-        <img src="src/assets/Logo.svg" alt="" />
+        <img className="w-35" src="src/assets/Logo.svg" alt="" />
         <div
           ref={containerRef}
           className="h-full lg:block hidden font-krona-one"
@@ -56,7 +56,7 @@ const onLeave = contextSafe((e: React.MouseEvent<HTMLButtonElement>) => {
             SIGN IN
           </button>
         </div>
-        <button className="lg:hidden font-krona-one wrap w-[20%]">Drag for Menu ↓ </button>
+        <button className="lg:hidden font-krona-one wrap w-[20%] text-sm">Menu ↓ </button>
       </div>
       <NavbarBackground />
     </nav>
