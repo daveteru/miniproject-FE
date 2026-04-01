@@ -22,7 +22,7 @@ export default function Footer() {
       <div className="w-screen bg-[#E6FF06] h-75 grid grid-cols-2">
         {/* Footer Kiri */}
 
-        <div className="border-r border-dashed h-full border-gray-500 grid grid-cols-4 p-5 ">
+        <div className="border-r border-dashed h-full border-gray-500 grid lg:grid-cols-4 p-5 ">
           <div className=" flex flex-col justify-end">
             <img className="w-35" src="src/assets/Logo.svg" alt="" />
           </div>
