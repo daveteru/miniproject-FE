@@ -4,17 +4,20 @@ import { createBrowserRouter } from "react-router";
 import { RouterProvider } from "react-router/dom";
 import './index.css'
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+import Home from './pages/Home';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <div>Hello World</div>,
+    element: <Home/>,
   },
 ]);
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Navbar/>
-      <RouterProvider router={router} />,
+      <RouterProvider router={router} />
+      <Footer/>
   </StrictMode>,
 )

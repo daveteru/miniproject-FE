@@ -36,7 +36,7 @@ const onLeave = contextSafe((e: React.MouseEvent<HTMLButtonElement>) => {
 
 
   return (
-    <nav className="h-15 relative z-10">
+    <nav className="h-15 fixed w-screen z-10">
       <div className="relative flex justify-between items-center px-5 z-1 h-full">
         <img className="w-35" src="src/assets/Logo.svg" alt="" />
         <div
