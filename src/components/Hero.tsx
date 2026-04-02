@@ -17,14 +17,19 @@ export default function Hero() {
             <h1 className="text-5xl md:text-6xl lg:w-120 text-center lg:text-left leading-14 md:leading-17  uppercase">
               MensRea* <br></br>@ Istora Senayan
             </h1>
-            <h1 className="text-xl  lg:w-100 leading-15 text-center  lg:text-right">12/12/2027</h1>
+            <h1 className="text-xl  lg:w-100 leading-15 text-center  lg:text-right">
+              12/12/2027
+            </h1>
           </div>
-          <div ref={containerRef} className=" justify-center items-center lg:items-start text-center lg:text-left flex flex-col gap-5">
+          <div
+            ref={containerRef}
+            className=" justify-center items-center lg:items-start text-center lg:text-left flex flex-col gap-5"
+          >
             <p className="md:w-100 text-sm text-white">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi
               mollitia delectus aspernatur eum dolorum est voluptates
               accusantium aliquid maiores nisi minus ipsam aliquam molestias
-              sunt quia, alias ullam ipsum quam vel? lorem pisum 
+              sunt quia, alias ullam ipsum quam vel? lorem pisum
             </p>
             <button
               onMouseEnter={onEnter}
