@@ -1,5 +1,5 @@
-import Featuredcard from "../components/Featuredcard";
 import Hero from "../components/Hero";
+import Landingpagecategory from "../components/Landingpagecategory";
 import Landingpagefeatured from "../components/Landingpagefeatured";
 import Landingpagewhatsup from "../components/Landingpagewhatsup";
 import Searchbar from "../components/Searchbar";
@@ -18,6 +18,7 @@ export default function Home() {
 
       <Landingpagefeatured />
       <Landingpagewhatsup />
+      <Landingpagecategory/>
     </div>
   );
 }

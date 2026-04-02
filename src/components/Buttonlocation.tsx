@@ -8,7 +8,7 @@ export default function Buttonlocation() {
     "
     >
       <img className="h-5" src={locationpin} alt="" />
-      <select className="appearance-none rounded-full w-50 px-5 py-1 focus:outline-none">
+      <select className="appearance-none rounded-full w-40 px-5 py-1 focus:outline-none">
         {cities.map((city) => (
           <option key={city} value={city}>
             {city}
