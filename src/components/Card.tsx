@@ -6,7 +6,7 @@ type cardProps = {
 
 export default function Card({category , title}:cardProps) {
   return (
-    <div className=" relative h-60 rounded-2xl overflow-hidden bg-gray-300 hover:border-amber-500 border border-transparent  transition-all cursor-pointer">
+    <div className=" relative h-60 rounded-2xl overflow-hidden bg-gray-300  outline-transparent outline hover:outline-3 hover:outline-gray-600  transition-all cursor-pointer">
       <img
         className="absolute z-0  h-full w-full object-cover  "
         src="src/assets/photo/example_thumb.jpg"
