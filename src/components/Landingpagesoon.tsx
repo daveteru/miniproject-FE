@@ -1,4 +1,3 @@
-import Card from "./Card";
 import Cardsoon from "./Cardsoon";
 
 export default function Landingpagesoon() {

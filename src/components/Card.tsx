@@ -1,10 +1,10 @@
 type cardProps = {
-  category : string
-  title : string
-  img?:string
-}
+  category: string;
+  title: string;
+  img?: string;
+};
 
-export default function Card({category , title}:cardProps) {
+export default function Card({ category, title }: cardProps) {
   return (
     <div className=" relative h-60 rounded-2xl overflow-hidden bg-gray-300  outline-transparent outline hover:outline-3 hover:outline-gray-600  transition-all cursor-pointer">
       <img

@@ -12,9 +12,9 @@ export default function Home() {
       <Hero />
       <Searchbar />
 
-      <div className="bg-black w-full h-40 flex justify-center items-center px-5 *:">
+      <div className="bg-[#121212] w-full h-40 flex justify-center items-center px-5 *:">
         <h1 className="text-[#E6FF06] text-xl">
-          Find What's Happening, Make tonight count.
+          Find What's Happening, Make the night count.
         </h1>
       </div>
 
