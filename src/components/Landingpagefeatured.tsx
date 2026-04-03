@@ -9,7 +9,7 @@ const featuredData = [
 
 export default function Landingpagefeatured() {
   return (
-    <div>
+    <section>
       {" "}
       <div className=" container mx-auto px-5 md:px-15 lg:px-30 my-10">
         <h1 className="text-2xl mb-5">FEATURED</h1>
@@ -24,6 +24,6 @@ export default function Landingpagefeatured() {
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 }

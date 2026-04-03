@@ -14,7 +14,7 @@ export default function Landingpagecategory({title} : LandingpagecategoryProps) 
   ];
 
   return (
-    <div className="w-full ">
+    <section className="w-full ">
       <div className="w-full h-fit flex-col container mx-auto px-5 lg:px-30 py-10  ">
         <div className="h-full flex flex-col gap-5">
           <div className="font-krona-one flex justify-between gap-5 items-center ">
@@ -28,6 +28,6 @@ export default function Landingpagecategory({title} : LandingpagecategoryProps) 
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

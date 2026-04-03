@@ -20,7 +20,7 @@ export default function Footer() {
   );
 
   return (
-    <div>
+    <footer>
 
 
       {/* divider */}
@@ -90,6 +90,6 @@ export default function Footer() {
           </div>
         </div>
       </div>
-    </div>
+    </footer>
   );
 }
