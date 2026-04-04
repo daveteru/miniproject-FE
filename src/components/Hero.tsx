@@ -57,8 +57,7 @@ export default function Hero() {
 
 
   return (
-    <div>
-      <header className="bg-gray-400 w-screen h-170 relative text-[#E6FF06] overflow-hidden">
+      <header className="bg-gray-400 w-full h-170 relative text-[#E6FF06] overflow-hidden">
         {/* custom carousell container */}
         <div ref={carousellcontainer} className="w-[300%] h-full absolute flex">
 
@@ -117,7 +116,7 @@ export default function Hero() {
                 onMouseLeave={onLeave}
                 className="w-fit transition-all ease-in-out h-fit py-2 px-5 bg-[#E6FF06] text-black  hover:bg-[#dbb303] rounded-xl font-krona-one"
               >
-                Learn More
+                BUY TICKETS
               </button>
             </div>
           </div>
@@ -135,6 +134,5 @@ export default function Hero() {
             </div>
         </div>
       </header>
-    </div>
   );
 }

@@ -10,7 +10,7 @@ export default function Landingpagewhatsup() {
   ];
 
   return (
-    <div className="w-full bg-black">
+    <div className="w-full bg-[#121212]">
       <div className="w-full h-fit  text-white flex-col container mx-auto px-5 lg:px-30 py-15 ">
         <div className="h-full flex flex-col gap-5">
           <div className="font-krona-one flex  gap-5 items-center ">

@@ -43,7 +43,7 @@ export default function Footer() {
         </svg>
       </div>
 
-      <div className="w-full bg-black h-75 grid grid-cols-2">
+      <div className="w-full bg-[#121212] h-75 grid grid-cols-2">
         {/* Footer Kiri */}
 
         <div className="border-r border-dashed h-full border-gray-500 grid lg:grid-cols-4 p-5 text-white">
