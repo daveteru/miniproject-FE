@@ -7,6 +7,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import Discover from './pages/Discover';
+import Events from './pages/Events';
 
 function Layout() {
   return (
@@ -26,6 +27,7 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <Home /> },
       { path: "/discover", element: <Discover /> },
+      { path: "/events", element: <Events /> },
     ],
   },
 ]);
