@@ -8,6 +8,7 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import Discover from './pages/Discover';
 import Events from './pages/Events';
+import Userpage from './pages/Userpage';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -20,7 +21,7 @@ function Layout() {
     <>
       <ScrollToTop />
       <Navbar />
-      <main className="pt-24">
+      <main className="pt-24 h-full">
         <Outlet />
       </main>
       <Footer />
@@ -35,6 +36,7 @@ const router = createBrowserRouter([
       { path: "/", element: <Home /> },
       { path: "/discover", element: <Discover /> },
       { path: "/events", element: <Events /> },
+      { path: "/profile", element: <Userpage /> },
     ],
   },
 ]);
