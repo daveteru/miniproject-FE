@@ -1,6 +1,6 @@
-import { StrictMode } from 'react'
+import { StrictMode, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
-import { createBrowserRouter, Outlet } from "react-router";
+import { createBrowserRouter, Outlet, useLocation } from "react-router";
 import { RouterProvider } from "react-router/dom";
 import './index.css'
 import Navbar from './components/Navbar';
@@ -9,9 +9,16 @@ import Home from './pages/Home';
 import Discover from './pages/Discover';
 import Events from './pages/Events';
 
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  return null;
+}
+
 function Layout() {
   return (
     <>
+      <ScrollToTop />
       <Navbar />
       <main className="pt-24">
         <Outlet />
