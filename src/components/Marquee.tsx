@@ -13,7 +13,7 @@ export default function Marquee() {
 
   return (
     <div>
-      <div className="w-full relative h-fit bg-[#121212] py-1 overflow-hidden">
+      <div className="w-full relative h-fit bg-[#262626] py-2 overflow-hidden">
         <div className="GSAPmarquee whitespace-nowrap flex w-[200vw] h-full">
           <span className="text-[#E6FF06] text-[10px] uppercase flex items-center w-full justify-left overflow-hidden mr-5">
             FRNTROW* is Indonesia's leading ticket marketplace, you are dealing

@@ -1,10 +1,11 @@
 import { useState } from "react";
+import { Link } from "react-router";
 
 const NAV_ITEMS = [
   { label: "Profile", href: "/profile" },
   { label: "My Events", href: "/my-events" },
   { label: "My Purchases", href: "/my-purchases" },
-  { label: "Create Event", href: "/create-event" },
+  { label: "Create Event", href: "/createevent" },
 ];
 
 export default function Sidebar({ userName = "USER_NAME", avatarUrl, activePath = "/profile" }: { userName?: string; avatarUrl?: string; activePath?: string }) {
@@ -35,13 +36,10 @@ export default function Sidebar({ userName = "USER_NAME", avatarUrl, activePath 
       {/* Navigation */}
       <nav className="flex flex-col py-2">
         {NAV_ITEMS.map((item) => (
-          <a
+          <Link
             key={item.href}
-            href={item.href}
-            onClick={(e) => {
-              e.preventDefault();
-              setActive(item.href);
-            }}
+            to={item.href}
+            onClick={() => setActive(item.href)}
             className={`
               px-6 py-3 text-sm font-semibold uppercase tracking-wide transition-colors
               ${active === item.href
@@ -51,7 +49,7 @@ export default function Sidebar({ userName = "USER_NAME", avatarUrl, activePath 
             `}
           >
             {item.label}
-          </a>
+          </Link>
         ))}
       </nav>
     </aside>

@@ -14,11 +14,11 @@ export default function Navbarbackground() {
 
   const todaydate: Date = new Date();
   return (
-    <div className="fixed top-0 left-0 w-full z-0 pointer-events-none border bg-[#E6FF06] ">
+    <div className= "absolute top-0 left-0 w-full z-0 pointer-events-none border-b-8 border-[#262626] bg-[#E6FF06] ">
       <div className="w-full h-80 border-b border-dashed"></div>
-      <div className="w-full h-20 grid grid-cols-4 grid-span">
-        <div className="border-r border-dashed w-full h-full col-span-3 lg:col-span-1 flex justify-end items-end">
-          <p className=" mr-2 mb-7 text-[8px] md:text-[12px] rotate-90 ">
+      <div className="w-full h-15 grid grid-cols-4 grid-span">
+        <div className="border-r border-dashed w-full h-15 col-span-3 lg:col-span-1 flex justify-end  items-end">
+          <p className=" mr-2 mb-7 text-[8px] md:text-[12px] rotate-90 -translate-y-1">
             {todaydate.toLocaleDateString()}
           </p>
 
@@ -30,7 +30,7 @@ export default function Navbarbackground() {
         </div>
         <div className="w-full col-span-1 lg:col-span-3 flex items-end">
           <svg
-            className="-translate-x-[18px]"
+            className="-translate-x-[16px] "
             xmlns="http://www.w3.org/2000/svg"
             width="32"
             height="18"
@@ -39,7 +39,7 @@ export default function Navbarbackground() {
           >
             <path
               d="M15.5884 0L31.1768 18H-7.82013e-05L15.5884 0Z"
-              fill="black"
+              fill="#262626"
             />
           </svg>
         </div>

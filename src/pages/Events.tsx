@@ -1,10 +1,13 @@
+import { useRef } from "react";
 import ticketicon from "../assets/icons/Ticket_use_fill.svg";
 import Landingpagecategory from "../components/Landingpagecategory";
 import Partners from "../components/Partners";
 import Review from "../components/Review";
-import Smailldetails from "../components/Smalldetails";
+import { default as Smailldetails, default as Smalldetails } from "../components/Smalldetails";
 
 export default function Events() {
+  const targetRef = useRef<HTMLDivElement>(null);
+
   return (
     <div className="w-full flex flex-col items-center ">
       <div className="w-full h-115 bg-gray-500"></div>
@@ -12,7 +15,7 @@ export default function Events() {
       <div className=" w-full h-fit ">
         {" "}
         {/* start of sticky bar parent */}
-        <div className="w-full h-20 border-b-gray-400 drop-shadow-xl flex bg-white sticky z-5 top-24">
+        <div className="w-full h-20 border-b-gray-400 drop-shadow-xl flex bg-white sticky z-5 top-16">
           <div className="container mx-auto w-full flex   h-full pl-25">
             <div className="flex justify-center px-5 flex-col   h-full w-[70%]">
               <h1 className="text-xl">EXAMPLE EVENT NAME</h1>
@@ -23,7 +26,12 @@ export default function Events() {
                 <small className="text-[10px]">TICKET PRICE FROM</small>
                 <p className="font-bold"> IDR 500.000 </p>
               </div>
-              <button className="w-fit h-fit font-krona-one px-5 py-2 bg-[#E6FF06] hover:bg-amber-400 transition-colors  rounded-xl">
+              <button
+                className="w-fit h-fit font-krona-one px-5 py-2 bg-[#E6FF06] hover:bg-amber-400 transition-colors  rounded-xl"
+                onClick={() =>
+                  targetRef.current?.scrollIntoView({ behavior: "smooth" })
+                }
+              >
                 BUY TICKETS
               </button>
             </div>
@@ -31,7 +39,7 @@ export default function Events() {
         </div>
         <div className="container mx-auto w-full  flex-1 flex  pl-25">
           <section className="w-[70%] h-fit  pl-5 pr-10 mb-25">
-            <Smailldetails />
+            <Smalldetails />
             <hr className="my-5 border-gray-300"></hr>
             <article className=" mt-5 flex flex-col gap-2">
               <h1>DESCRIPTION</h1>
@@ -57,7 +65,10 @@ export default function Events() {
               </p>
             </article>
 
-            <div className=" w-full h-fit drop-shadow-xl bg-white border border-gray-100  rounded-2xl my-15 flex flex-col gap-2 p-5">
+            <div
+              ref={targetRef}
+              className="scroll-mt-40 w-full h-fit drop-shadow-xl bg-white border border-gray-100  rounded-2xl my-15 flex flex-col gap-2 p-5"
+            >
               <div className=" w-full h-10 items-center flex gap-2">
                 <img src={ticketicon} alt="" />
                 <h1>TICKETS</h1>
@@ -171,7 +182,7 @@ export default function Events() {
           {/* end of sticky bar parent */}
 
           {/* sidebar sticky ticket window */}
-          <div className="flex-1 sticky top-44   h-fit ">
+          <div className="flex-1 sticky top-36 h-fit ">
             <div className="flex bg-white flex-1 h-110 rounded-b-2xl  overflow-hidden drop-shadow-md flex-col">
               <div className="w-full bg-gray-400 h-50"></div>
               <div className="w-full px-5">

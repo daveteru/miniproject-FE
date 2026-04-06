@@ -34,9 +34,9 @@ export default function Userpage({ user = {} }: { user?: User }) {
   return (
     <div className="w-full border flex min-h-screen">
       <Sidebar />
-      <div className="flex-1 justify-center flex   overflow-y-auto">
+      <div className="flex-1 px-5 flex overflow-y-auto">
       {/* Breadcrumb */}
-      <div className="w-[70%] flex flex-col  bg-white px-5 justify-center py-10">
+      <div className="w-[70%] flex flex-col  bg-white px-5 justify-center py-8">
             <nav className="text-xs uppercase tracking-wide text-neutral-500 mb-1">
                 <Link to="/"><span className="hover:text-neutral-900 cursor-pointer">Home</span></Link>
                 <span className="mx-1">&gt;</span>
