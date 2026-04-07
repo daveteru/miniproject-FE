@@ -2,7 +2,7 @@ import locationicon from "../assets/icons/location_pin.svg";
 import calendaricon from "../assets/icons/Calendar.svg";
 import categoryicon from "../assets/icons/Shopping Tag.svg";
 
-export default function Smailldetails() {
+export default function Smalldetails() {
   return (
     <div className="py-5 h-fit gap-2 flex flex-col">
       <p className="flex w-fit h-8 items-center  gap-5">

@@ -11,23 +11,23 @@ export default function Navbar() {
   return (
     <nav ref={navRef} className="h-100 fixed w-full z-10">
       {/* MOBILE MENU */}
-      <div className="relative z-1 w-full h-80">
+      <div className="relative z-1 w-full bg-[#E6FF06] h-80">
         <div className="h-full w-full flex flex-col lg:hidden font-krona-one">
           <Navbarbuttton label="ABOUT" />
           <Navbarbuttton link="/discover" label="DISCOVER" closeFunction={closeMenu}/>
           <Navbarbuttton label="HELP" />
-          <Navbarbuttton label="SIGN IN" />
+          <Navbarbuttton link="/profile" label="SIGN IN" closeFunction={closeMenu} />
         </div>
       </div>
 
       {/* BIG SCREEN MENU */}
-      <div className="relative flex justify-between items-center pl-5 z-1 h-20">
+      <div className="relative flex justify-between items-center pl-5 z-1 h-16 ">
         <Link to="/"><img className="w-35" src={navbarlogo} onClick={closeMenu} alt="" /></Link>
         <div className="h-full lg:flex hidden font-krona-one">
           <Navbarbuttton label="ABOUT" />
           <Navbarbuttton link="/discover"  label="DISCOVER"  />
           <Navbarbuttton label="HELP" />
-          <Navbarbuttton label="SIGN IN" />
+          <Navbarbuttton link="/profile" label="SIGN IN" />
         </div>
 
         {/* REVEAL MOBILE MENU BUTTON */}
@@ -41,7 +41,6 @@ export default function Navbar() {
 
       {/* AESTHETIC PURPOSES */}
       <Navbarbackground />
-      <Marquee />
     </nav>
   );
 }

@@ -3,12 +3,14 @@ import Landingpagecategory from "../components/Landingpagecategory";
 import Landingpagefeatured from "../components/Landingpagefeatured";
 import Landingpagesoon from "../components/Landingpagesoon";
 import Landingpagewhatsup from "../components/Landingpagewhatsup";
+import Marquee from "../components/Marquee";
 import Partners from "../components/Partners";
 import Searchbar from "../components/Searchbar";
 
 export default function Home() {
   return (
     <div className="relative z-9">
+      <Marquee/>
       <Hero />
       <Searchbar />
 

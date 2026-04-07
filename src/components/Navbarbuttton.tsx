@@ -16,7 +16,7 @@ export default function Navbarbuttton({ label, link = "/" , closeFunction }: Nav
           onMouseEnter={onEnter}
           onMouseLeave={onLeave}
           onClick={closeFunction}
-          className="hover:bg-[#121212] hover:text-white w-full h-full px-10 "
+          className="hover:bg-[#121212] hover:text-white w-full h-full px-10 text-sm"
         >
           <p>{label}</p>
         </button>
