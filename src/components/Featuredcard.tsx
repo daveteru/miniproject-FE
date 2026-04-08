@@ -1,16 +1,27 @@
+
 type FeaturedcardProps = {
   artistName: string;
   category: string;
   price: string;
+  thumbnail?: string;
 };
 
-export default function Featuredcard({ artistName, category, price }: FeaturedcardProps) {
+
+export default function Featuredcard({
+  artistName,
+  category,
+  price,
+  thumbnail
+}: FeaturedcardProps) {
+  
   return (
     <div
-      className="flex flex-col gap-2  hover:shadow-[0px_4px_6px_0px_rgba(0,0,0,0.1)]
+      className="flex flex-col gap-2  hover:shadow-[0px_4px_6px_0px_rgba(0,0,0,0.3)]
  p-2 rounded-lg transition-all ease-in cursor-pointer"
     >
-      <div className=" bg-gray-400 w-full h-[350px] rounded-xl"></div>
+      <div className=" bg-gray-400 w-full h-[350px] rounded-xl overflow-hidden">
+      <img src={thumbnail} className="w-full h-full object-cover object-center" alt="" />
+      </div>
       <div className="flex justify-between w-full">
         <div>
           <h1 className="text-sm">{category}</h1>
