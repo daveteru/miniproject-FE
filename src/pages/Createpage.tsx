@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import Sidebar from "../components/Sidebar";
 import { Link } from "react-router";
+import Formtext, { Formdate } from "../components/Formtext";
 
 const EMPTY_TIER = { className: "", price: 0, seats: 0 };
 
@@ -18,7 +19,7 @@ export default function Createpage() {
     promoDisc: 0,
     promoStartDate: "",
     promoEndDate: "",
-    maxVoucher: 0
+    maxVoucher: 0,
   });
 
   const [tiers, setTiers] = useState([{ ...EMPTY_TIER }]);
@@ -28,12 +29,12 @@ export default function Createpage() {
 
   // --- Handlers ---
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
-  };
+  // const handleChange = (
+  //   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  // ) => {
+  //   const { name, value } = e.target;
+  //   setForm((prev) => ({ ...prev, [name]: value }));
+  // };
 
   const handleToggleFree = () => {
     setForm((prev) => ({ ...prev, isFree: !prev.isFree }));
@@ -69,6 +70,9 @@ export default function Createpage() {
     console.log("Submit:", { ...form, tiers, thumbnail });
   };
 
+  const handleFieldChange = (field: string, value: string) => {
+    setForm((prev) => ({ ...prev, [field]: value }));
+  };
   // --- Render ---
 
   return (
@@ -98,71 +102,48 @@ export default function Createpage() {
             {/* Left column — inputs */}
             <div className="flex-1 space-y-4">
               {/* Event Name */}
-              <div>
-                <label className="block text-xs font-semibold uppercase tracking-wide text-neutral-700 mb-1">
-                  Event Name
-                </label>
-                <input
-                  type="text"
-                  name="eventName"
-                  value={form.eventName}
-                  onChange={handleChange}
-                  className="w-full rounded-xl border border-neutral-300 px-4 py-2 text-sm outline-none focus:border-neutral-500 transition-colors"
-                />
-              </div>
+              <Formtext
+                label="EVENT NAME"
+                formfunc={(value) => handleFieldChange("eventName", value)}
+                value={form.eventName}
+              />
 
               {/* Artist Name */}
-              <div>
-                <label className="block text-xs font-semibold uppercase tracking-wide text-neutral-700 mb-1">
-                  Artist Name
-                </label>
-                <input
-                  type="text"
-                  name="artistName"
-                  value={form.artistName}
-                  onChange={handleChange}
-                  className="w-full rounded-xl border border-neutral-300 px-4 py-2 text-sm outline-none focus:border-neutral-500 transition-colors"
-                />
-              </div>
+              <Formtext
+                label="Artist Name"
+                formfunc={(value) => handleFieldChange("artistName", value)}
+                value={form.artistName}
+              />
 
               {/* Category / Start Date / End Date */}
               <div className="grid grid-cols-3 gap-4">
-                <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wide text-neutral-700 mb-1">
-                    Category
-                  </label>
-                  <input
-                    type="text"
-                    name="category"
-                    value={form.category}
-                    onChange={handleChange}
-                    className="w-full rounded-xl border border-neutral-300 px-4 py-2 text-sm outline-none focus:border-neutral-500 transition-colors"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wide text-neutral-700 mb-1">
-                    Start Date
-                  </label>
-                  <input
-                    type="date"
-                    name="startDate"
-                    value={form.startDate}
-                    onChange={handleChange}
-                    className="w-full rounded-xl border border-neutral-300 px-4 py-2 text-sm outline-none focus:border-neutral-500 transition-colors"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wide text-neutral-700 mb-1">
-                    End Date
-                  </label>
-                  <input
-                    type="date"
-                    name="endDate"
-                    value={form.endDate}
-                    onChange={handleChange}
-                    className="w-full rounded-xl border border-neutral-300 px-4 py-2 text-sm outline-none focus:border-neutral-500 transition-colors"
-                  />
-                </div>
+                <Formtext
+                  label="Category"
+                  formfunc={(value) => handleFieldChange("category", value)}
+                  value={form.category}
+                />
+                <Formdate
+                  label="START DATE"
+                  formfunc={(value) => handleFieldChange("category", value)}
+                  value={form.startDate}
+                />
+                <Formdate
+                  label="END DATE"
+                  formfunc={(value) => handleFieldChange("category", value)}
+                  value={form.endDate}
+                />
+              </div>
+              <div className="flex gap-5">
+                <Formtext
+                  label="City"
+                  formfunc={(value) => handleFieldChange("category", value)}
+                  value={form.endDate}
+                />
+                <Formtext
+                  label="Location"
+                  formfunc={(value) => handleFieldChange("category", value)}
+                  value={form.endDate}
+                />
               </div>
             </div>
 
@@ -203,9 +184,8 @@ export default function Createpage() {
               Description
             </label>
             <textarea
-              name="description"
               value={form.description}
-              onChange={handleChange}
+              onChange={(e) => handleFieldChange("description", e.target.value)}
               rows={8}
               className="w-full rounded-2xl border border-neutral-300 px-4 py-3 text-sm outline-none focus:border-neutral-500 transition-colors resize-none"
             />
@@ -345,15 +325,10 @@ export default function Createpage() {
             {/* Promotion Name */}
             <div className="mb-5 flex  w-full gap-4">
               <div className="flex flex-col w-full">
-                <label className="block text-xs font-semibold uppercase tracking-wide text-neutral-700 mb-1">
-                  Promotion Name
-                </label>
-                <input
-                  type="text"
-                  name="artistName"
+                <Formtext
+                  label="Promotion Name"
+                  formfunc={(value) => handleFieldChange("artistName", value)}
                   value={form.artistName}
-                  onChange={handleChange}
-                  className="w-full h-full rounded-xl border border-neutral-300 px-4 py-2 text-sm outline-none focus:border-neutral-500 transition-colors"
                 />
               </div>
               <div className="w-[48%]">
@@ -364,9 +339,10 @@ export default function Createpage() {
                   <span className="text-neutral-400">IDR</span>
                   <input
                     type="number"
-                    name="category"
                     value={form.promoDisc}
-                    onChange={handleChange}
+                    onChange={(e) =>
+                      handleFieldChange("promoDisc", e.target.value)
+                    }
                     className="w-full text-sm outline-none "
                   />
                 </div>
@@ -381,9 +357,10 @@ export default function Createpage() {
                 </label>
                 <input
                   type="date"
-                  name="startDate"
                   value={form.promoStartDate}
-                  onChange={handleChange}
+                  onChange={(e) =>
+                    handleFieldChange("promoStartDate", e.target.value)
+                  }
                   className="w-full rounded-xl border border-neutral-300 px-4 py-2 text-sm outline-none focus:border-neutral-500 transition-colors"
                 />
               </div>
@@ -393,9 +370,10 @@ export default function Createpage() {
                 </label>
                 <input
                   type="date"
-                  name="endDate"
                   value={form.promoEndDate}
-                  onChange={handleChange}
+                  onChange={(e) =>
+                    handleFieldChange("promoEndDate", e.target.value)
+                  }
                   className="w-full rounded-xl border border-neutral-300 px-4 py-2 text-sm outline-none focus:border-neutral-500 transition-colors"
                 />
               </div>
@@ -405,9 +383,10 @@ export default function Createpage() {
                 </label>
                 <input
                   type="number"
-                  name="maxvoucher"
                   value={form.maxVoucher}
-                  onChange={handleChange}
+                  onChange={(e) =>
+                    handleFieldChange("maxVoucher", e.target.value)
+                  }
                   className="w-full rounded-xl border border-neutral-300 px-4 py-2 text-sm outline-none focus:border-neutral-500 transition-colors"
                 />
               </div>
@@ -420,9 +399,8 @@ export default function Createpage() {
               FAQ
             </label>
             <textarea
-              name="faq"
               value={form.faq}
-              onChange={handleChange}
+              onChange={(e) => handleFieldChange("faq", e.target.value)}
               rows={10}
               className="w-full rounded-2xl border border-neutral-300 px-4 py-3 text-sm outline-none focus:border-neutral-500 transition-colors resize-none"
             />

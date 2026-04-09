@@ -22,8 +22,8 @@ export default function Home() {
 
       <Landingpagefeatured />
       <Landingpagewhatsup />
-      <Landingpagecategory title="discover music"/>
-      <Landingpagecategory title="discover comedy"/>
+      <Landingpagecategory title="music"/>
+      <Landingpagecategory title="comedy"/>
       <Landingpagesoon/>
       <Partners/>
     </div>

@@ -1,4 +1,28 @@
+import { useEffect, useState } from "react";
 import Cardsoon from "./Cardsoon";
+import { axiosInstance } from "../lib/axios";
+import { formatDate } from "../utility/dateconvert";
+
+type Eventsprops = {
+  id: number;
+  name: string;
+  artist: string;
+  location: string;
+  city: string;
+  startDate: string;
+  thumbnail: string;
+  category: string;
+  organizerId: number;
+};
+
+type EventsAPI = {
+  data: Eventsprops[];
+  meta: {
+    page: number;
+    take: number;
+    total: number;
+  };
+};
 
 export default function Landingpagesoon() {
   const placeholder = [
@@ -12,6 +36,20 @@ export default function Landingpagesoon() {
     { category: "COMEDY", title: "SUCRD Raditya Dika" },
   ];
 
+  const [soonEvents, setSoonEvents] = useState<Eventsprops[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    axiosInstance
+      .get<EventsAPI>(`/events?sortBy=startDate&sortOrder=asc`)
+      .then(({ data }) => {
+        setSoonEvents(data.data);
+        console.log(data.data);
+      })
+      .catch((err) => console.error(err))
+      .finally(() => setLoading(false));
+  }, []);
+
   return (
     <section className="w-full mb-20 ">
       <div className="w-full h-fit flex-col container mx-auto px-5 lg:px-30 py-10  ">
@@ -21,15 +59,15 @@ export default function Landingpagesoon() {
             <span className="underline hover:text-blue-700">VIEW ALL</span>
           </div>
           <div className="w-full h-full  grid grid-rows-3 md:grid-cols-1 lg:grid-cols-2 gap-2 text-white">
-            <Cardsoon/>
-            <Cardsoon/>
-            <Cardsoon/>
-            <Cardsoon/>
-            <Cardsoon/>
-            <Cardsoon/>
-            {/* {placeholder.map((place) => (
-              <Card category={place.category} title={place.title} />
-            ))} */}
+            {soonEvents.map((e) => (
+              <Cardsoon
+                key={e.id}
+                name={e.name}
+                category={e.category}
+                date={formatDate(e.startDate)}
+                city={e.city}
+              />
+            ))}
           </div>
         </div>
       </div>

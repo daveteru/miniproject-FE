@@ -1,6 +1,12 @@
-import { useState } from "react";
 import searchicon from "../assets/icons/Search Icon.svg";
 import searchiconwhite from "../assets/icons/Search_icon_white.svg";
+
+type searchbar2props = {
+  setCity: React.Dispatch<React.SetStateAction<string>>;
+  city: string;
+  search: string;
+  setSearch :React.Dispatch<React.SetStateAction<string>>;
+};
 
 export default function Searchbar() {
   return (
@@ -22,12 +28,16 @@ export default function Searchbar() {
   );
 }
 
-export function Searchbar2() {
-  const [location, setLocation] = useState("Jakarta");
+export function Searchbar2({ city, setCity, search , setSearch }: searchbar2props) {
   return (
     <div className="h-10 w-full font-[inter] font-light text-lg border-b border-[#a7a7a7] flex items-center transition-all ease-in gap-5">
       <img src={searchiconwhite} className="w-7" alt="Search Icon" />
-      <select value={location} onChange={(e) => setLocation(e.target.value)}>
+      <select
+        value={city}
+        onChange={(e) => {
+          setCity(e.target.value);
+        }}
+      >
         <option value="Jakarta">Jakarta</option>
         <option value="Bandung">Bandung</option>
         <option value="Bali">Bali</option>
@@ -35,7 +45,9 @@ export function Searchbar2() {
       <input
         type="text"
         id="searchbar"
+        value={search}
         placeholder={"Search Events..."}
+        onChange={(e)=>setSearch(e.target.value)}
         className="focus:outline-none w-full"
       />
     </div>
