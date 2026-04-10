@@ -1,33 +1,46 @@
+import { Link, useLocation } from "react-router";
+import navbarlogo from "../assets/Logo.svg";
+import organizerlogo from "../assets/Logo_organizer.svg";
 import { useNavbarDrag } from "../hooks/useNavbarDrag";
-import Marquee from "./Marquee";
-import Navbarbackground from "./Navbarbackground";
+import Navbarbackground from "./NavbarBackground";
 import Navbarbuttton from "./Navbarbuttton";
-import navbarlogo from "../assets/Logo.svg"
-import { Link } from "react-router";
+import { useState, useEffect } from "react";
+import { useAppStore } from "../store/useAppStore";
 
 export default function Navbar() {
   const { navRef, isMenuOpen, toggleMenu , closeMenu } = useNavbarDrag();
 
+  const user = useAppStore((state) => state.user)
+  const isLoggedIn = !!user
+
+  const location = useLocation()
+  const [isloginpage, setIsloginpage] = useState(false)
+
+  useEffect(() => {
+    setIsloginpage(location.pathname === "/login")
+  }, [location.pathname])
+
   return (
-    <nav ref={navRef} className="h-100 fixed w-full z-10">
+    <nav ref={navRef} className={`h-100 ${isloginpage? "hidden" : ""} fixed lg:absolute w-full z-10`}>
       {/* MOBILE MENU */}
       <div className="relative z-1 w-full bg-[#E6FF06] h-80">
         <div className="h-full w-full flex flex-col lg:hidden font-krona-one">
           <Navbarbuttton label="ABOUT" />
           <Navbarbuttton link="/discover" label="DISCOVER" closeFunction={closeMenu}/>
           <Navbarbuttton label="HELP" />
-          <Navbarbuttton link="/profile" label="SIGN IN" closeFunction={closeMenu} />
+          <Navbarbuttton key={isLoggedIn ? "mobile-logged-in" : "mobile-logged-out"} link={isLoggedIn?"/profile": "/login"} label={isLoggedIn ? `Hello, ${user?.fullName}` : "SIGN IN"} closeFunction={closeMenu} />
         </div>
       </div>
 
       {/* BIG SCREEN MENU */}
       <div className="relative flex justify-between items-center pl-5 z-1 h-16 ">
-        <Link to="/"><img className="w-35" src={navbarlogo} onClick={closeMenu} alt="" /></Link>
+        <Link to="/"><img className="w-35" src={user?.role === "ORGANIZER" ?organizerlogo:navbarlogo} onClick={closeMenu} alt="" /></Link>
         <div className="h-full lg:flex hidden font-krona-one">
           <Navbarbuttton label="ABOUT" />
           <Navbarbuttton link="/discover"  label="DISCOVER"  />
           <Navbarbuttton label="HELP" />
-          <Navbarbuttton link="/profile" label="SIGN IN" />
+          {isLoggedIn? <Navbarbuttton key="logged-in" link="/profile" label={`HELLO , ${user.fullName}`} /> : <Navbarbuttton key="logged-out" link="/login" label="SIGN IN" />}
+          
         </div>
 
         {/* REVEAL MOBILE MENU BUTTON */}
@@ -40,7 +53,7 @@ export default function Navbar() {
       </div>
 
       {/* AESTHETIC PURPOSES */}
-      <Navbarbackground />
+      <Navbarbackground/>
     </nav>
   );
 }

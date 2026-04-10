@@ -1,47 +1,40 @@
-import { useState, useRef, useEffect } from "react";
-import { useNavAnimation } from "../hooks/useNavAnimation";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
+import { useEffect, useRef, useState } from "react";
+import { useNavAnimation } from "../hooks/useNavAnimation";
+import { axiosInstance } from "../lib/axios";
 
 gsap.registerPlugin(SplitText);
-import heroImg1 from "../assets/photo/3.webp";
-import heroImg2 from "../assets/photo/2.webp";
-import heroImg3 from "../assets/photo/1.webp";
+const heroImg3 = "https://res.cloudinary.com/dbjnkjxli/image/upload/f_auto,q_auto/1_jar4xn";
 
-const slides = [
-  {
-    title: "MensRea",
-    date: "12/12/2027",
-    location: "Istora Senayan",
-    description:
-      "Guilty of making you laugh. Indonesia's sharpest comic minds take the mic — no filter, no mercy. One night of uncomfortable truths dressed up as punchlines. Court is in session.",
-  },
-  {
-    title: `Heads in the cloud`,
-    date: "01/01/2028",
-    location: "Ancol",
-    description:
-      "Pan-Asian. Genre-fluid. Unapologetically loud. 88rising brings the wave — where hip-hop meets nostalgia and every track feels like a coming-of-age moment. Float up.",
-  },
-  {
-    title: "Tulus",
-    date: "03/03/2028",
-    location: "ICE BSD",
-    description:
-      "Ada lagu yang hidup lebih lama dari perasaan yang melahirkannya. Malam ini, suara Tulus mengisi ruang yang selama ini kamu biarkan kosong. Datang dan bawa siapa saja yang kamu rindukan",
-  },
-];
+// 2. Define the type matching your backend response
+type HeroSlide = {
+  id: number;
+  priority:string;
+  status:string
+  eventId:number;
+  event: {
+    name: string;
+    startDate: string;
+    location: string;
+    thumbnail: string;
+    description: string;
+  };
+};
 
 export default function Hero() {
   const { containerRef, onEnter, onLeave } = useNavAnimation();
   const [carousellpage, setCarousellpage] = useState<1 | 2 | 3>(1);
+  const [herocontent, setHerocontent] = useState<HeroSlide[]>([]);
+  const [loading, setLoading] = useState(true);
   const carousellcontainer = useRef<HTMLDivElement>(null);
 
   // Carousell Animation
 
   useGSAP(
     () => {
+      if (!carousellcontainer.current) return;
       gsap.to(carousellcontainer.current, {
         xPercent: -(carousellpage - 1) * (100 / 3),
         duration: 0.6,
@@ -59,6 +52,28 @@ export default function Hero() {
     }, 5000);
     return () => clearInterval(interval);
   }, [carousellpage]); //5000ms counter reset everytime carousellpage state changed
+
+  //Data Fetching from DB
+
+  useEffect(() => {
+    axiosInstance
+      .get<HeroSlide[]>("/promotions/hero")
+      .then((res) => {
+        setHerocontent(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => console.error(err))
+      .finally(() => setLoading(false));
+  }, []);
+
+
+  if (loading || herocontent.length === 0) {
+    return (
+      <header className="w-full h-170 bg-gray-900 flex items-center justify-center text-[#E6FF06]">
+        <p className="text-lg animate-pulse">Loading...</p>
+      </header>
+    );
+  }
 
   return (
     <header className="bg-gray-400 w-full h-170 justify-center items-center relative text-[#E6FF06]  overflow-hidden">
@@ -91,14 +106,14 @@ export default function Hero() {
         <div className="w-screen">
           <img
             className="relative w-full h-full z-0 inset-0 object-cover "
-            src={heroImg1}
+            src={herocontent[0].event.thumbnail}
             alt=""
           />
         </div>
         <div className="w-screen">
           <img
             className="relative w-full h-full z-0 inset-0 object-cover "
-            src={heroImg2}
+            src={herocontent[1].event.thumbnail}
             alt=""
           />
         </div>
@@ -106,7 +121,7 @@ export default function Hero() {
         <div className="w-screen">
           <img
             className="relative w-full h-full z-0 inset-0 object-cover "
-            src={heroImg3}
+            src={herocontent[2].event.thumbnail}
             alt=""
           />
         </div>
@@ -117,15 +132,20 @@ export default function Hero() {
       <div className="absolute inset-0 z-0 bg-gradient-to-t from-black/50 to-black/20 lg:to-transparent " />
 
       <div className="container w-screen mx-auto py-12 px-5 lg:px-30 relative z-2 flex flex-col lg:flex-row h-full  justify-end items-end">
+        
         {/* text content top layer */}
         <div className="flex flex-col justify-between  w-full h-full  mb-5 lg:mb-0">
           <div>
-            <h1 className="text-5xl md:text-6xl lg:w-130 text-center lg:text-left leading-14 md:leading-17  uppercase">
-              {slides[carousellpage - 1].title}* <br /> @{" "}
-              {slides[carousellpage - 1].location}
+            <h1 className="text-5xl md:text-6xl lg:w-150 text-center lg:text-left leading-14 md:leading-17  uppercase">
+              {herocontent[carousellpage - 1].event.name}* <br /> @{" "}
+              {herocontent[carousellpage - 1].event.location}
             </h1>
             <h1 className="text-xl  lg:w-100 leading-15 text-center  lg:text-right">
-              {slides[carousellpage - 1].date}
+              {new Intl.DateTimeFormat("id-ID", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+              }).format(new Date(herocontent[carousellpage - 1].event.startDate))}
             </h1>
           </div>
           <div
@@ -133,7 +153,7 @@ export default function Hero() {
             className=" justify-center items-center lg:items-start text-center lg:text-left flex flex-col gap-5"
           >
             <p className="md:w-100 text-sm text-white">
-              {slides[carousellpage - 1].description}
+              {herocontent[carousellpage - 1].event.description}
             </p>
             <button
               onMouseEnter={onEnter}
