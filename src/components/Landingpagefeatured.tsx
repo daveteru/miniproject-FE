@@ -2,12 +2,6 @@ import { useEffect, useState } from "react";
 import Featuredcard from "./Featuredcard";
 import { axiosInstance } from "../lib/axios";
 
-const featuredData = [
-  { artistName: "Tulus", category: "CONCERT", price: "250.000" },
-  { artistName: "Raisa", category: "CONCERT", price: "300.000" },
-  { artistName: "Pamungkas", category: "LIVE MUSIC", price: "150.000" },
-  { artistName: "Yura Yunita", category: "CONCERT", price: "200.000" },
-];
 
 type FeaturedEvents = {
   id: number;
@@ -27,7 +21,7 @@ type FeaturedEvents = {
 
 export default function Landingpagefeatured() {
   const [featuredContent, setFeaturedContent] = useState<FeaturedEvents[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [isloading, setisLoading] = useState(true);
 
   useEffect(() => {
     axiosInstance
@@ -37,15 +31,15 @@ export default function Landingpagefeatured() {
         console.log(res.data);
       })
       .catch((err) => console.error(err))
-      .finally(() => setLoading(false));
+      .finally(() => setisLoading(false));
   }, []);
 
   return (
     <section>
       {" "}
-      <div className=" container mx-auto px-5 md:px-15 lg:px-30 my-10">
-        <h1 className="text-2xl mb-5">FEATURED</h1>
-        <div className="grid md:grid-cols-2 md:grid-rows-2 gap-3 ">
+      <div className=" container mx-auto px-5 md:px-15 lg:px-30 my-10  items-center flex flex-col">
+        <h1 className="text-2xl text-left  mb-5">FEATURED</h1>
+        <div className="grid md:grid-cols-2 md:grid-rows-2 gap-3  w-fit ">
           {featuredContent.map((item, index) => (
             <Featuredcard
               key={index}

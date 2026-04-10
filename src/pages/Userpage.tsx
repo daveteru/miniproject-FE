@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-import Sidebar from "../components/Sidebar";
 import { Link } from "react-router";
 import Formtext from "../components/Formtext";
+import Sidebar from "../components/Sidebar";
 
 type User = {
   name?: string;
@@ -23,6 +23,8 @@ export default function Userpage({ user = {} }: { user?: User }) {
     instagram: user.instagram || "",
     description: user.description || "",
   });
+
+  
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -148,7 +150,6 @@ export default function Userpage({ user = {} }: { user?: User }) {
             </div>
 
             {/* Submit row */}
-
           </form>
         </div>
       </div>

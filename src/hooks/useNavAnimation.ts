@@ -9,15 +9,18 @@ export function useNavAnimation() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { contextSafe } = useGSAP({ scope: containerRef });
   const tlMap = useRef<Map<HTMLElement, gsap.core.Timeline>>(new Map());
+  const splitMap = useRef<Map<HTMLElement, ReturnType<typeof SplitText.create>>>(new Map());
 
   const onEnter = contextSafe((e: React.MouseEvent<HTMLButtonElement>) => {
     const btn = e.currentTarget;
     tlMap.current.get(btn)?.kill();
+    splitMap.current.get(btn)?.revert();
 
     const split = SplitText.create(btn, {
       type: "chars",
       mask: "chars",
     });
+    splitMap.current.set(btn, split);
 
     const tl = gsap
       .timeline()
@@ -39,7 +42,14 @@ export function useNavAnimation() {
   });
 
   const onLeave = contextSafe((e: React.MouseEvent<HTMLButtonElement>) => {
-    tlMap.current.get(e.currentTarget)?.reverse();
+    const btn = e.currentTarget;
+    const tl = tlMap.current.get(btn);
+    if (tl) {
+      tl.reverse().then(() => {
+        splitMap.current.get(btn)?.revert();
+        splitMap.current.delete(btn);
+      });
+    }
   });
 
   return { containerRef, onEnter, onLeave };

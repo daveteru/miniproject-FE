@@ -3,7 +3,10 @@ import ticketicon from "../assets/icons/Ticket_use_fill.svg";
 import Landingpagecategory from "../components/Landingpagecategory";
 import Partners from "../components/Partners";
 import Review from "../components/Review";
-import { default as Smailldetails, default as Smalldetails } from "../components/Smalldetails";
+import {
+  default as Smailldetails,
+  default as Smalldetails,
+} from "../components/Smalldetails";
 
 export default function Events() {
   const targetRef = useRef<HTMLDivElement>(null);
@@ -15,7 +18,7 @@ export default function Events() {
       <div className=" w-full h-fit ">
         {" "}
         {/* start of sticky bar parent */}
-        <div className="w-full h-20 border-b-gray-400 drop-shadow-xl flex bg-white sticky z-5 top-16">
+        <div className="w-full h-20 border-b-gray-400 drop-shadow-xl flex bg-white sticky z-5 top-0">
           <div className="container mx-auto w-full flex   h-full pl-25">
             <div className="flex justify-center px-5 flex-col   h-full w-[70%]">
               <h1 className="text-xl">EXAMPLE EVENT NAME</h1>
@@ -67,7 +70,7 @@ export default function Events() {
 
             <div
               ref={targetRef}
-              className="scroll-mt-40 w-full h-fit drop-shadow-xl bg-white border border-gray-100  rounded-2xl my-15 flex flex-col gap-2 p-5"
+              className="scroll-mt-25 w-full h-fit drop-shadow-xl bg-white border border-gray-100  rounded-2xl my-15 flex flex-col gap-2 p-5"
             >
               <div className=" w-full h-10 items-center flex gap-2">
                 <img src={ticketicon} alt="" />
@@ -182,7 +185,7 @@ export default function Events() {
           {/* end of sticky bar parent */}
 
           {/* sidebar sticky ticket window */}
-          <div className="flex-1 sticky top-36 h-fit ">
+          <div className="flex-1 sticky top-20 h-fit ">
             <div className="flex bg-white flex-1 h-110 rounded-b-2xl  overflow-hidden drop-shadow-md flex-col">
               <div className="w-full bg-gray-400 h-50"></div>
               <div className="w-full px-5">

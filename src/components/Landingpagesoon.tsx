@@ -66,6 +66,7 @@ export default function Landingpagesoon() {
                 category={e.category}
                 date={formatDate(e.startDate)}
                 city={e.city}
+                thumbnail={e.thumbnail}
               />
             ))}
           </div>

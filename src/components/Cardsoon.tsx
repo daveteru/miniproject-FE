@@ -3,13 +3,16 @@ type soonprops = {
   category?: string;
   date?: string;
   city?: string;
+  thumbnail?:string;
 };
 
-export default function Cardsoon({ name, category, date,city }: soonprops) {
+export default function Cardsoon({ name, category, date,city,thumbnail }: soonprops) {
   return (
     <div className="border relative border-gray-400 rounded-2xl flex h-30 p-2 text-black justify-between cursor-pointer">
       <div className="flex w-fit gap-5">
-        <div className="hidden md:block h-full w-40 bg-gray-400 rounded-xl"></div>
+        <div className=" aspect-16/10 hidden md:block h-full w-40 bg-gray-400 rounded-xl  overflow-hidden">
+          <img src={thumbnail} alt="" className="w-full h-full object-cover" />
+        </div>
         <div className="flex flex-col justify-between">
           <h3>{date}</h3>
           <div className="flex flex-col">

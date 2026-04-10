@@ -54,7 +54,7 @@ export default function Landingpagecategory({
           </div>
           <div className="w-full h-full  grid md:grid-cols-2 lg:grid-cols-4 gap-5 text-white">
             {events.map((place) => (
-              <Card key={place.id} category={place.artist} title={place.name} />
+              <Card key={place.id} category={place.artist} title={place.name} thumbnail={place.thumbnail}/>
             ))}
           </div>
         </div>
