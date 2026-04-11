@@ -16,7 +16,7 @@ export default function Home() {
 
       <div className="bg-[#121212] w-full h-40 flex justify-center items-center px-5 *:">
         <h1 className="text-[#E6FF06] text-xl">
-          Find What's Happening, Make the night count.
+          Find What's Happening, be at the FRNTROW*.
         </h1>
       </div>
 

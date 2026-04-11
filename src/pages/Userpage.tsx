@@ -1,30 +1,41 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { Link } from "react-router";
 import Formtext from "../components/Formtext";
 import Sidebar from "../components/Sidebar";
+import { useAppStore } from "../store/useAppStore";
 
-type User = {
-  name?: string;
-  email?: string;
-  phone?: string;
-  twitter?: string;
-  instagram?: string;
-  description?: string;
-  avatarUrl?: string;
+type form = {
+  name: string;
+  email: string;
+  phone: string;
+  birthdate: string;
+  referrer: string;
+  avatar: string;
 };
 
-export default function Userpage({ user = {} }: { user?: User }) {
-  const [form, setForm] = useState({
-    name: user.name || "",
-    email: user.email || "",
-    phone: user.phone || "",
-    twitter: user.twitter || "",
-    instagram: user.instagram || "",
-    description: user.description || "",
+export default function formpage() {
+  const [form, setForm] = useState<form>({
+    name: "",
+    email: "",
+    phone: "",
+    avatar: "",
+    birthdate: "",
+    referrer: "",
   });
 
-  
+  const formdata = useAppStore((state) => state.user);
+
+  useEffect(() => {
+    if (formdata) {
+      setForm((prev) => ({
+        ...prev,
+        name: formdata.fullName,
+        email: formdata.email,
+        birthdate: formdata.birthdate,
+      }));
+    }
+  }, [formdata]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -70,9 +81,9 @@ export default function Userpage({ user = {} }: { user?: User }) {
                   Display Picture
                 </label>
                 <div className="w-24 h-24 rounded-full bg-neutral-200 overflow-hidden cursor-pointer hover:ring-2 hover:ring-neutral-300 transition-shadow">
-                  {user.avatarUrl ? (
+                  {form.avatar ? (
                     <img
-                      src={user.avatarUrl}
+                      src={form.avatar}
                       alt="Avatar"
                       className="w-full h-full object-cover"
                     />
@@ -107,13 +118,15 @@ export default function Userpage({ user = {} }: { user?: User }) {
                   />
                   <Formtext
                     label="Birthdate"
-                    formfunc={(value) => handleFieldChange("twitter", value)}
-                    value={form.twitter}
+                    editable={false}
+                    formfunc={(value) => handleFieldChange("birthdate", value)}
+                    value={form.birthdate}
                   />
                   <Formtext
                     label="Referrer"
-                    formfunc={(value) => handleFieldChange("instagram", value)}
-                    value={form.instagram}
+                    editable={false}
+                    formfunc={(value) => handleFieldChange("referrer", value)}
+                    value={form.referrer}
                   />
                 </div>
               </div>

@@ -4,8 +4,10 @@ import { persist } from "zustand/middleware";
 type AppState = {
   user: {
     id: string;
+    email: string;
     fullName: string;
     role: string;
+    birthdate: string;
     avatar: string;
   } | null;
 };
