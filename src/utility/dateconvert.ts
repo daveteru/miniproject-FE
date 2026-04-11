@@ -1,3 +1,7 @@
+export function formatThousand(n: number): string {
+  return n.toLocaleString("id-ID");
+}
+
 export function formatDate(isoString: string): string {
   const date = new Date(isoString);
   return date.toLocaleDateString("en-GB", {

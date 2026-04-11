@@ -122,6 +122,7 @@ export default function Discover() {
               {events.map((e) => (
                 <DiscoverCard
                   key={e.id}
+                  id={e.id}
                   title={e.name}
                   thumbnail={e.thumbnail}
                   artist={e.artist}

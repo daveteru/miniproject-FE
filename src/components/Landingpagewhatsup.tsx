@@ -52,7 +52,7 @@ export default function Landingpagewhatsup() {
           </div>
           <div className="w-full h-full  grid md:grid-cols-2 lg:grid-cols-4 gap-5">
             {cityContent.map((e) => (
-              <Card category={e.category} title={e.name} thumbnail={e.thumbnail} />
+              <Card eventid={e.id} category={e.category} title={e.name} thumbnail={e.thumbnail} />
             ))}
           </div>
         </div>

@@ -1,11 +1,37 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router";
 import discountticket from "../assets/icons/discount.svg";
 import { Smalldetailstransaction } from "../components/Smalldetails";
 import TicketCard from "../components/TicketCard";
 import Toggler from "../components/Toggler";
+import { axiosInstance } from "../lib/axios";
+
+type Ticket = {
+  id: number;
+  ticketLevel: string;
+  price: number;
+  availableTicket: number;
+};
 
 export default function Transaction() {
   const [isvoucher, setIsvoucher] = useState<boolean>(false);
+  const [tickets, setTickets] = useState<Ticket[]>([]);
+  const [eventdetails , setEventdetails] = useState()
+  const [searchParams] = useSearchParams();
+  const [cart , setCart ] = useState<[{}]>([{}])
+  const eventId = searchParams.get("eventId");
+
+  useEffect(() => {
+    const fetchTickets = async () => {
+      try {
+        const { data } = await axiosInstance.get(`/events/detail/${eventId}`);
+        setTickets(data.tickets);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    if (eventId) fetchTickets();
+  }, [eventId]);
 
   return (
     <div className="w-full mih-h-screen border border-transparent bg-neutral-100 h-min-screen ">
@@ -21,9 +47,14 @@ export default function Transaction() {
           {" "}
           <div className="w-[60%] h-full  gap-2 flex flex-col">
             <div className="flex flex-col gap-4">
-              <TicketCard />
-              <TicketCard />
-              <TicketCard />
+              {tickets.map((t) => (
+                <TicketCard
+                  key={t.id}
+                  ticketLevel={t.ticketLevel}
+                  price={t.price}
+                  availableTicket={t.availableTicket}
+                />
+              ))}
             </div>
           </div>
           <div className="w-full flex-1 flex-col flex gap-2">
