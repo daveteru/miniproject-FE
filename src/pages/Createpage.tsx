@@ -6,15 +6,15 @@ import { axiosInstance } from "../lib/axios";
 import { useAppStore } from "../store/useAppStore";
 
 export default function Createpage() {
-  const user = useAppStore((state) => state.user)
-  const navigate = useNavigate()
+  const user = useAppStore((state) => state.user);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (user?.role !== "ORGANIZER") {
-      alert("this page is only for event organizer")
-      navigate("/")
+      alert("this page is only for event organizer");
+      navigate("/");
     }
-  }, [user])
+  }, [user]);
 
   const EMPTY_TICKET = { ticketLevel: "reguler", price: 0, availableTicket: 0 };
 
@@ -33,15 +33,15 @@ export default function Createpage() {
     },
     tickets: [{ ...EMPTY_TICKET }],
     voucher: {
-      amount: "",
+      amount: 0,
       expiredDate: "",
-      userId: "",
+      userId: 1,
     },
   });
 
   const [freetoggle, setFreetoggle] = useState(false);
   const [promotoggle, setPromotoggle] = useState(false);
-  const [isloading , setIsloading ]= useState(false);
+  const [isloading, setIsloading] = useState(false);
   const [thumbnailPreview, setThumbnailPreview] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -49,23 +49,38 @@ export default function Createpage() {
     setForm((prev) => ({ ...prev, event: { ...prev.event, [field]: value } }));
   };
 
-  const handleTicketChange = (index: number, field: string, value: string) => {
+  const handleTicketChange = (
+    index: number,
+    field: string,
+    value: string | number,
+  ) => {
     setForm((prev) => ({
       ...prev,
-      tickets: prev.tickets.map((t, i) => (i === index ? { ...t, [field]: value } : t)),
+      tickets: prev.tickets.map((t, i) =>
+        i === index ? { ...t, [field]: value } : t,
+      ),
     }));
   };
 
   const addTicket = () => {
-    setForm((prev) => ({ ...prev, tickets: [...prev.tickets, { ...EMPTY_TICKET }] }));
+    setForm((prev) => ({
+      ...prev,
+      tickets: [...prev.tickets, { ...EMPTY_TICKET }],
+    }));
   };
 
   const removeTicket = (index: number) => {
-    setForm((prev) => ({ ...prev, tickets: prev.tickets.filter((_, i) => i !== index) }));
+    setForm((prev) => ({
+      ...prev,
+      tickets: prev.tickets.filter((_, i) => i !== index),
+    }));
   };
 
   const handleVoucherChange = (field: string, value: string) => {
-    setForm((prev) => ({ ...prev, voucher: { ...prev.voucher, [field]: value } }));
+    setForm((prev) => ({
+      ...prev,
+      voucher: { ...prev.voucher, [field]: value },
+    }));
   };
 
   const handleThumbnailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,19 +91,25 @@ export default function Createpage() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsloading(true)
+    setIsloading(true);
     try {
       await axiosInstance.post("/events/bundle", {
-        event: form.event,
+        event: { ...form.event, organizerId: user!.id },
         tickets: form.tickets,
         ...(promotoggle && { voucher: form.voucher }),
       });
+       alert("Submission sucess");
     } catch (err: any) {
       alert("Submission failed");
-      console.log(err.response?.data?.errors ?? err.response?.data?.message ?? err.message);
-    }
-    finally {
-      setIsloading(false)
+      console.log(
+        err.response?.data?.errors ??
+          err.response?.data?.message ??
+          err.message,
+      );
+    } finally {
+     
+
+      setIsloading(false);
     }
   };
   // --- Render ---
@@ -210,6 +231,7 @@ export default function Createpage() {
               <h2 className="text-lg font-black uppercase tracking-wider text-neutral-900">
                 Pricing
               </h2>
+              <small className="text-neutral-400">Maximum 5 Types of Ticket</small>
             </div>
             <div
               className={`border-2 border-dashed border-neutral-300 rounded-2xl p-6 space-y-4 ${freetoggle ? "hidden" : ""}`}
@@ -223,7 +245,9 @@ export default function Createpage() {
                     <input
                       type="text"
                       value={ticket.ticketLevel}
-                      onChange={(e) => handleTicketChange(i, "ticketLevel", e.target.value)}
+                      onChange={(e) =>
+                        handleTicketChange(i, "ticketLevel", e.target.value)
+                      }
                       placeholder="e.g. VIP, Regular"
                       className="w-full rounded-xl border border-neutral-300 px-4 py-2 text-sm outline-none focus:border-neutral-500 transition-colors"
                     />
@@ -235,7 +259,9 @@ export default function Createpage() {
                     <input
                       type="number"
                       value={ticket.price}
-                      onChange={(e) => handleTicketChange(i, "price", e.target.value)}
+                      onChange={(e) =>
+                        handleTicketChange(i, "price", Number(e.target.value))
+                      }
                       className="w-full rounded-xl border border-neutral-300 px-4 py-2 text-sm outline-none focus:border-neutral-500 transition-colors"
                     />
                   </div>
@@ -247,7 +273,13 @@ export default function Createpage() {
                       <input
                         type="number"
                         value={ticket.availableTicket}
-                        onChange={(e) => handleTicketChange(i, "availableTicket", e.target.value)}
+                        onChange={(e) =>
+                          handleTicketChange(
+                            i,
+                            "availableTicket",
+                            Number(e.target.value),
+                          )
+                        }
                         className="w-full rounded-xl border border-neutral-300 px-4 py-2 text-sm outline-none focus:border-neutral-500 transition-colors"
                       />
                     </div>
@@ -264,6 +296,7 @@ export default function Createpage() {
                   </div>
                 </div>
               ))}
+               {form.tickets.length < 5 && (
               <div className="flex justify-center pt-2">
                 <button
                   type="button"
@@ -273,6 +306,7 @@ export default function Createpage() {
                   +
                 </button>
               </div>
+              )}
             </div>
           </div>
 
@@ -299,7 +333,7 @@ export default function Createpage() {
           </div>
 
           <div
-            className={`border px-6 py-8 mb-10 rounded-2xl border-neutral-300 ${promotoggle ? "" : "hidden"}`}
+            className={` px-6 py-8 mb-10 rounded-2xl border-neutral-300 border-dashed border-2 ${promotoggle ? "" : "hidden"}`}
           >
             <div className="flex w-full gap-4">
               <div className="w-[48%]">
@@ -311,7 +345,9 @@ export default function Createpage() {
                   <input
                     type="number"
                     value={form.voucher.amount}
-                    onChange={(e) => handleVoucherChange("amount", e.target.value)}
+                    onChange={(e) =>
+                      handleVoucherChange("amount", e.target.value)
+                    }
                     className="w-full text-sm outline-none"
                   />
                 </div>
@@ -323,15 +359,17 @@ export default function Createpage() {
                 <input
                   type="date"
                   value={form.voucher.expiredDate}
-                  onChange={(e) => handleVoucherChange("expiredDate", e.target.value)}
+                  onChange={(e) =>
+                    handleVoucherChange("expiredDate", e.target.value)
+                  }
                   className="w-full rounded-xl border border-neutral-300 px-4 py-2 text-sm outline-none focus:border-neutral-500 transition-colors"
                 />
               </div>
             </div>
           </div>
 
-          {/* FAQ */}
-          <div className="mb-10">
+          {/* FAQ */} 
+          {/* <div className="mb-10">
             <label className="block text-xs font-semibold uppercase tracking-wide text-neutral-700 mb-2">
               FAQ
             </label>
@@ -341,19 +379,18 @@ export default function Createpage() {
               rows={10}
               className="w-full rounded-2xl border border-neutral-300 px-4 py-3 text-sm outline-none focus:border-neutral-500 transition-colors resize-none"
             />
-          </div>
+          </div> */}
 
           {/* Submit row */}
           <div className="flex items-center gap-6">
             <button
               type="submit"
-              className={`${isloading? "bg-neutral-500" :"bg-[#d4f531]"} hover:bg-[#c5e620] text-neutral-900 font-bold uppercase tracking-wider text-sm px-8 py-3 rounded-xl transition-colors`}
+              className={`${isloading ? "bg-neutral-500" : "bg-[#d4f531]"} hover:bg-[#c5e620] text-neutral-900 font-bold uppercase tracking-wider text-sm px-8 py-3 rounded-xl transition-colors`}
             >
-              {isloading? "Loading...":"Submit Event"}
+              {isloading ? "Loading..." : "Submit Event"}
             </button>
             <p className="text-xs text-red-500 ">
-              Make sure all details are correct. Lorem ipsum dolor sit amet
-              lorem ipsum dolor sit amet
+              Make sure all details are correct. 
             </p>
           </div>
         </form>
