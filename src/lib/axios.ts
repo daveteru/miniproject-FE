@@ -2,4 +2,30 @@ import axios from "axios";
 
 export const axiosInstance = axios.create({
   baseURL: "http://localhost:8000/",
+  withCredentials: true,
 });
+
+export const refreshInstance = axios.create({
+  baseURL: "http://localhost:8001",
+  withCredentials: true,
+});
+
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
+    if (
+      error.response?.status === 401 &&
+      error.response?.data?.message === "Token expired" &&
+      !originalRequest._retry
+    ) {
+      try {
+        await refreshInstance.post("/auth/refresh");
+        return axiosInstance(originalRequest);
+      } catch (error) {
+        await refreshInstance.post("/auth/refresh");
+        return Promise.reject(error);
+      }
+    }
+  },
+);
