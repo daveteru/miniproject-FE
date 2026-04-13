@@ -9,7 +9,11 @@ import {
 } from "../components/Smalldetails";
 import { axiosInstance } from "../lib/axios";
 import { useNavigate, useParams } from "react-router";
-import { formatDate, formatThousand } from "../utility/dateconvert";
+import {
+  formatDate,
+  formatThousand,
+  getCountdown,
+} from "../utility/dateconvert";
 import Ticketcontent from "../components/Ticketcontent";
 
 type EventDetailsAPI = {
@@ -38,19 +42,29 @@ type EventDetailsAPI = {
     fullName: string;
     avatar: string | null;
   };
+  vouchers: {
+    expiredDate: string;
+    discamount: number;
+    amount: number;
+  }[];
 };
 export default function Events() {
   const targetRef = useRef<HTMLDivElement>(null);
   const { id } = useParams();
   const navigate = useNavigate();
-  const [event, setEvent] = useState<EventDetailsAPI | null >(null);
-  const [fromprice , setFromprice] = useState<number[]>([])
+  const [event, setEvent] = useState<EventDetailsAPI | null>(null);
+  const [ispromo, setIspromo] = useState<boolean>(false);
+  const [fromprice, setFromprice] = useState<number[]>([]);
+
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const { data } = await axiosInstance.get<EventDetailsAPI>(`/events/detail/${id}`);
+        const { data } = await axiosInstance.get<EventDetailsAPI>(
+          `/events/detail/${id}`,
+        );
         setEvent(data);
-        setFromprice(data.tickets?.map((t) => t.price) ?? [])
+        setFromprice(data.tickets?.map((t) => t.price) ?? []);
+        data.vouchers.length == 0 ? setIspromo(false) : setIspromo(true);
       } catch (err) {
         console.error(err);
       }
@@ -60,8 +74,12 @@ export default function Events() {
 
   return (
     <div className="w-full flex flex-col items-center ">
-      <div className="w-full h-115 bg-gray-500">
-        <img src={event?.thumbnail} alt="" className="object-cover w-full h-full" />
+      <div className="w-full h-115 bg-gray-500 overflow-hidden">
+        <img
+          src={event?.thumbnail}
+          alt=""
+          className="object-cover w-full h-full blur scale-110"
+        />
       </div>
       <div className="w-full h-10 bg-black"></div>
       <div className=" w-full h-fit ">
@@ -76,8 +94,14 @@ export default function Events() {
             <div className="border-2 border-gray-100 w-[30%] h-20 flex justify-between items-center p-3 bg-white">
               <div className="w-fit h-full  ">
                 <small className="text-[10px]">TICKET PRICE FROM</small>
-                <p className="font-bold"><p className="font-bold">IDR {fromprice.length > 0 ? formatThousand(Math.min(...fromprice)) : "-"}</p>
-</p>
+                <p className="font-bold">
+                  <p className="font-bold">
+                    IDR{" "}
+                    {fromprice.length > 0
+                      ? formatThousand(Math.min(...fromprice))
+                      : "-"}
+                  </p>
+                </p>
               </div>
               <button
                 className="w-fit h-fit font-krona-one px-5 py-2 bg-[#E6FF06] hover:bg-amber-400 transition-colors  rounded-xl"
@@ -101,9 +125,7 @@ export default function Events() {
             <hr className="my-5 border-gray-300"></hr>
             <article className=" mt-5 flex flex-col gap-2">
               <h1>DESCRIPTION</h1>
-              <p>
-                {event?.description}
-              </p>
+              <p>{event?.description}</p>
             </article>
 
             <div
@@ -129,26 +151,75 @@ export default function Events() {
             <article className=" mt-5 flex flex-col gap-2">
               <h1>TERMS & CONDITION</h1>
               <ul className="list-disc translate-x-4 flex flex-col gap-1 text-sm text-neutral-700">
-                <li>Tiket yang telah dibeli tidak dapat dikembalikan atau ditukarkan dalam kondisi apapun.</li>
-                <li>Tiket hanya berlaku untuk satu kali masuk dan tidak dapat digunakan ulang.</li>
-                <li>Penonton wajib membawa tiket (fisik atau digital) beserta identitas diri yang sah saat memasuki venue.</li>
-                <li>Panitia berhak menolak masuk penonton yang tidak dapat menunjukkan tiket atau identitas yang valid.</li>
-                <li>Dilarang membawa senjata tajam, bahan berbahaya, minuman keras, atau obat-obatan terlarang ke dalam venue.</li>
-                <li>Dilarang melakukan tindakan yang mengganggu kenyamanan dan keselamatan penonton lain.</li>
-                <li>Penonton yang melanggar tata tertib dapat dikeluarkan dari venue tanpa pengembalian dana.</li>
-                <li>Pengambilan foto dan video untuk keperluan pribadi diperbolehkan, namun dilarang menggunakan kamera profesional tanpa izin resmi dari panitia.</li>
-                <li>Panitia tidak bertanggung jawab atas kehilangan barang bawaan penonton selama acara berlangsung.</li>
-                <li>Jadwal acara dapat berubah sewaktu-waktu. Informasi terbaru akan disampaikan melalui kanal resmi penyelenggara.</li>
+                <li>
+                  Tiket yang telah dibeli tidak dapat dikembalikan atau
+                  ditukarkan dalam kondisi apapun.
+                </li>
+                <li>
+                  Tiket hanya berlaku untuk satu kali masuk dan tidak dapat
+                  digunakan ulang.
+                </li>
+                <li>
+                  Penonton wajib membawa tiket (fisik atau digital) beserta
+                  identitas diri yang sah saat memasuki venue.
+                </li>
+                <li>
+                  Panitia berhak menolak masuk penonton yang tidak dapat
+                  menunjukkan tiket atau identitas yang valid.
+                </li>
+                <li>
+                  Dilarang membawa senjata tajam, bahan berbahaya, minuman
+                  keras, atau obat-obatan terlarang ke dalam venue.
+                </li>
+                <li>
+                  Dilarang melakukan tindakan yang mengganggu kenyamanan dan
+                  keselamatan penonton lain.
+                </li>
+                <li>
+                  Penonton yang melanggar tata tertib dapat dikeluarkan dari
+                  venue tanpa pengembalian dana.
+                </li>
+                <li>
+                  Pengambilan foto dan video untuk keperluan pribadi
+                  diperbolehkan, namun dilarang menggunakan kamera profesional
+                  tanpa izin resmi dari panitia.
+                </li>
+                <li>
+                  Panitia tidak bertanggung jawab atas kehilangan barang bawaan
+                  penonton selama acara berlangsung.
+                </li>
+                <li>
+                  Jadwal acara dapat berubah sewaktu-waktu. Informasi terbaru
+                  akan disampaikan melalui kanal resmi penyelenggara.
+                </li>
               </ul>
               <br />
               <h1>THINGS TO REMEMBER</h1>
               <ul className="list-disc translate-x-4 flex flex-col gap-1 text-sm text-neutral-700">
-                <li>Harap tiba lebih awal untuk menghindari antrean panjang di pintu masuk.</li>
-                <li>Ikuti arahan petugas keamanan dan panitia selama berada di dalam venue.</li>
-                <li>Jaga kebersihan venue — buang sampah pada tempat yang telah disediakan.</li>
-                <li>Perhatikan kondisi kesehatan Anda. Jika merasa tidak sehat, segera hubungi petugas medis yang bertugas.</li>
-                <li>Tetap jaga barang bawaan pribadi Anda selama acara berlangsung.</li>
-                <li>Hormati sesama penonton dan ciptakan suasana yang aman dan menyenangkan bagi semua.</li>
+                <li>
+                  Harap tiba lebih awal untuk menghindari antrean panjang di
+                  pintu masuk.
+                </li>
+                <li>
+                  Ikuti arahan petugas keamanan dan panitia selama berada di
+                  dalam venue.
+                </li>
+                <li>
+                  Jaga kebersihan venue — buang sampah pada tempat yang telah
+                  disediakan.
+                </li>
+                <li>
+                  Perhatikan kondisi kesehatan Anda. Jika merasa tidak sehat,
+                  segera hubungi petugas medis yang bertugas.
+                </li>
+                <li>
+                  Tetap jaga barang bawaan pribadi Anda selama acara
+                  berlangsung.
+                </li>
+                <li>
+                  Hormati sesama penonton dan ciptakan suasana yang aman dan
+                  menyenangkan bagi semua.
+                </li>
               </ul>
               <br />
               <h1>LOCATION</h1>
@@ -187,10 +258,27 @@ export default function Events() {
 
           {/* sidebar sticky ticket window */}
           <div className="flex-1 sticky top-20 h-fit ">
-            <div className="flex bg-white flex-1 h-110 rounded-b-2xl  overflow-hidden drop-shadow-md flex-col">
+            <div className="flex bg-white flex-1 h-fit rounded-b-2xl  overflow-hidden drop-shadow-md flex-col">
               <div className="w-full aspect-16/10 bg-gray-400 ">
-                <img src={event?.thumbnail} alt="" className="object-cover w-full h-full" />
+                <img
+                  src={event?.thumbnail}
+                  alt=""
+                  className="object-cover w-full h-full"
+                />
               </div>
+              {ispromo ? (
+                <div className="bg-amber-500 w-full p-5 text-white h-20">
+                  <h1 className="text-sm">LIMITED OFFER VOUCHER</h1>
+                  <div className="flex justify-between items-center">
+                    <strong>IDR {formatThousand(event?.vouchers[0].discamount ?? 0)}</strong>
+                    <small className="">
+                      Expires at: {formatDate(event?.vouchers[0].expiredDate)}
+                    </small>
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
               <div className="w-full px-5">
                 <Smalldetails
                   location={event?.location ?? ""}
@@ -200,9 +288,9 @@ export default function Events() {
                 />
               </div>
               <div className="w-full  bg-white border-t border-dashed flex items-center gap-5 border-gray-300 flex-1 px-5">
-                <div className="flex flex-col">
+                <div className="flex flex-col py-5">
                   <small className="text-gray-400">ORGANIZED BY</small>
-                  <p>CONCERT ORGANIZER 88</p>
+                  <p>{event?.organizer.fullName}</p>
                 </div>
               </div>
             </div>
