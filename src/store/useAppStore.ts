@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { axiosInstance } from "../lib/axios";
 
 type AppState = {
   user: {
@@ -8,7 +9,7 @@ type AppState = {
     fullName: string;
     role: string;
     birthdate: string;
-    avatar: string;
+    avatar: string | null;
   } | null;
 };
 
@@ -22,8 +23,12 @@ export const useAppStore = create<AppState & AppActions>()(
     (set) => ({
       user: null,
       setUser: (user) => set({ user }),
-      clearUser: () => set({ user: null }),
+      clearUser: async () => {
+        await axiosInstance.post("/auth/logout");
+        set({ user: null });
+        window.location.href = "/";
+      },
     }),
-    { name: "auth-store" }
-  )
+    { name: "auth-store" },
+  ),
 );
