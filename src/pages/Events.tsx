@@ -272,7 +272,7 @@ export default function Events() {
                   <div className="flex justify-between items-center">
                     <strong>IDR {formatThousand(event?.vouchers[0].discamount ?? 0)}</strong>
                     <small className="">
-                      Expires at: {formatDate(event?.vouchers[0].expiredDate)}
+                      Expires at: {formatDate(event?.vouchers[0].expiredDate?? "")}
                     </small>
                   </div>
                 </div>
