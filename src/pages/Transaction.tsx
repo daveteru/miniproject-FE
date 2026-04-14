@@ -48,6 +48,24 @@ type eventdetails = {
   }[];
 };
 
+type transactiondetails = {
+  id: number;
+  uuid: string;
+  expiredAt: string;
+  paymentProof: string;
+  paymentStatus: string;
+  userId: string;
+  ticketId: string;
+  voucherId: string;
+  couponId: number;
+  pointsUsed: string;
+  tickets: {
+    id: number;
+    ticketLevel: string;
+    qty: number;
+  }[];
+};
+
 export default function Transaction() {
   const [isvoucher, setIsvoucher] = useState<boolean>(false);
   const [tickets, setTickets] = useState<Ticket[]>([]);
@@ -55,11 +73,10 @@ export default function Transaction() {
   const [searchParams] = useSearchParams();
   const [cart, setCart] = useState<CartItem[]>([]);
   const [total, setTotal] = useState<number>(0);
+  const [transaction,setTransaction] = useState<transactiondetails|null>(null)
 
 
   const eventId = searchParams.get("eventId");
-
-
 
   useEffect(() => {
     const fetchTickets = async () => {

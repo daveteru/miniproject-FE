@@ -4,6 +4,7 @@ import { Link } from "react-router";
 import Formtext from "../components/Formtext";
 import Sidebar from "../components/Sidebar";
 import { useAppStore } from "../store/useAppStore";
+import { formatDate } from "../utility/dateconvert";
 
 type form = {
   name: string;
@@ -109,7 +110,7 @@ export default function formpage() {
                   value={form.email}
                 />
 
-                {/* Phone / Twitter / Instagram */}
+                {/* Phone / birthdate / referral code */}
                 <div className="grid grid-cols-3 gap-4">
                   <Formtext
                     label="Phone"
@@ -120,7 +121,7 @@ export default function formpage() {
                     label="Birthdate"
                     editable={false}
                     formfunc={(value) => handleFieldChange("birthdate", value)}
-                    value={form.birthdate}
+                    value={formatDate(form.birthdate)}
                   />
                   <Formtext
                     label="Referrer"
