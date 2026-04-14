@@ -1,7 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import type { AxiosError } from "axios";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router";
@@ -37,7 +36,7 @@ export default function Login() {
         role: response.user.role,
         birthdate: response.user.birthdate,
       });
-      toast.success("Login success!");
+      toast.success("Login successful!");
       navigate("/");
     },
     onError: (error: AxiosError<{ message: string }>) => {
@@ -100,6 +99,10 @@ export default function Login() {
                 {isPending ? "Loading" : "Login"}
               </button>
             </form>
+            <div className="flex flex-row gap-2 text-[12px] mt-3">
+              <p>Don't have an account?</p>
+              <Link to="/register" className="underline text-blue-500 font-semibold">Register here</Link>
+            </div>
           </div>
         </section>
       </div>
