@@ -1,3 +1,29 @@
+
+
+export interface Countdown {
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+  expired: boolean;
+}
+
+export function getCountdown(inputexpiry: string): Countdown {
+  const diff = new Date(inputexpiry).getTime() - Date.now();
+
+  if (diff <= 0) {
+    return { days: 0, hours: 0, minutes: 0, seconds: 0, expired: true };
+  }
+
+  return {
+    days: Math.floor(diff / (1000 * 60 * 60 * 24)),
+    hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
+    minutes: Math.floor((diff / (1000 * 60)) % 60),
+    seconds: Math.floor((diff / 1000) % 60),
+    expired: false,
+  };
+}
+
 export function formatDate(isoString: string): string {
   const date = new Date(isoString);
   return date.toLocaleDateString("en-GB", {
@@ -5,4 +31,8 @@ export function formatDate(isoString: string): string {
     month: "2-digit",
     year: "numeric",
   });
+}
+
+export function formatThousand(n: number): string {
+  return n.toLocaleString("id-ID");
 }

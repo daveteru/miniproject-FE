@@ -16,6 +16,7 @@ type FeaturedEvents = {
     location: string;
     thumbnail: string;
     description: string;
+    tickets: { price: number }[];
   };
 };
 
@@ -43,10 +44,11 @@ export default function Landingpagefeatured() {
           {featuredContent.map((item, index) => (
             <Featuredcard
               key={index}
+              eventid={item.eventId}
               artistName={item.event.artist}
               category={item.event.category}
               thumbnail={item.event.thumbnail}
-              price="test"
+              tickets={item.event.tickets ?? []}
             />
           ))}
         </div>

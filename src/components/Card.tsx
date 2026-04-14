@@ -1,14 +1,15 @@
 import { Link } from "react-router";
 
 type cardProps = {
+  eventid:number,
   category: string;
   title: string;
   thumbnail?:string
 };
 
-export default function Card({ category, title,thumbnail }: cardProps) {
+export default function Card({ eventid,category, title,thumbnail }: cardProps) {
   return (
-    <Link to="/events">
+    <Link to={`/events/${eventid}`}>
       <div className=" relative aspect-16/10 rounded-2xl overflow-hidden bg-gray-300  outline-transparent outline hover:outline-3 hover:outline-gray-600  transition-all cursor-pointer">
         <img
           className="absolute z-0  h-full w-full object-cover  "
