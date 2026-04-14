@@ -11,8 +11,8 @@ export default function Createpage() {
 
   useEffect(() => {
     if (user?.role !== "ORGANIZER") {
-      alert("this page is only for event organizer");
-      navigate("/");
+      alert("This page is only for event organizers!");
+      navigate("/login");
     }
   }, [user]);
 
