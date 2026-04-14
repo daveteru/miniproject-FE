@@ -14,6 +14,7 @@ import Login from "./pages/Login";
 import Transaction from "./pages/Transaction";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
+import Register from "./pages/Register";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -47,6 +48,7 @@ const router = createBrowserRouter([
       { path: "/createevent", element: <Createpage /> },
       { path: "/login", element: <Login /> },
       { path: "/transaction", element: <Transaction /> },
+      { path: "/register", element: <Register />}
     ],
   },
 ]);
