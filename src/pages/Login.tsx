@@ -1,41 +1,54 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+import type { AxiosError } from "axios";
 import { useState } from "react";
-import { axiosInstance } from "../lib/axios";
-import { useAppStore } from "../store/useAppStore";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router";
-import { formatDate } from "../utility/dateconvert";
+import { axiosInstance } from "../lib/axios";
+import { loginSchema, type LoginSchema } from "../schemas/loginSchema";
+import { useAppStore } from "../store/useAppStore";
 
 export default function Login() {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginSchema>({
+    resolver: zodResolver(loginSchema),
+  });
   const setUser = useAppStore((state) => state.setUser);
   const navigate = useNavigate();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
+  const { mutateAsync: loginMutation, isPending } = useMutation({
+    mutationFn: async (payload: LoginSchema) => {
       const response = await axiosInstance.post("/auth/login", {
-        email,
-        password,
+        email: payload.email,
+        password: payload.password,
       });
-      const { user } = response.data;
+      return response.data;
+    },
+    onSuccess: (response) => {
       setUser({
-        id: user.id,
-        fullName: user.fullName,
-        role: user.role,
-        avatar: user.avatar,
-        email: user.email,
-        birthdate: user.birthdate ? formatDate(user.birthdate) : "",
+        id: response.user.id,
+        fullName: response.user.fullName,
+        email: response.user.email,
+        avatar: response.user.avatar,
+        role: response.user.role,
+        birthdate: response.user.birthdate,
       });
+      toast.success("Login success!");
       navigate("/");
-    } catch (error: any) {
-      alert("login error");
-      console.log(
-        error.response?.data?.errors ??
-          error.response?.data?.message ??
-          error.message,
-      );
-    }
+    },
+    onError: (error: AxiosError<{ message: string }>) => {
+      toast.error(error.response?.data.message || "Login failed!");
+    },
+  });
+
+  const onSubmit = async (data: LoginSchema) => {
+    await loginMutation(data);
   };
+
   return (
     <div className="w-full h-screen bg-black ">
       <div className="w-full h-full flex justify-center items-center mx-auto container">
@@ -49,28 +62,42 @@ export default function Login() {
             </Link>
 
             <h1>LOGIN</h1>
-            <form onSubmit={handleSubmit} className="flex flex-col gap-2">
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="flex flex-col gap-2"
+            >
               <label>E-mail</label>
               <input
                 type="text"
                 id="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
                 className="border border-neutral-200 w-120 rounded-xl px-5 py-2"
+                placeholder="youremail@example.com"
+                {...register("email")}
               ></input>
+              {errors.email && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.email.message}
+                </p>
+              )}
               <label>Password</label>
               <input
                 type="password"
                 id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
                 className="border border-neutral-200 rounded-xl px-5 py-2"
+                placeholder="••••••••"
+                {...register("password")}
               ></input>
+              {errors.password && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.password.message}
+                </p>
+              )}
               <button
                 type="submit"
                 className="px-5 py-3 w-fit mt-5 rounded-lg font-krona-one bg-[#E6FF06] hover:bg-amber-400"
+                disabled={isPending}
               >
-                LOGIN
+                {isPending ? "Loading" : "Login"}
               </button>
             </form>
           </div>
