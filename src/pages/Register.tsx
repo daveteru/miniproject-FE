@@ -45,17 +45,17 @@ export default function Register() {
 
   return (
     <div className="w-full h-full bg-black ">
-      <div className="w-full h-full flex justify-center items-center m-auto container">
-        <section className="w-200 h-175 mt-20 border text-left p-5 justify-center items-center border-neutral-200 rounded-3xl drop-shadow-2xl flex bg-white -translate-y-8">
+      <div className="w-full h-fit flex justify-center items-center m-auto container">
+        <section className="w-200 h-full mt-20 border text-left p-5 py-20 justify-center items-center border-neutral-200 rounded-3xl drop-shadow-2xl flex bg-white -translate-y-8">
           <div className="flex flex-col">
             <Link
-              to="/"
+              to="/login"
               className="mb-2 hover:underline hover:text-blue-600 cursor-pointer"
             >
-              <small> &lt; BACK TO HOME</small>
+              <small> &lt; BACK TO LOGIN</small>
             </Link>
 
-            <h1>REGISTER</h1>
+            <h1 className="my-5 text-2xl">REGISTER</h1>
             <form
               onSubmit={handleSubmit(onSubmit)}
               className="flex flex-col gap-2"
@@ -145,7 +145,7 @@ export default function Register() {
                 {isPending ? "Loading" : "Register"}
               </button>
             </form>
-            <div className="flex flex-row gap-2 text-[12px] mt-3">
+            <div className="flex flex-row gap-2 text-[12px] mt-10">
               <p>Already have an account?</p>
               <Link to="/login" className="underline text-blue-500 font-semibold">Login here</Link>
             </div>
