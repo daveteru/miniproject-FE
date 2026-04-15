@@ -6,7 +6,6 @@ import { axiosInstance } from "../lib/axios";
 const NAV_ITEMS = [
   { label: "Profile", href: "/profile" },
   { label: "My Events", href: "/my-events" },
-  { label: "My Purchases", href: "/my-purchases" },
   { label: "Create Event", href: "/createevent" },
 ];
 

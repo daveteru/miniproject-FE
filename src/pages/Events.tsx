@@ -94,14 +94,14 @@ export default function Events() {
             <div className="border-2 border-gray-100 w-[30%] h-20 flex justify-between items-center p-3 bg-white">
               <div className="w-fit h-full  ">
                 <small className="text-[10px]">TICKET PRICE FROM</small>
-                <p className="font-bold">
+                <div className="font-bold">
                   <p className="font-bold">
                     IDR{" "}
                     {fromprice.length > 0
                       ? formatThousand(Math.min(...fromprice))
                       : "-"}
                   </p>
-                </p>
+                </div>
               </div>
               <button
                 className="w-fit h-fit font-krona-one px-5 py-2 bg-[#E6FF06] hover:bg-amber-400 transition-colors  rounded-xl"
@@ -223,7 +223,7 @@ export default function Events() {
               </ul>
               <br />
               <h1>LOCATION</h1>
-              <p>
+              <div>
                 <ul className="list-disc translate-x-4">
                   <li>
                     By MRT → Stop at Blok M BCA Station, exit via ASEAN gate,
@@ -243,7 +243,7 @@ export default function Events() {
                     Panglima Polim area. Look for Row9 signage at the front.
                   </li>
                 </ul>
-              </p>
+              </div>
             </article>
 
             <div className=" my-10">
@@ -268,7 +268,7 @@ export default function Events() {
               </div>
               {ispromo ? (
                 <div className="bg-amber-500 w-full p-5 text-white h-20">
-                  <h1 className="text-sm">LIMITED OFFER VOUCHER</h1>
+                 <div className="flex justify-between"> <h1 className="text-sm">LIMITED VOUCHER</h1> <small>{event?.vouchers[0].amount} remaining</small></div>
                   <div className="flex justify-between items-center">
                     <strong>IDR {formatThousand(event?.vouchers[0].discamount ?? 0)}</strong>
                     <small className="">

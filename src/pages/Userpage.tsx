@@ -6,6 +6,7 @@ import Sidebar from "../components/Sidebar";
 import { useAppStore } from "../store/useAppStore";
 import { formatDate } from "../utility/dateconvert";
 import UserpageRewards from "../components/UserpageRewards";
+import Bookinghistory from "../components/Bookinghistory";
 
 type form = {
   name: string;
@@ -145,7 +146,8 @@ export default function formpage() {
                 Make sure all details are correct.
               </p>
             </div>
-
+            <hr className="my-5 border-neutral-200"></hr>
+          <UserpageRewards />
             <hr className="my-5 border-neutral-200"></hr>
 
             {/* My Bookings Section */}
@@ -157,17 +159,17 @@ export default function formpage() {
               Description
             </p>
 
-            <div className="w-full min-h-[400px] rounded-2xl border border-neutral-300 mb-10">
+            <div className="w-full  flex-col min-h-[200px] flex rounded-2xl border border-neutral-300 mb-10 p-5">
               {/* Bookings content goes here */}
-              <div className="p-4 text-sm text-neutral-400">
-                {/* Placeholder — replace with booking list/table */}
-              </div>
+                <Bookinghistory/>
+                <Bookinghistory/>
+                <Bookinghistory/>
             </div>
 
             {/* Submit row */}
           </form>
           <hr className="mb-5 border-neutral-200" />
-          <UserpageRewards />
+
         </div>
       </div>
     </div>

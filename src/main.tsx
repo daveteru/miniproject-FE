@@ -45,7 +45,7 @@ const router = createBrowserRouter([
       { path: "/", element: <Home /> },
       { path: "/discover", element: <Discover /> },
       { path: "/events/:id", element: <Events /> },
-      { path: "/profile", element: <Userpage />, loader: authLoader(["USER"]) },
+      { path: "/profile", element: <Userpage />, loader: authLoader(["USER" , "ORGANIZER"]) },
       {
         path: "/createevent",
         element: <Createpage />,
