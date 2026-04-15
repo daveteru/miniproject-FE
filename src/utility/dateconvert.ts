@@ -24,9 +24,9 @@ export function getCountdown(inputexpiry: string): Countdown {
   };
 }
 
-export function formatDate(isoString: string): string {
-  const date = new Date(isoString);
-  return date.toLocaleDateString("en-GB", {
+export function formatDate(date: string | Date): string {
+  const formattedDate = new Date(date);
+  return formattedDate.toLocaleDateString("en-GB", {
     day: "2-digit",
     month: "2-digit",
     year: "numeric",

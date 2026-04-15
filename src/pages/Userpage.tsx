@@ -5,6 +5,7 @@ import Formtext from "../components/Formtext";
 import Sidebar from "../components/Sidebar";
 import { useAppStore } from "../store/useAppStore";
 import { formatDate } from "../utility/dateconvert";
+import UserpageRewards from "../components/UserpageRewards";
 
 type form = {
   name: string;
@@ -50,8 +51,8 @@ export default function formpage() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Submit:", form);
   };
+
   return (
     <div className="w-full  flex min-h-screen">
       <Sidebar />
@@ -148,7 +149,7 @@ export default function formpage() {
             <hr className="my-5 border-neutral-200"></hr>
 
             {/* My Bookings Section */}
-            <h2 className="text-2xl font-bold  text-neutral-900 mb-2">
+            <h2 className="text-2xl font-bold text-neutral-900 mb-2">
               My Bookings
             </h2>
 
@@ -165,6 +166,8 @@ export default function formpage() {
 
             {/* Submit row */}
           </form>
+          <hr className="mb-5 border-neutral-200" />
+          <UserpageRewards />
         </div>
       </div>
     </div>
