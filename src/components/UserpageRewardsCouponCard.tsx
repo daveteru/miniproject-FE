@@ -10,15 +10,15 @@ export default function UserpageRewardsCouponCard({
   coupon,
 }: CouponsListProps) {
   return (
-    <div className="flex flex-row border h-15 justify-start items-center rounded-xl border-neutral-600 text-neutral-600 hover:text-neutral-400">
-      <div className="flex items-center justify-center border-r border-neutral-600 bg-amber-300 h-full rounded-l-xl">
+    <div className="flex flex-row border-b h-15 justify-start items-center border-neutral-200 text-neutral-600">
+      <div className="flex items-center justify-center">
         <div className="mx-2">
           <img src={couponIcon} alt="Coupon icon" className="h-8 w-8" />
         </div>
       </div>
-      <div className="flex flex-col mx-2">
+      <div className="flex flex-row justify-between items-center mx-2 w-full">
         <p className=" text-xl font-[impact]">{coupon.amount}% OFF</p>
-        <p className="font-semibold text-xs">
+        <p className="font-semibold text-[14px]">
           EXPIRES IN: {formatDate(coupon.expiredDate)}
         </p>
       </div>
