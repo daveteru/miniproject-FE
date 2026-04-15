@@ -57,8 +57,8 @@ export default function formpage() {
   return (
     <div className="w-full  flex min-h-screen">
       <Sidebar />
-      <div className="flex-1 px-5 flex overflow-y-auto">
-        <div className="w-[70%] flex flex-col  bg-white px-5 justify-center py-8">
+      <div className="flex-1 flex overflow-y-auto bg-neutral-100">
+        <div className="w-[70%] max-w-275 flex flex-col  bg-white px-5  py-8">
           {/* Breadcrumb */}
           <nav className="text-xs uppercase tracking-wide text-neutral-500 mb-1">
             <Link to="/">

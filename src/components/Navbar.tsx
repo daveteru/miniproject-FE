@@ -22,7 +22,7 @@ export default function Navbar() {
   }, [location.pathname]);
 
   return (
-    <div className={`"border border-red-500 ${isHiddenRoute ? "" : "h-16"}`}>
+    <div className={`" ${isHiddenRoute ? "" : "h-16"}`}>
       {!isHiddenRoute ? (
         <nav
           ref={navRef}
