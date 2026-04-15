@@ -4,6 +4,7 @@ import { axiosInstance } from "../lib/axios";
 import type { Coupon } from "../types/coupon";
 import UserpageRewardsCouponCard from "./UserpageRewardsCouponCard";
 import pointsIcon from "../assets/icons/points_icon.svg";
+import { formatThousand } from "../utility/dateconvert";
 
 export default function UserpageRewards() {
   const userId = useAppStore.getState().user?.id;
@@ -46,11 +47,11 @@ export default function UserpageRewards() {
           <p className="font-semibold uppercase tracking-wide text-neutral-700 mb-2">
             Points
           </p>
-          <div className="flex flex-row gap-4 items-center">
-            <img src={pointsIcon} alt="Coupon icon" className="w-12 h-12" />
+          <div className="flex flex-row gap-4  items-center ">
+            <img src={pointsIcon} alt="Coupon icon" className="w-10 h-10 borer" />
             {points && (
-              <p className="font-extrabold uppercase tracking-wide text-neutral-700 mb-2 text-5xl">
-                {points.totalPoints}
+              <p className="font-extrabold  h-full uppercase flex items-center  text-neutral-700  text-2xl">
+                {formatThousand(points.totalPoints)}
               </p>
             )}
           </div>
