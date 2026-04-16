@@ -1,11 +1,10 @@
-import { Link, useLocation } from "react-router";
+import { Link } from "react-router";
 import navbarlogo from "../assets/Logo.svg";
 import organizerlogo from "../assets/Logo_organizer.svg";
 import { useNavbarDrag } from "../hooks/useNavbarDrag";
+import { useAppStore } from "../store/useAppStore";
 import Navbarbackground from "./NavbarBackground";
 import Navbarbuttton from "./Navbarbuttton";
-import { useState, useEffect } from "react";
-import { useAppStore } from "../store/useAppStore";
 
 export default function Navbar() {
   const { navRef, isMenuOpen, toggleMenu, closeMenu } = useNavbarDrag();
@@ -13,17 +12,8 @@ export default function Navbar() {
   const user = useAppStore((state) => state.user);
   const isLoggedIn = !!user;
 
-  const location = useLocation();
-  const hideNavbarPaths = ["/login", "/register"];
-  const [isHiddenRoute, setIsHiddenRoute] = useState(false);
-
-  useEffect(() => {
-    setIsHiddenRoute(hideNavbarPaths.includes(location.pathname));
-  }, [location.pathname]);
-
   return (
-    <div className={`" ${isHiddenRoute ? "" : "h-16"}`}>
-      {!isHiddenRoute ? (
+    <div className="border border-red-500 h-16">
         <nav
           ref={navRef}
           className={`h-100 fixed lg:relative w-full z-10 -translate-y-81`}
@@ -84,9 +74,6 @@ export default function Navbar() {
           {/* AESTHETIC PURPOSES */}
           <Navbarbackground />
         </nav>
-      ) : (
-        ""
-      )}
     </div>
   );
 }
