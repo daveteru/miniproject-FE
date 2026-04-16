@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 
-import { Link } from "react-router";
+import { Link, useParams } from "react-router";
 import Formtext from "../components/Formtext";
 import Sidebar from "../components/Sidebar";
 import { useAppStore } from "../store/useAppStore";
 import { formatDate } from "../utility/dateconvert";
 import UserpageRewards from "../components/UserpageRewards";
 import Bookinghistory from "../components/Bookinghistory";
+import { axiosInstance } from "../lib/axios";
 
 type form = {
   name: string;
@@ -17,6 +18,54 @@ type form = {
   avatar: string;
 };
 
+type TransactionItem = {
+  id: string;
+  transactionId: number;
+  ticketId: number;
+  quantity: number;
+  price: number;
+  ticket: {
+    id: number;
+    ticketLevel: string;
+    availableTicket: number;
+    deletedAt: string | null;
+    eventId: number;
+    price: number;
+    event: {
+      name: string;
+      artist: string;
+      location: string;
+      city: string;
+      startDate: string;
+    };
+  };
+};
+
+type txhistoryprops = {
+  id: number;
+  expiredAt: string;
+  paymentProof: string | null;
+  paymentStatus:
+    | "WAITING_FOR_PAYMENT"
+    | "WAITING_FOR_CONFIRM"
+    | "PAID"
+    | "EXPIRED"
+    | "REJECTED"
+    |"";
+  pointsUsed: number;
+  voucher: { discamount: number } | null;
+  items: TransactionItem[];
+  totalPrice: number;
+};
+
+type txhistoryresponse = {
+  data: txhistoryprops[];
+  meta: {
+    page: number;
+    take: number;
+    total: number;
+  };
+};
 export default function formpage() {
   const [form, setForm] = useState<form>({
     name: "",
@@ -25,9 +74,18 @@ export default function formpage() {
     avatar: "",
     birthdate: "",
     referrer: "",
-  });
-
+   });
+  const [txhistory, setTxhistory] = useState<txhistoryprops[]>([]);
   const formdata = useAppStore((state) => state.user);
+
+  const handleFieldChange = (field: string, value: string) => {
+    setForm((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
+
 
   useEffect(() => {
     if (formdata) {
@@ -40,25 +98,25 @@ export default function formpage() {
     }
   }, [formdata]);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-
-  const handleFieldChange = (field: string, value: string) => {
-    setForm((prev) => ({ ...prev, [field]: value }));
-  };
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-  };
+  useEffect(() => {
+    const fetchTransactions = async () => {
+      try {
+        const { data : response } = await axiosInstance.get<txhistoryresponse>(
+          `/transactions/history/${formdata?.id}`,
+        );
+        setTxhistory(response.data);
+      } catch (err) {
+        alert(err);
+      }
+    };
+    fetchTransactions();
+  }, []);
 
   return (
     <div className="w-full  flex min-h-screen">
       <Sidebar />
-      <div className="flex-1 px-5 flex overflow-y-auto">
-        <div className="w-[70%] flex flex-col  bg-white px-5 justify-center py-8">
+      <div className="flex-1 flex overflow-y-auto bg-neutral-100">
+        <div className="w-[70%] max-w-275 flex flex-col  bg-white px-5  py-8">
           {/* Breadcrumb */}
           <nav className="text-xs uppercase tracking-wide text-neutral-500 mb-1">
             <Link to="/">
@@ -69,12 +127,10 @@ export default function formpage() {
             <span className="mx-1">&gt;</span>
             <span className="text-neutral-700">Profile Page</span>
           </nav>
-
           {/* Page title */}
           <h1 className="text-2xl font-bold  text-neutral-900 mb-8">
             Profile Page
           </h1>
-
           <form onSubmit={handleSubmit}>
             {/* Avatar + fields row */}
             <div className="flex gap-8 mb-6">
@@ -146,11 +202,13 @@ export default function formpage() {
                 Make sure all details are correct.
               </p>
             </div>
-            <hr className="my-5 border-neutral-200"></hr>
+          </form>
+          <hr className="my-5 border-neutral-200"></hr>
           <UserpageRewards />
-            <hr className="my-5 border-neutral-200"></hr>
+          <hr className="my-5 border-neutral-200"></hr>
 
-            {/* My Bookings Section */}
+          {/* My Bookings Section */}
+          <div>
             <h2 className="text-2xl font-bold text-neutral-900 mb-2">
               My Bookings
             </h2>
@@ -158,18 +216,22 @@ export default function formpage() {
             <p className="text-xs font-semibold uppercase tracking-wide text-neutral-700 mb-2">
               Description
             </p>
+          </div>
+          <div className="w-full  flex-col min-h-[100px] flex rounded-2xl border border-neutral-300 mb-10 p-5">
+            {/* Bookings content goes here */}
+            {txhistory.map((data, index)=>(<Bookinghistory
+            txno={index+1}
+            expiredAt={data.expiredAt}
+            paymentProof={data.paymentProof}
+            paymentStatus={data.paymentStatus}
+            pointsUsed={data.pointsUsed}
+            voucher={data.voucher}
+            items={data.items}
+            totalPrice={data.totalPrice}
+            />))}
+          </div>
 
-            <div className="w-full  flex-col min-h-[200px] flex rounded-2xl border border-neutral-300 mb-10 p-5">
-              {/* Bookings content goes here */}
-                <Bookinghistory/>
-                <Bookinghistory/>
-                <Bookinghistory/>
-            </div>
-
-            {/* Submit row */}
-          </form>
           <hr className="mb-5 border-neutral-200" />
-
         </div>
       </div>
     </div>

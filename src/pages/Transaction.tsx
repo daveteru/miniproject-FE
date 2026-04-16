@@ -87,7 +87,7 @@ export default function Transaction() {
 
   useEffect(() => {
     const subtotal = cart.reduce((a, item) => a + item.price * item.qty, 0);
-    const voucherdiscount = eventdetails?.vouchers[0].discamount ?? 0;
+    const voucherdiscount = eventdetails?.vouchers[0]?.discamount ?? 0;
     if (isvoucher) {
       return setTotal(subtotal - voucherdiscount);
     }
@@ -103,7 +103,7 @@ export default function Transaction() {
     setIsloading(true);
     try {
       const voucherPayload = isvoucher
-        ? { voucherId: eventdetails?.vouchers[0].id }
+        ? { voucherId: eventdetails?.vouchers[0]?.id }
         : {};
       const payload = {
         userId: Number(user?.id),
@@ -203,11 +203,11 @@ export default function Transaction() {
                 <hr className="border-neutral-300"></hr>
                 {isvoucher ? (
                   <div className="items-center flex justify-between">
-                    <small>Voucher Discount</small>
-                    <strong>
-                      -IDR{" "}
-                      {formatThousand(
-                        eventdetails?.vouchers[0].discamount ?? 0,
+                    <span className="text-sm">Voucher Discount</span>
+                    <strong className="text-red-300 text-[12px]">
+                      IDR{" "}
+                      -{formatThousand(
+                        eventdetails?.vouchers[0]?.discamount ?? 0,
                       )}
                     </strong>
                   </div>
@@ -215,7 +215,7 @@ export default function Transaction() {
                   ""
                 )}
                 <div className="items-center flex justify-between">
-                  <small>Total Purchase</small>
+                  <span className="text-sm">Total Purchase</span>
                   <strong>IDR {formatThousand(total)}</strong>
                 </div>
               </div>
@@ -232,11 +232,11 @@ export default function Transaction() {
                 </button>
               )}
             </div>
-            <div className="w-full h-20 border  justify-between rounded-lg text-neutral-500 font-[inter] flex items-center border-neutral-300 p-5 drop-shadow-lg bg-white">
+{eventdetails?.vouchers?            <div className="w-full h-20 border  justify-between rounded-lg text-neutral-500 font-[inter] flex items-center border-neutral-300 p-5 drop-shadow-lg bg-white">
               <img src={discountticket} className="mr-2" />
-              <small>Use Event Voucher?</small>{" "}
+              <p>Use Event Voucher?</p>{" "}
               <Toggler setter={setIsvoucher} state={isvoucher} />
-            </div>
+            </div>:""}
           </div>
         </div>
       </section>

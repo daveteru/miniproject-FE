@@ -42,7 +42,6 @@ export default function Discover() {
         )
         .then(({ data }) => {
           setEvents(data.data);
-          console.log(data.data);
         })
         .catch((err) => console.error(err))
         .finally(() => setLoading(false));
