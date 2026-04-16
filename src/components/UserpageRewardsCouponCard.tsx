@@ -17,7 +17,7 @@ export default function UserpageRewardsCouponCard({
         </div>
       </div>
       <div className="flex flex-row justify-between items-center mx-2 w-full">
-        <p className=" text-xl font-[impact]">{coupon.amount}% OFF</p>
+        <p className=" text-xl font-krona-one">{coupon.amount}% OFF</p>
         <p className="font-semibold text-[14px]">
           EXPIRES IN: {formatDate(coupon.expiredDate)}
         </p>

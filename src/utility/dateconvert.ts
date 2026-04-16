@@ -42,3 +42,7 @@ export function formatDate(date: string | Date): string {
 export function formatThousand(n: number): string {
   return n.toLocaleString("id-ID");
 }
+
+export function formatSnakeCase(str: string): string {
+  return str.replaceAll("_", " ");
+}

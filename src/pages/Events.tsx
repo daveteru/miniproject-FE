@@ -299,7 +299,7 @@ export default function Events() {
       </div>
 
       <section className=" w-full h-fit my-10 border-t border-dashed border-gray-200 relative -z-1">
-        <Landingpagecategory title="Events for you" />
+        <Landingpagecategory title="" />
       </section>
       <Partners />
     </div>

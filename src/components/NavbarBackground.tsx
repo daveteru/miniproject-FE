@@ -1,5 +1,6 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import decor from "../assets/decorative_element.svg"
 gsap.registerPlugin(useGSAP);
 
 export default function Navbarbackground() {
@@ -14,7 +15,7 @@ export default function Navbarbackground() {
 
   const todaydate: Date = new Date();
   return (
-    <div className= "absolute top-0 left-0 w-full z-0 pointer-events-none border-b-8 border-[#262626] bg-[#E6FF06] ">
+    <div className="absolute top-0 left-0 w-full z-0 pointer-events-none border-b-8 border-[#262626] bg-[#E6FF06] ">
       <div className="w-full h-80 border-b border-dashed"></div>
       <div className="w-full h-15 grid grid-cols-4 grid-span">
         <div className="border-r border-dashed w-full h-15 col-span-3 lg:col-span-1 flex justify-end  items-end">
@@ -23,7 +24,7 @@ export default function Navbarbackground() {
           </p>
 
           <img
-            src="src/assets/decorative_element.svg"
+            src={decor}
             alt=""
             className=" w-20 -translate-y-3 -translate-x-5 "
           />

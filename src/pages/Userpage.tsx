@@ -219,7 +219,7 @@ export default function formpage() {
           </div>
           <div className="w-full  flex-col min-h-[100px] flex rounded-2xl border border-neutral-300 mb-10 p-5">
             {/* Bookings content goes here */}
-            {txhistory.map((data, index)=>(<Bookinghistory
+            {txhistory? txhistory.map((data, index)=>(<Bookinghistory
             txno={index+1}
             expiredAt={data.expiredAt}
             paymentProof={data.paymentProof}
@@ -228,7 +228,7 @@ export default function formpage() {
             voucher={data.voucher}
             items={data.items}
             totalPrice={data.totalPrice}
-            />))}
+            />)): <p>no items found here</p>}
           </div>
 
           <hr className="mb-5 border-neutral-200" />
