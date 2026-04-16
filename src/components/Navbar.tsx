@@ -13,13 +13,13 @@ export default function Navbar() {
   const isLoggedIn = !!user;
 
   return (
-    <div className="border border-red-500 h-16">
+    <div className="h-16">
         <nav
           ref={navRef}
           className={`h-100 fixed lg:relative w-full z-10 -translate-y-81`}
         >
           {/* MOBILE MENU */}
-          <div className="relative z-1 w-full bg-[#E6FF06] h-80">
+          <div className="relative z-1 w-full bg-[#E6FF06] border-b border-dashed h-80">
             <div className="h-full w-full flex flex-col lg:hidden font-krona-one">
               <Navbarbuttton label="ABOUT" />
               <Navbarbuttton

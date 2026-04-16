@@ -6,6 +6,7 @@ import {
   formatDate,
   formatThousand,
   formatCountdown,
+  formatSnakeCase,
 } from "../utility/dateconvert";
 
 type TransactionItem = {
@@ -76,9 +77,10 @@ export default function Bookinghistory({
       style={{ height: isopen ? height : 60 }}
       className={`w-full  bg-white transition-[height] overflow-hidden  duration-400 ease-in-out  `}
     >
+       
       <button
         onClick={() => setIsopen(!isopen)}
-        className="border-b w-full h-15 px-5 py-3 flex items-center justify-between border-neutral-200 "
+        className="border-b w-full h-15 px-5 py-3 flex items-center justify-between border-neutral-200 cursor-pointer "
       >
         <div className="flex items-center gap-2">
           <img src={ticketicon} className="h-8" alt="" />
@@ -86,7 +88,7 @@ export default function Bookinghistory({
         </div>
         <div className="flex gap-5">
           <div className="rounded-full h-fit w-fit flex items-center bg-amber-100 outline-amber-400 outline px-2 py-1 text-amber-700">
-            <p className="text-[12px]">{paymentStatus}</p>
+            <p className="text-[12px]">{formatSnakeCase(paymentStatus?? "")}</p>
           </div>
           <img
             src={accordionicon}
@@ -122,7 +124,7 @@ export default function Bookinghistory({
             <hr className="border-neutral-200 my-1" />
             <div className="flex flex-col">
               {items?.map((item) => (
-                <div key={item.id} className="justify-between flex">
+                <div key={item.id} className="justify-between flex border-b py-1 border-neutral-200 border-dashed">
                   <div>
                     <p>
                       {item.ticket.ticketLevel} x {item.quantity}
@@ -131,18 +133,17 @@ export default function Bookinghistory({
                       @IDR {formatThousand(item.ticket.price)}/TIX
                     </p>
                   </div>
-                  <p>IDR {formatThousand(item.price)}</p>
-                </div>
+                  <p>IDR {formatThousand(item.price)}</p> 
+                </div>  
               ))}
             </div>
-            <hr className="border-neutral-200 my-1" />
             <div className="w-full flex justify-between text-[12px]">
               <div>
                 <p className="text-neutral-300">Points Used:</p>
                 {voucher && (
-                  <p className="text-neutral-300">Voucher Discount:</p>
+                  <p className="text-red-300">Voucher Discount:</p>
                 )}
-                <p>TOTAL:</p>
+                <span className="font-bold">TOTAL:</span>
               </div>
               <div className="text-end">
                 <p className="text-neutral-300">
@@ -150,11 +151,11 @@ export default function Bookinghistory({
                   {formatThousand(pointsUsed ?? 0)}
                 </p>
                 {voucher && (
-                  <p className="text-neutral-300">
+                  <p className="text-red-300">
                     -IDR {formatThousand(voucher.discamount)}
                   </p>
                 )}
-                <p>IDR {formatThousand(totalPrice ?? 0)}</p>
+                <p className="font-bold">IDR {formatThousand(totalPrice ?? 0)}</p>
               </div>
             </div>
           </div>

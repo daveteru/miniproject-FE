@@ -18,6 +18,7 @@ import Transaction from "./pages/Transaction";
 import Userpage from "./pages/Userpage";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -70,9 +71,11 @@ const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-      <Toaster />
-    </QueryClientProvider>
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+        <Toaster />
+      </QueryClientProvider>
+    </GoogleOAuthProvider>
   </StrictMode>,
 );

@@ -7,6 +7,8 @@ import { Link, useNavigate } from "react-router";
 import { axiosInstance } from "../lib/axios";
 import { loginSchema, type LoginSchema } from "../schemas/loginSchema";
 import { useAppStore } from "../store/useAppStore";
+import googleicon from "../assets/icons/Social Icons.svg";
+import { useGoogleLogin } from "@react-oauth/google";
 
 export default function Login() {
   const {
@@ -48,10 +50,34 @@ export default function Login() {
     await loginMutation(data);
   };
 
+  const handleloginbyGoogle = useGoogleLogin({
+    onSuccess: async ({ access_token }) => {
+      try {
+        const response = await axiosInstance.post("/auth/google", {
+          accessToken: access_token,
+        });
+
+        setUser({
+          id: response.data.user.id,
+          fullName: response.data.user.fullName,
+          email: response.data.user.email,
+          avatar: response.data.user.avatar,
+          role: response.data.user.role,
+          birthdate: response.data.user.birthdate,
+        });
+
+        toast.success("Login successful!");
+        navigate("/");
+      } catch (error) {
+        toast.error("Login Failed");
+      }
+    },
+  });
+
   return (
     <div className="w-full h-screen bg-black ">
       <div className="w-full h-full flex justify-center items-center mx-auto container">
-        <section className="w-200 h-100 border text-left p-5 justify-center items-center border-neutral-200 rounded-3xl drop-shadow-2xl flex  bg-white -translate-y-8">
+        <section className="w-fit h-fit border text-left px-15 py-15 justify-center items-center border-neutral-200 rounded-3xl drop-shadow-2xl flex  bg-white -translate-y-8">
           <div className="flex flex-col">
             <Link
               to="/"
@@ -91,18 +117,38 @@ export default function Login() {
                   {errors.password.message}
                 </p>
               )}
-              <Link to="/forgot-password" className="text-[12px] text-blue-500 font-semibold hover:underline">Forgot password?</Link>
-              <button
-                type="submit"
-                className="px-5 py-3 w-fit mt-5 rounded-lg font-krona-one bg-[#E6FF06] hover:bg-amber-400"
-                disabled={isPending}
+              <Link
+                to="/forgot-password"
+                className="text-[12px] text-blue-500 font-semibold hover:underline"
               >
-                {isPending ? "Loading" : "Login"}
-              </button>
+                Forgot password?
+              </Link>
+              <div className="flex w-full  gap-10 justify-center">
+                <button
+                  type="submit"
+                  className="px-5 py-3 flex w-fit mt-5 rounded-lg font-krona-one bg-[#E6FF06] hover:bg-amber-400"
+                  disabled={isPending}
+                >
+                  {isPending ? "Loading" : "Login"}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleloginbyGoogle()}
+                  className="px-5 py-3 flex gap-2 w-fit mt-5 rounded-lg font-krona-one bg-[#E6FF06] hover:bg-amber-400"
+                >
+                  <img src={googleicon} alt="" className="w-5" /> Login by
+                  Google
+                </button>
+              </div>
             </form>
             <div className="flex flex-row gap-1 text-[12px] mt-3">
               <p>Don't have an account?</p>
-              <Link to="/register" className="hover:underline text-blue-500 font-semibold">Register here</Link>
+              <Link
+                to="/register"
+                className="hover:underline text-blue-500 font-semibold"
+              >
+                Register here
+              </Link>
             </div>
           </div>
         </section>
