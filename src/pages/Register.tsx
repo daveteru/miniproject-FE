@@ -145,7 +145,7 @@ export default function Register() {
                 {isPending ? "Loading" : "Register"}
               </button>
             </form>
-            <div className="flex flex-row gap-2 text-[12px] mt-10">
+            <div className="flex flex-row gap-1 text-[12px] mt-10">
               <p>Already have an account?</p>
               <Link to="/login" className="underline text-blue-500 font-semibold">Login here</Link>
             </div>

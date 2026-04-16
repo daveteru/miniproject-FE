@@ -3,48 +3,46 @@ import { useMutation } from "@tanstack/react-query";
 import type { AxiosError } from "axios";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import { axiosInstance } from "../lib/axios";
-import { loginSchema, type LoginSchema } from "../schemas/loginSchema";
-import { useAppStore } from "../store/useAppStore";
+import {
+  resetPasswordSchema,
+  type ResetPasswordSchema,
+} from "../schemas/resetPasswordSchema";
 
-export default function Login() {
+export default function ResetPassword() {
+  const { token } = useParams<{ token: string }>();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginSchema>({
-    resolver: zodResolver(loginSchema),
+  } = useForm<ResetPasswordSchema>({
+    resolver: zodResolver(resetPasswordSchema),
   });
-  const setUser = useAppStore((state) => state.setUser);
   const navigate = useNavigate();
 
   const { mutateAsync: loginMutation, isPending } = useMutation({
-    mutationFn: async (payload: LoginSchema) => {
-      const response = await axiosInstance.post("/auth/login", {
-        email: payload.email,
-        password: payload.password,
-      });
+    mutationFn: async (payload: ResetPasswordSchema) => {
+      const response = await axiosInstance.post(
+        "/auth/reset-password",
+        {
+          password: payload.password,
+        },
+        { headers: { Authorization: `Bearer ${token}` } },
+      );
       return response.data;
     },
-    onSuccess: (response) => {
-      setUser({
-        id: response.user.id,
-        fullName: response.user.fullName,
-        email: response.user.email,
-        avatar: response.user.avatar,
-        role: response.user.role,
-        birthdate: response.user.birthdate,
-      });
-      toast.success("Login successful!");
-      navigate("/");
+    onSuccess: () => {
+      toast.success("Password successfuly reset");
+      navigate("/login");
     },
     onError: (error: AxiosError<{ message: string }>) => {
-      toast.error(error.response?.data.message || "Login failed!");
+      toast.error(error.response?.data.message || "Something went wrong!");
     },
   });
 
-  const onSubmit = async (data: LoginSchema) => {
+  const onSubmit = async (data: ResetPasswordSchema) => {
     await loginMutation(data);
   };
 
@@ -60,29 +58,16 @@ export default function Login() {
               <small> &lt; BACK TO HOME</small>
             </Link>
 
-            <h1>LOGIN</h1>
+            <h1>RESET PASSWORD</h1>
             <form
               onSubmit={handleSubmit(onSubmit)}
               className="flex flex-col gap-2 mt-2"
             >
-              <label>E-mail</label>
-              <input
-                type="text"
-                id="email"
-                className="border border-neutral-200 w-120 rounded-xl px-5 py-2"
-                placeholder="youremail@example.com"
-                {...register("email")}
-              ></input>
-              {errors.email && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.email.message}
-                </p>
-              )}
               <label>Password</label>
               <input
                 type="password"
                 id="password"
-                className="border border-neutral-200 rounded-xl px-5 py-2"
+                className="border border-neutral-200 w-120 rounded-xl px-5 py-2"
                 placeholder="••••••••"
                 {...register("password")}
               ></input>
@@ -91,18 +76,35 @@ export default function Login() {
                   {errors.password.message}
                 </p>
               )}
-              <Link to="/forgot-password" className="text-[12px] text-blue-500 font-semibold hover:underline">Forgot password?</Link>
+              <label>Confirm Password</label>
+              <input
+                type="password"
+                id="confirmPassword"
+                className="border border-neutral-200 rounded-xl px-5 py-2"
+                placeholder="••••••••"
+                {...register("confirmPassword")}
+              ></input>
+              {errors.confirmPassword && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.confirmPassword.message}
+                </p>
+              )}
               <button
                 type="submit"
                 className="px-5 py-3 w-fit mt-5 rounded-lg font-krona-one bg-[#E6FF06] hover:bg-amber-400"
                 disabled={isPending}
               >
-                {isPending ? "Loading" : "Login"}
+                {isPending ? "Loading" : "Submit"}
               </button>
             </form>
             <div className="flex flex-row gap-1 text-[12px] mt-3">
               <p>Don't have an account?</p>
-              <Link to="/register" className="hover:underline text-blue-500 font-semibold">Register here</Link>
+              <Link
+                to="/register"
+                className="hover:underline text-blue-500 font-semibold"
+              >
+                Register here
+              </Link>
             </div>
           </div>
         </section>

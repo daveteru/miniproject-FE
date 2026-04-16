@@ -1,20 +1,11 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { useEffect, useRef, useState } from "react";
-import { useLocation } from "react-router";
+import { useRef } from "react";
 
 gsap.registerPlugin(useGSAP);
 
 export default function Footer() {
   const container1 = useRef(null);
-
-  const location = useLocation();
-  const hideNavbarPaths = ["/login", "/register"];
-  const [isHiddenRoute, setIsHiddenRoute] = useState(false);
-
-  useEffect(() => {
-    setIsHiddenRoute(hideNavbarPaths.includes(location.pathname));
-  }, [location.pathname]);
 
   useGSAP(
     () => {
@@ -30,7 +21,6 @@ export default function Footer() {
 
   return (
     <footer className="relative">
-      {!isHiddenRoute && (
         <div>
           <div className="w-full bg-[#E6FF06] h-7 flex justify-center relative z-1">
             <svg
@@ -95,7 +85,6 @@ export default function Footer() {
             </div>
           </div>
         </div>
-      )}
     </footer>
   );
 }
