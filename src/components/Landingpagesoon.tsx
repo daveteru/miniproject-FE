@@ -44,7 +44,6 @@ export default function Landingpagesoon() {
       .get<EventsAPI>(`/events?sortBy=startDate&sortOrder=asc`)
       .then(({ data }) => {
         setSoonEvents(data.data);
-        console.log(data.data);
       })
       .catch((err) => console.error(err))
       .finally(() => setLoading(false));
