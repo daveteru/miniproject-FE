@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import { Link, useNavigate } from "react-router";
-import Formtext, { Formdate } from "../components/Formtext";
+import FormText, { FormDate } from "../components/FormComponent";
 import { axiosInstance } from "../lib/axios";
 import { useAppStore } from "../store/useAppStore";
 
@@ -140,42 +140,42 @@ export default function Createpage() {
           <div className="flex gap-8 mb-6">
             {/* Left column — inputs */}
             <div className="flex-1 space-y-4">
-              <Formtext
+              <FormText
                 label="EVENT NAME"
-                formfunc={(value) => handleEventChange("name", value)}
+                formFunction={(value) => handleEventChange("name", value)}
                 value={form.event.name}
               />
-              <Formtext
+              <FormText
                 label="Artist Name"
-                formfunc={(value) => handleEventChange("artist", value)}
+                formFunction={(value) => handleEventChange("artist", value)}
                 value={form.event.artist}
               />
               <div className="grid grid-cols-3 gap-4">
-                <Formtext
+                <FormText
                   label="Category"
-                  formfunc={(value) => handleEventChange("category", value)}
+                  formFunction={(value) => handleEventChange("category", value)}
                   value={form.event.category}
                 />
-                <Formdate
+                <FormDate
                   label="START DATE"
-                  formfunc={(value) => handleEventChange("startDate", value)}
+                  formFunction={(value) => handleEventChange("startDate", value)}
                   value={form.event.startDate}
                 />
-                <Formdate
+                <FormDate
                   label="END DATE"
-                  formfunc={(value) => handleEventChange("endDate", value)}
+                  formFunction={(value) => handleEventChange("endDate", value)}
                   value={form.event.endDate}
                 />
               </div>
               <div className="flex gap-5">
-                <Formtext
+                <FormText
                   label="City"
-                  formfunc={(value) => handleEventChange("city", value)}
+                  formFunction={(value) => handleEventChange("city", value)}
                   value={form.event.city}
                 />
-                <Formtext
+                <FormText
                   label="Location"
-                  formfunc={(value) => handleEventChange("location", value)}
+                  formFunction={(value) => handleEventChange("location", value)}
                   value={form.event.location}
                 />
               </div>

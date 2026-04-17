@@ -34,8 +34,6 @@ export default function Landingpagewhatsup() {
       .get<EventAPI>(`/events?city=${city}&take=4`)
       .then(({ data }) => {
         setCityContent(data.data);
-        console.log(data.data);
-        console.log(city)
       })
       .catch((err) => console.error(err))
       .finally(() => setLoading(false));

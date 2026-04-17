@@ -10,11 +10,13 @@ type AppState = {
     role: string;
     birthdate: string;
     avatar: string | null;
+    referral: string;
   } | null;
 };
 
 type AppActions = {
   setUser: (user: AppState["user"]) => void;
+  // updateUser: (updates: Partial<AppState["user"]>) => void;
   clearUser: () => void;
 };
 
@@ -23,6 +25,11 @@ export const useAppStore = create<AppState & AppActions>()(
     (set) => ({
       user: null,
       setUser: (user) => set({ user }),
+      // updateUser: (updates) =>
+      //   set((state) => ({
+      //     ...state,
+      //     user: state.user ? { ...state.user, ...updates } : null,
+      //   })),
       clearUser: async () => {
         await axiosInstance.post("/auth/logout");
         set({ user: null });

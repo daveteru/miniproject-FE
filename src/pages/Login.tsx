@@ -37,6 +37,7 @@ export default function Login() {
         avatar: response.user.avatar,
         role: response.user.role,
         birthdate: response.user.birthdate,
+        referral: response.user.referral
       });
       toast.success("Login successful!");
       navigate("/");
@@ -64,6 +65,7 @@ export default function Login() {
           avatar: response.data.user.avatar,
           role: response.data.user.role,
           birthdate: response.data.user.birthdate,
+          referral: response.data.user.referral
         });
 
         toast.success("Login successful!");

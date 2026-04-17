@@ -29,7 +29,6 @@ export default function Landingpagefeatured() {
       .get<FeaturedEvents[]>("/promotions/featured")
       .then((res) => {
         setFeaturedContent(res.data);
-        console.log(res.data);
       })
       .catch((err) => console.error(err))
       .finally(() => setisLoading(false));

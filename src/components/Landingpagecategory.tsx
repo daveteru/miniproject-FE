@@ -38,7 +38,6 @@ export default function Landingpagecategory({
       .get<EventsAPI>(`/events?category=${title}&take=4`)
       .then(({ data }) => {
         setEvents(data.data);
-        console.log(data.data);
       })
       .catch((err) => console.error(err))
       .finally(() => setLoading(false));
