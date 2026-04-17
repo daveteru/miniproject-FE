@@ -99,18 +99,19 @@ export default function formpage() {
   }, [formdata]);
 
   useEffect(() => {
+    if (!formdata?.id) return;
     const fetchTransactions = async () => {
       try {
-        const { data : response } = await axiosInstance.get<txhistoryresponse>(
-          `/transactions/history/${formdata?.id}`,
+        const res = await axiosInstance.get<txhistoryresponse>(
+          `/transactions/history/${formdata.id}`,
         );
-        setTxhistory(response.data);
+        setTxhistory(res.data?.data ?? []);
       } catch (err) {
         alert(err);
       }
     };
     fetchTransactions();
-  }, []);
+  }, [formdata?.id]);
 
   return (
     <div className="w-full  flex min-h-screen">
@@ -213,11 +214,8 @@ export default function formpage() {
               My Bookings
             </h2>
 
-            <p className="text-xs font-semibold uppercase tracking-wide text-neutral-700 mb-2">
-              Description
-            </p>
           </div>
-          <div className="w-full  flex-col min-h-[100px] flex rounded-2xl border border-neutral-300 mb-10 p-5">
+          <div className="w-full  flex-col min-h-[100px] flex rounded-2xl border border-neutral-300 mb-10 overflow-hidden">
             {/* Bookings content goes here */}
             {txhistory? txhistory.map((data, index)=>(<Bookinghistory
             txno={index+1}

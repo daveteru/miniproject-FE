@@ -8,6 +8,7 @@ import {
   formatCountdown,
   formatSnakeCase,
 } from "../utility/dateconvert";
+import TransactionStatusIndicator from "./TransactionStatusIndicator";
 
 type TransactionItem = {
   id: string;
@@ -75,21 +76,19 @@ export default function Bookinghistory({
     <div
       ref={contentRef}
       style={{ height: isopen ? height : 60 }}
-      className={`w-full  bg-white transition-[height] overflow-hidden  duration-400 ease-in-out  `}
+      className={`w-full  border-b border-dashed border-neutral-200 transition-[height] overflow-hidden  duration-400 ease-in-out   `}
     >
        
       <button
         onClick={() => setIsopen(!isopen)}
-        className="border-b w-full h-15 px-5 py-3 flex items-center justify-between border-neutral-200 cursor-pointer "
+        className="border-b w-full h-15 px-5 py-3 flex items-center justify-between border-neutral-200 cursor-pointer hover:bg-neutral-100 bg-white drop-shadow-sm transition-all "
       >
         <div className="flex items-center gap-2">
           <img src={ticketicon} className="h-8" alt="" />
           Transaction #{txno} - {items?.[0]?.ticket.event.name}
         </div>
         <div className="flex gap-5">
-          <div className="rounded-full h-fit w-fit flex items-center bg-amber-100 outline-amber-400 outline px-2 py-1 text-amber-700">
-            <p className="text-[12px]">{formatSnakeCase(paymentStatus?? "")}</p>
-          </div>
+          <TransactionStatusIndicator paymentStatus={paymentStatus??""}/>
           <img
             src={accordionicon}
             alt=""
