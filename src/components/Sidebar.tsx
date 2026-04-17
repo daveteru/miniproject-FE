@@ -1,47 +1,29 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation } from "react-router";
 import { useAppStore } from "../store/useAppStore";
-import { axiosInstance } from "../lib/axios";
 
 const NAV_ITEMS = [
   { label: "Profile", href: "/profile" },
+  { label: "Privacy", href: "/privacy" },
   { label: "My Events", href: "/my-events" },
   { label: "Create Event", href: "/createevent" },
 ];
 
-export default function Sidebar({
-  userName = "USER_NAME",
-  avatarUrl,
-  activePath = "/profile",
-}: {
-  userName?: string;
-  avatarUrl?: string;
-  activePath?: string;
-}) {
-  const [active, setActive] = useState(activePath);
-  const storeuser = useAppStore((state) => state.user);
-  const navigate = useNavigate();
-  const clearUser = useAppStore((state) => state.clearUser);
-
-  const logout = async () => {
-    try {
-      await axiosInstance.post("/auth/logout");
-      clearUser();
-      navigate("/");
-    } catch (error) {
-      alert("error");
-    }
-  };
+export default function Sidebar() {
+  const location = useLocation();
+  const [active, setActive] = useState(location.pathname);
+  const user = useAppStore((state) => state.user);
+  const logout = useAppStore((state) => state.logout);
 
   return (
     <aside className="flex flex-col w-[25%] justify-between bg-neutral-100 border border-neutral-200">
       {/* User greeting */}
       <div>
         <div className="flex items-center gap-3 px-6 py-6 border-b border-neutral-200">
-          {avatarUrl ? (
+          {user?.avatar ? (
             <img
-              src={avatarUrl}
-              alt={storeuser?.fullName || "USER123"}
+              src={user.avatar}
+              alt={user?.fullName || "USER123"}
               className="w-10 h-10 rounded-full object-cover"
             />
           ) : (
@@ -51,7 +33,7 @@ export default function Sidebar({
             <span className="text-neutral-500">Hello,</span>
             <br />
             <span className="font-semibold text-neutral-900 uppercase tracking-wide">
-              {storeuser?.fullName || "USER123"}
+              {user?.fullName || "USER123"}
             </span>
           </div>
         </div>
