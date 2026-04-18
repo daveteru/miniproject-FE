@@ -78,7 +78,6 @@ export default function Bookinghistory({
       style={{ height: isopen ? height : 60 }}
       className={`w-full  border-b border-dashed border-neutral-200 transition-[height] overflow-hidden  duration-400 ease-in-out   `}
     >
-       
       <button
         onClick={() => setIsopen(!isopen)}
         className="border-b w-full h-15 px-5 py-3 flex items-center justify-between border-neutral-200 cursor-pointer hover:bg-neutral-100 bg-white drop-shadow-sm transition-all "
@@ -88,7 +87,7 @@ export default function Bookinghistory({
           Transaction #{txno} - {items?.[0]?.ticket.event.name}
         </div>
         <div className="flex gap-5">
-          <TransactionStatusIndicator paymentStatus={paymentStatus??""}/>
+          <TransactionStatusIndicator paymentStatus={paymentStatus ?? ""} />
           <img
             src={accordionicon}
             alt=""
@@ -100,7 +99,8 @@ export default function Bookinghistory({
         <div className="flex justify-between items-center">
           <h1>Transaction Details</h1>
           <div className="text-[12px] font-bold text-red-500 flex gap-2">
-            <p>Expires in:</p>{expiredAt ? formatCountdown(expiredAt) : "-"}
+                      {paymentStatus === "WAITING_FOR_PAYMENT" ? "expires in : " + formatCountdown(expiredAt ?? "") : "" }
+            
           </div>
         </div>
         <hr className="border-neutral-200 my-2" />
@@ -123,7 +123,10 @@ export default function Bookinghistory({
             <hr className="border-neutral-200 my-1" />
             <div className="flex flex-col">
               {items?.map((item) => (
-                <div key={item.id} className="justify-between flex border-b py-1 border-neutral-200 border-dashed">
+                <div
+                  key={item.id}
+                  className="justify-between flex border-b py-1 border-neutral-200 border-dashed"
+                >
                   <div>
                     <p>
                       {item.ticket.ticketLevel} x {item.quantity}
@@ -132,16 +135,14 @@ export default function Bookinghistory({
                       @IDR {formatThousand(item.ticket.price)}/TIX
                     </p>
                   </div>
-                  <p>IDR {formatThousand(item.price)}</p> 
-                </div>  
+                  <p>IDR {formatThousand(item.price)}</p>
+                </div>
               ))}
             </div>
             <div className="w-full flex justify-between text-[12px]">
               <div>
                 <p className="text-neutral-300">Points Used:</p>
-                {voucher && (
-                  <p className="text-red-300">Voucher Discount:</p>
-                )}
+                {voucher && <p className="text-red-300">Voucher Discount:</p>}
                 <span className="font-bold">TOTAL:</span>
               </div>
               <div className="text-end">
@@ -154,7 +155,9 @@ export default function Bookinghistory({
                     -IDR {formatThousand(voucher.discamount)}
                   </p>
                 )}
-                <p className="font-bold">IDR {formatThousand(totalPrice ?? 0)}</p>
+                <p className="font-bold">
+                  IDR {formatThousand(totalPrice ?? 0)}
+                </p>
               </div>
             </div>
           </div>

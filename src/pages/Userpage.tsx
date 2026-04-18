@@ -66,13 +66,13 @@ export default function formpage() {
         const { data: response } = await axiosInstance.get<txhistoryresponse>(
           `/transactions/history/${user?.id}`,
         );
-        setTxhistory(res.data?.data ?? []);
+        setTxhistory(response?.data ?? []);
       } catch (err) {
         alert(err);
       }
     };
     fetchTransactions();
-  }, [formdata?.id]);
+  }, [user?.id]);
 
   return (
     <div className="w-full  flex min-h-screen">
