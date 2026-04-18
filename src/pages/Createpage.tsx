@@ -1,21 +1,13 @@
-import { useState, useRef, useEffect } from "react";
-import Sidebar from "../components/Sidebar";
-import { Link, useNavigate } from "react-router";
+import { useRef, useState } from "react";
+import { Link } from "react-router";
 import FormText, { FormDate } from "../components/FormComponent";
+import Sidebar from "../components/Sidebar";
 import { axiosInstance } from "../lib/axios";
 import { useAppStore } from "../store/useAppStore";
+import toast from "react-hot-toast";
 
 export default function Createpage() {
   const user = useAppStore((state) => state.user);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (user?.role !== "ORGANIZER") {
-      alert("This page is only for event organizers!");
-      navigate("/login");
-    }
-  }, [user]);
-
   const EMPTY_TICKET = { ticketLevel: "reguler", price: 0, availableTicket: 0 };
 
   const [form, setForm] = useState({
@@ -98,27 +90,17 @@ export default function Createpage() {
         tickets: form.tickets,
         ...(promotoggle && { voucher: form.voucher }),
       });
-       alert("Submission sucess");
-    } catch (err: any) {
-      alert("Submission failed");
-      console.log(
-        err.response?.data?.errors ??
-          err.response?.data?.message ??
-          err.message,
-      );
+       toast.success("Submission sucess");
+    } catch (error) {
+      toast.error("Submission failed");
     } finally {
-     
-
       setIsloading(false);
     }
   };
-  // --- Render ---
 
   return (
     <div className="w-full  flex min-h-screen">
-      <Sidebar />
-      <div className="flex flex-col  px-10 py-8 w-[60%] overflow-y-auto">
-        {/* Breadcrumb */}
+      <div className="flex flex-col  px-10 py-8 w-[80%] overflow-y-auto">
         <nav className="text-xs uppercase tracking-wide text-neutral-500 mb-1">
           <Link to="/" className="hover:text-neutral-900 cursor-pointer">
             Home
@@ -367,19 +349,6 @@ export default function Createpage() {
               </div>
             </div>
           </div>
-
-          {/* FAQ */} 
-          {/* <div className="mb-10">
-            <label className="block text-xs font-semibold uppercase tracking-wide text-neutral-700 mb-2">
-              FAQ
-            </label>
-            <textarea
-              value={form.event.description}
-              onChange={(e) => handleEventChange("description", e.target.value)}
-              rows={10}
-              className="w-full rounded-2xl border border-neutral-300 px-4 py-3 text-sm outline-none focus:border-neutral-500 transition-colors resize-none"
-            />
-          </div> */}
 
           {/* Submit row */}
           <div className="flex items-center gap-6">
