@@ -26,7 +26,7 @@ export default function Createpage() {
       city: "",
       startDate: "",
       endDate: "",
-      thumbnail: "",
+      thumbnail: "" as File | string,
       category: "",
       description: "",
       organizerId: "",
@@ -87,18 +87,43 @@ export default function Createpage() {
     const file = e.target.files?.[0];
     if (!file) return;
     setThumbnailPreview(URL.createObjectURL(file));
+    setForm((prev) => ({ ...prev, event: { ...prev.event, thumbnail: file } }));
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (form.tickets.length === 0) {
+      alert("at least required 1 ticket");
+      return;
+    }
     setIsloading(true);
     try {
-      await axiosInstance.post("/events/bundle", {
-        event: { ...form.event, organizerId: user!.id },
-        tickets: form.tickets,
-        ...(promotoggle && { voucher: form.voucher }),
+      if (!form.event.thumbnail) {
+        alert("Thumbnail is required");
+        setIsloading(false);
+        return;
+      }
+      const formData = new FormData();
+      if (form.event.thumbnail) {
+        formData.append("thumbnail", form.event.thumbnail);
+      }
+
+      const { thumbnail, ...eventWithoutThumbnail } = form.event;
+      formData.append(
+        "event",
+        JSON.stringify({ ...eventWithoutThumbnail, organizerId: user!.id }),
+      );
+      formData.append("tickets", JSON.stringify(form.tickets));
+      if (promotoggle) {
+        formData.append("voucher", JSON.stringify(form.voucher));
+      }
+
+      await axiosInstance.post("/events/bundle", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
       });
-       alert("Submission sucess");
+
+      alert("Submission sucess");
+      navigate("/")
     } catch (err: any) {
       alert("Submission failed");
       console.log(
@@ -107,8 +132,6 @@ export default function Createpage() {
           err.message,
       );
     } finally {
-     
-
       setIsloading(false);
     }
   };
@@ -231,7 +254,9 @@ export default function Createpage() {
               <h2 className="text-lg font-black uppercase tracking-wider text-neutral-900">
                 Pricing
               </h2>
-              <small className="text-neutral-400">Maximum 5 Types of Ticket</small>
+              <small className="text-neutral-400">
+                Maximum 5 Types of Ticket
+              </small>
             </div>
             <div
               className={`border-2 border-dashed border-neutral-300 rounded-2xl p-6 space-y-4 ${freetoggle ? "hidden" : ""}`}
@@ -296,16 +321,16 @@ export default function Createpage() {
                   </div>
                 </div>
               ))}
-               {form.tickets.length < 5 && (
-              <div className="flex justify-center pt-2">
-                <button
-                  type="button"
-                  onClick={addTicket}
-                  className="w-9 h-9 rounded-xl border border-neutral-300 hover:bg-neutral-200 flex items-center justify-center text-neutral-400 hover:text-neutral-600 transition-colors text-xl"
-                >
-                  +
-                </button>
-              </div>
+              {form.tickets.length < 5 && (
+                <div className="flex justify-center pt-2">
+                  <button
+                    type="button"
+                    onClick={addTicket}
+                    className="w-9 h-9 rounded-xl border border-neutral-300 hover:bg-neutral-200 flex items-center justify-center text-neutral-400 hover:text-neutral-600 transition-colors text-xl"
+                  >
+                    +
+                  </button>
+                </div>
               )}
             </div>
           </div>
@@ -368,20 +393,6 @@ export default function Createpage() {
             </div>
           </div>
 
-          {/* FAQ */} 
-          {/* <div className="mb-10">
-            <label className="block text-xs font-semibold uppercase tracking-wide text-neutral-700 mb-2">
-              FAQ
-            </label>
-            <textarea
-              value={form.event.description}
-              onChange={(e) => handleEventChange("description", e.target.value)}
-              rows={10}
-              className="w-full rounded-2xl border border-neutral-300 px-4 py-3 text-sm outline-none focus:border-neutral-500 transition-colors resize-none"
-            />
-          </div> */}
-
-          {/* Submit row */}
           <div className="flex items-center gap-6">
             <button
               type="submit"
@@ -390,7 +401,7 @@ export default function Createpage() {
               {isloading ? "Loading..." : "Submit Event"}
             </button>
             <p className="text-xs text-red-500 ">
-              Make sure all details are correct. 
+              Make sure all details are correct.
             </p>
           </div>
         </form>

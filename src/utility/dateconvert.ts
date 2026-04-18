@@ -25,9 +25,9 @@ export function getCountdown(inputexpiry: string): Countdown {
 }
 
 export function formatCountdown(expiredAt: string): string {
-  const { days, hours, minutes, expired } = getCountdown(expiredAt);
+  const { days, hours, minutes,seconds, expired } = getCountdown(expiredAt);
   if (expired) return "Expired";
-  return `${days}d ${hours}h ${minutes}m`;
+  return `${days}d ${hours}h ${minutes}m ${seconds}s`;
 }
 
 export function formatDate(date: string | Date): string {
