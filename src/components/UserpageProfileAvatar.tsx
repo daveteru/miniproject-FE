@@ -31,7 +31,7 @@ export default function UserpageProfileAvatar({ onFileSelect }: AvatarProps) {
         onChange={handleFileChange}
         className="hidden"
       />
-      <div>
+      <div className="w-full h-full bg-neutral-300">
         {preview ? (
           <img
             src={preview}

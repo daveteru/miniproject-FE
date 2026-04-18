@@ -8,6 +8,7 @@ import Toggler from "../components/Toggler";
 import { axiosInstance } from "../lib/axios";
 import { useAppStore } from "../store/useAppStore";
 import { formatThousand } from "../utility/dateconvert";
+import pointsicon from "../assets/icons/points_icon.svg";
 
 type Ticket = {
   id: number;
@@ -57,10 +58,12 @@ type transactiondetails = {
       quantity: number;
     },
   ];
-}[];
+};
 
 export default function Transaction() {
   const [isvoucher, setIsvoucher] = useState<boolean>(false);
+  const [ispoints, setIspoints] = useState<boolean>(false);
+  const [points, setPoints] = useState<number>(0);
   const [tickets, setTickets] = useState<Ticket[]>([]);
   const [eventdetails, setEventdetails] = useState<eventdetails | null>(null);
   const [searchParams] = useSearchParams();
@@ -69,7 +72,7 @@ export default function Transaction() {
   const [total, setTotal] = useState<number>(0);
   const [cartResetKey, setCartResetKey] = useState(0);
   const { user } = useAppStore();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const eventId = searchParams.get("eventId");
 
   useEffect(() => {
@@ -83,16 +86,27 @@ export default function Transaction() {
       }
     };
     if (eventId) fetchTickets();
+
+    const fetchpoints = async () => {
+      try {
+        const { data } = await axiosInstance.get(`/points/user/${user?.id}`);
+        setPoints(data.totalPoints);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchpoints();
   }, [eventId]);
 
   useEffect(() => {
     const subtotal = cart.reduce((a, item) => a + item.price * item.qty, 0);
-    const voucherdiscount = eventdetails?.vouchers[0]?.discamount ?? 0;
-    if (isvoucher) {
-      return setTotal(subtotal - voucherdiscount);
-    }
-    return setTotal(subtotal);
-  }, [cart, isvoucher]);
+    const voucherdiscount = isvoucher? eventdetails?.vouchers[0]?.discamount ?? 0 : 0
+    const pointsdiscount = ispoints? points ?? 0 : 0
+    const total = subtotal - voucherdiscount - pointsdiscount
+
+    if (total<0) return setTotal(0)
+    return setTotal(total);
+  }, [cart, isvoucher , ispoints]);
 
   const processTransaction = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -107,6 +121,7 @@ export default function Transaction() {
         : {};
       const payload = {
         userId: Number(user?.id),
+        pointsUsed:points,
         ...voucherPayload,
         items: cart.map(({ id: ticketId, qty: quantity }) => ({
           ticketId,
@@ -114,9 +129,9 @@ export default function Transaction() {
         })),
       };
       await axiosInstance.post("/transactions", payload);
-      console.log(payload)
-      alert("Submission sucess")
-      setCart([])
+      console.log(payload);
+      alert("Submission sucess");
+      setCart([]);
       navigate(`/events/${eventId}`);
     } catch (err: any) {
       alert("Submission failed");
@@ -205,8 +220,8 @@ export default function Transaction() {
                   <div className="items-center flex justify-between">
                     <span className="text-sm">Voucher Discount</span>
                     <strong className="text-red-300 text-[12px]">
-                      IDR{" "}
-                      -{formatThousand(
+                      IDR -
+                      {formatThousand(
                         eventdetails?.vouchers[0]?.discamount ?? 0,
                       )}
                     </strong>
@@ -214,6 +229,20 @@ export default function Transaction() {
                 ) : (
                   ""
                 )}
+
+                {ispoints ? (
+                  <div className="items-center flex justify-between">
+                    <span className="text-sm">Points</span>
+                    <strong className="text-red-300 text-[12px] flex">
+                      <img src={pointsicon} className="w-4 mr-2" />
+
+                      {formatThousand(points ?? 0)}
+                    </strong>
+                  </div>
+                ) : (
+                  ""
+                )}
+
                 <div className="items-center flex justify-between">
                   <span className="text-sm">Total Purchase</span>
                   <strong>IDR {formatThousand(total)}</strong>
@@ -232,13 +261,30 @@ export default function Transaction() {
                 </button>
               )}
             </div>
-{eventdetails?.vouchers?            <div className="w-full h-20 border  justify-between rounded-lg text-neutral-500 font-[inter] flex items-center border-neutral-300 p-5 drop-shadow-lg bg-white">
-              <img src={discountticket} className="mr-2" />
-              <p>Use Event Voucher?</p>{" "}
-              <Toggler setter={setIsvoucher} state={isvoucher} />
-            </div>:""}
+
+            {/* voucher module */}
+            {eventdetails?.vouchers ? (
+              <div className="w-full h-20 border  justify-between rounded-lg text-neutral-500 font-[inter] flex items-center border-neutral-300 p-5 drop-shadow-lg bg-white">
+                <img src={discountticket} className="mr-2" />
+                <p>Use Event Voucher?</p>{" "}
+                <Toggler setter={setIsvoucher} state={isvoucher} />
+              </div>
+            ) : (
+              ""
+            )}
+            {/* points usage module */}
+            {points ? (
+              <div className="w-full h-20 border  justify-between rounded-lg text-neutral-500 font-[inter] flex items-center border-neutral-300 p-5 drop-shadow-lg bg-white">
+                <img src={pointsicon} className="w-10 mr-2" />
+                <p>Use Points?</p>{" "}
+                <Toggler setter={setIspoints} state={ispoints} />
+              </div>
+            ) : (
+              ""
+            )}
           </div>
         </div>
+        {}
       </section>
     </div>
   );
