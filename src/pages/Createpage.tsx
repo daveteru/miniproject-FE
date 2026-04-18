@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Link } from "react-router";
+import { Link, Navigate, useNavigate } from "react-router";
 import FormText, { FormDate } from "../components/FormComponent";
 import Sidebar from "../components/Sidebar";
 import { axiosInstance } from "../lib/axios";
@@ -26,6 +26,7 @@ export default function Createpage() {
     tickets: [{ ...EMPTY_TICKET }],
     voucher: {
       amount: 0,
+      discamount: 0,
       expiredDate: "",
       userId: 1,
     },
@@ -36,6 +37,7 @@ export default function Createpage() {
   const [isloading, setIsloading] = useState(false);
   const [thumbnailPreview, setThumbnailPreview] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate()
 
   const handleEventChange = (field: string, value: string) => {
     setForm((prev) => ({ ...prev, event: { ...prev.event, [field]: value } }));
@@ -114,6 +116,7 @@ export default function Createpage() {
         headers: { "Content-Type": "multipart/form-data" },
       });
        toast.success("Submission sucess");
+       navigate("/")
     } catch (error) {
       toast.error("Submission failed");
     } finally {
@@ -340,15 +343,30 @@ export default function Createpage() {
           </div>
 
           <div
-            className={` px-6 py-8 mb-10 rounded-2xl border-neutral-300 border-dashed border-2 ${promotoggle ? "" : "hidden"}`}
+            className={` px-6 py-8 mb-10  rounded-2xl border-neutral-300 border-dashed border-2 ${promotoggle ? "" : "hidden"}`}
           >
-            <div className="flex w-full gap-4">
-              <div className="w-[48%]">
+            <div className="flex w-full  items-center gap-4">
+              <div className="w-[40%]">
                 <label className="block text-xs font-semibold uppercase tracking-wide text-neutral-700 mb-1">
                   DISCOUNT AMOUNT
                 </label>
                 <div className="border flex rounded-xl gap-2 border-neutral-300 px-4 py-1.5">
                   <span className="text-neutral-400">IDR</span>
+                  <input
+                    type="number"
+                    value={form.voucher.discamount}
+                    onChange={(e) =>
+                      handleVoucherChange("discamount", e.target.value)
+                    }
+                    className="w-full text-sm outline-none"
+                  />
+                </div>
+              </div>
+              <div className="w-[20%]">
+                <label className="block text-xs font-semibold uppercase tracking-wide text-neutral-700 mb-1">
+                  TOTAL AVAILABLE VOUCHER
+                </label>
+                <div className="border flex rounded-xl gap-2 border-neutral-300 px-4 py-2">
                   <input
                     type="number"
                     value={form.voucher.amount}

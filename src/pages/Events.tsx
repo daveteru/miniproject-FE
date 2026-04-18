@@ -46,6 +46,15 @@ type EventDetailsAPI = {
     expiredDate: string;
     discamount: number;
     amount: number;
+    id?: number;
+  }[];
+    reviews: {
+    text: string;
+    rating: number;
+    reviewer: {
+      fullName:string;
+      avatar:string
+    };
   }[];
 };
 export default function Events() {
@@ -248,10 +257,9 @@ export default function Events() {
 
             <div className=" my-10">
               <h1 className="my-2">REVIEWS</h1>
-              <Review />
-              <Review />
-              <Review />
-              <Review />
+              {event?.reviews?.map((e)=>(
+                <Review text={e.text} rating={e.rating} reviewername={e.reviewer.fullName} revieweravatar={e.reviewer.avatar} />
+              ))}
             </div>
           </section>
           {/* end of sticky bar parent */}
