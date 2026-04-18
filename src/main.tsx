@@ -19,6 +19,7 @@ import Userpage from "./pages/Userpage";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import Privacy from "./pages/Privacy";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -58,7 +59,16 @@ const router = createBrowserRouter([
         element: <Createpage />,
         loader: authLoader(["ORGANIZER"]),
       },
-      { path: "/transaction", element: <Transaction /> },
+      {
+        path: "/transaction",
+        element: <Transaction />,
+        loader: authLoader(["USER"]),
+      },
+      {
+        path: "/privacy",
+        element: <Privacy />,
+        loader: authLoader(["USER", "ORGANIZER"]),
+      },
     ],
   },
   { path: "/login", element: <Login />, loader: loggedInLoader },

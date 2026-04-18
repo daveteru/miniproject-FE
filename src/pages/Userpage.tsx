@@ -1,23 +1,12 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
-import { Link, useParams } from "react-router";
-import FormText from "../components/FormComponent";
-import Sidebar from "../components/Sidebar";
-import { useAppStore } from "../store/useAppStore";
-import { formatDate } from "../utility/dateconvert";
-import UserpageRewards from "../components/UserpageRewards";
+import { Link } from "react-router";
 import Bookinghistory from "../components/Bookinghistory";
-import { axiosInstance } from "../lib/axios";
+import Sidebar from "../components/Sidebar";
 import UserpageProfile from "../components/UserpageProfile";
-
-type form = {
-  name: string;
-  email: string;
-  phone: string;
-  birthdate: string;
-  referrer: string;
-  avatar: string;
-};
+import UserpageRewards from "../components/UserpageRewards";
+import { axiosInstance } from "../lib/axios";
+import { useAppStore } from "../store/useAppStore";
 
 type TransactionItem = {
   id: string;
@@ -52,7 +41,7 @@ type txhistoryprops = {
     | "PAID"
     | "EXPIRED"
     | "REJECTED"
-    |"";
+    | "";
   pointsUsed: number;
   voucher: { discamount: number } | null;
   items: TransactionItem[];
@@ -68,38 +57,14 @@ type txhistoryresponse = {
   };
 };
 export default function formpage() {
-  const [form, setForm] = useState<form>({
-    name: "",
-    email: "",
-    phone: "",
-    avatar: "",
-    birthdate: "",
-    referrer: "",
-   });
   const [txhistory, setTxhistory] = useState<txhistoryprops[]>([]);
-  const formdata = useAppStore((state) => state.user);
-
-  const handleFieldChange = (field: string, value: string) => {
-    setForm((prev) => ({ ...prev, [field]: value }));
-  };
+  const user = useAppStore((state) => state.user);
 
   useEffect(() => {
-    if (formdata) {
-      setForm((prev) => ({
-        ...prev,
-        name: formdata.fullName,
-        email: formdata.email,
-        birthdate: formdata.birthdate,
-      }));
-    }
-  }, [formdata]);
-
-  useEffect(() => {
-    if (!formdata?.id) return;
     const fetchTransactions = async () => {
       try {
-        const res = await axiosInstance.get<txhistoryresponse>(
-          `/transactions/history/${formdata.id}`,
+        const { data: response } = await axiosInstance.get<txhistoryresponse>(
+          `/transactions/history/${user?.id}`,
         );
         setTxhistory(res.data?.data ?? []);
       } catch (err) {
@@ -142,16 +107,22 @@ export default function formpage() {
           </div>
           <div className="w-full  flex-col min-h-[100px] flex rounded-2xl border border-neutral-300 mb-10 overflow-hidden">
             {/* Bookings content goes here */}
-            {txhistory? txhistory.map((data, index)=>(<Bookinghistory
-            txno={index+1}
-            expiredAt={data.expiredAt}
-            paymentProof={data.paymentProof}
-            paymentStatus={data.paymentStatus}
-            pointsUsed={data.pointsUsed}
-            voucher={data.voucher}
-            items={data.items}
-            totalPrice={data.totalPrice}
-            />)): <p>no items found here</p>}
+            {txhistory ? (
+              txhistory.map((data, index) => (
+                <Bookinghistory
+                  txno={index + 1}
+                  expiredAt={data.expiredAt}
+                  paymentProof={data.paymentProof}
+                  paymentStatus={data.paymentStatus}
+                  pointsUsed={data.pointsUsed}
+                  voucher={data.voucher}
+                  items={data.items}
+                  totalPrice={data.totalPrice}
+                />
+              ))
+            ) : (
+              <p>no items found here</p>
+            )}
           </div>
 
           <hr className="mb-5 border-neutral-200" />
