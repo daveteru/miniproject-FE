@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { Link, useLocation } from "react-router";
+import { NavLink } from "react-router";
 import { useAppStore } from "../store/useAppStore";
 
 const NAV_ITEMS = [
@@ -9,19 +8,16 @@ const NAV_ITEMS = [
 ];
 
 export default function EventManagerSidebar() {
-  const location = useLocation();
-  const [active, setActive] = useState(location.pathname);
   const user = useAppStore((state) => state.user);
 
   return (
     <aside className="flex flex-col w-[25%] justify-between bg-neutral-100 border border-neutral-200">
-      {/* User greeting */}
       <div>
         <div className="flex items-center gap-3 px-6 py-6 border-b border-neutral-200">
           {user?.avatar ? (
             <img
               src={user.avatar}
-              alt={user?.fullName || "USER123"}
+              alt={user?.fullName || "Username"}
               className="w-10 h-10 rounded-full object-cover"
             />
           ) : (
@@ -36,35 +32,31 @@ export default function EventManagerSidebar() {
           </div>
         </div>
 
-        {/* Navigation */}
         <nav className="flex flex-col py-2">
           {NAV_ITEMS.map((item) => (
-            <Link
+            <NavLink
               key={item.href}
               to={item.href}
-              onClick={() => setActive(item.href)}
-              className={`
-                px-6 py-3 text-sm font-semibold uppercase tracking-wide transition-colors
-                ${
-                  active === item.href
+              className={({ isActive }) =>
+                `px-6 py-3 text-sm font-semibold uppercase tracking-wide transition-colors ${
+                  isActive
                     ? "bg-neutral-200 text-neutral-900"
                     : "text-neutral-700 hover:bg-neutral-200/60 hover:text-neutral-900"
-                }
-              `}
+                }`
+              }
             >
               {item.label}
-            </Link>
+            </NavLink>
           ))}
         </nav>
       </div>
-      <Link
-        className={`
-              px-6 py-3 text-sm sticky bottom-0 font-semibold  uppercase tracking-wide transition-colors bg-neutral-600 text-neutral-100 cursor-pointer
-              `}
+
+      <NavLink
         to="/profile"
+        className="px-6 py-3 text-sm sticky bottom-0 font-semibold uppercase tracking-wide transition-colors bg-neutral-600 text-neutral-100 cursor-pointer text-center"
       >
         BACK TO PROFILE
-      </Link>
+      </NavLink>
     </aside>
   );
 }

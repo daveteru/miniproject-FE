@@ -1,18 +1,17 @@
 import { useEffect, useRef, useState } from "react";
+import { useNavigate, useParams } from "react-router";
 import ticketicon from "../assets/icons/Ticket_use_fill.svg";
 import Landingpagecategory from "../components/Landingpagecategory";
 import Partners from "../components/Partners";
 import Review from "../components/Review";
 import {
-  default as Smailldetails,
-  default as Smalldetails,
+  default as Smalldetails
 } from "../components/Smalldetails";
+import Ticketcontent from "../components/Ticketcontent";
 import { axiosInstance } from "../lib/axios";
-import { useNavigate, useParams } from "react-router";
 import {
   formatDate,
-  formatThousand,
-  getCountdown,
+  formatThousand
 } from "../utility/dateconvert";
 import Ticketcontent from "../components/Ticketcontent";
 import Revieweditor from "../components/Revieweditor";
