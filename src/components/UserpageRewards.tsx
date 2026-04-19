@@ -89,7 +89,9 @@ export default function UserpageRewards() {
               </div>
             )
           ) : (
-            <div></div>
+            <div>
+              <p>You have no coupons!</p>
+            </div>
           )}
         </div>
       </div>

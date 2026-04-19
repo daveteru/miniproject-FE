@@ -1,10 +1,9 @@
 import { useRef, useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router";
+import toast from "react-hot-toast";
+import { Link } from "react-router";
 import FormText, { FormDate } from "../components/FormComponent";
-import Sidebar from "../components/Sidebar";
 import { axiosInstance } from "../lib/axios";
 import { useAppStore } from "../store/useAppStore";
-import toast from "react-hot-toast";
 
 export default function Createpage() {
   const user = useAppStore((state) => state.user);
@@ -37,7 +36,6 @@ export default function Createpage() {
   const [isloading, setIsloading] = useState(false);
   const [thumbnailPreview, setThumbnailPreview] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const navigate = useNavigate()
 
   const handleEventChange = (field: string, value: string) => {
     setForm((prev) => ({ ...prev, event: { ...prev.event, [field]: value } }));
@@ -115,8 +113,7 @@ export default function Createpage() {
       await axiosInstance.post("/events/bundle", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-       toast.success("Submission sucess");
-       navigate("/")
+       toast.success("Submission success");
     } catch (error) {
       toast.error("Submission failed");
     } finally {
@@ -132,8 +129,8 @@ export default function Createpage() {
             Home
           </Link>
           <span className="mx-1">&gt;</span>
-          <Link to="/profile" className="hover:text-neutral-900 cursor-pointer">
-            Admin Page
+          <Link to="/event-manager/my-events" className="hover:text-neutral-900 cursor-pointer">
+            Event Manager
           </Link>
           <span className="mx-1">&gt;</span>
           <span className="text-neutral-700">Create New Event</span>
@@ -364,7 +361,7 @@ export default function Createpage() {
               </div>
               <div className="w-[20%]">
                 <label className="block text-xs font-semibold uppercase tracking-wide text-neutral-700 mb-1">
-                  TOTAL AVAILABLE VOUCHER
+                  AMOUNT
                 </label>
                 <div className="border flex rounded-xl gap-2 border-neutral-300 px-4 py-2">
                   <input

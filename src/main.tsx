@@ -21,6 +21,11 @@ import ResetPassword from "./pages/ResetPassword";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import Privacy from "./pages/Privacy";
 import EventManager from "./pages/EventManager";
+import EventManagerMyEvents from "./pages/EventManagerMyEvents";
+import MyEventDetail from "./pages/MyEventDetail";
+import MyEventDetailEdit from "./pages/MyEventDetailEdit";
+import MyEventDetailAttendees from "./pages/MyEventDetailAttendees";
+import MyEventDetailStats from "./pages/MyEventDetailStats";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -70,7 +75,16 @@ const router = createBrowserRouter([
         element: <EventManager />,
         loader: authLoader(["ORGANIZER"]),
         children: [
-          { path: "my-events" },
+          { path: "my-events", element: <EventManagerMyEvents /> },
+          {
+            path: "my-events/:id",
+            element: <MyEventDetail />,
+            children: [
+              { path: "edit", element: <MyEventDetailEdit /> },
+              { path: "attendees", element: <MyEventDetailAttendees /> },
+              { path: "stats", element: <MyEventDetailStats /> },
+            ],
+          },
           {
             path: "create-event",
             element: <Createpage />,

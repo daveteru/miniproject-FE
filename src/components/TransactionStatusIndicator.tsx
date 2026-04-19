@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { formatSnakeCase } from "../utility/dateconvert";
 
 type indicatorprops = {

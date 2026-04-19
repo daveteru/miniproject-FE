@@ -9,6 +9,7 @@ import { axiosInstance } from "../lib/axios";
 import { useAppStore } from "../store/useAppStore";
 import { formatThousand } from "../utility/dateconvert";
 import pointsicon from "../assets/icons/points_icon.svg";
+import toast from "react-hot-toast";
 
 type Ticket = {
   id: number;
@@ -111,7 +112,7 @@ export default function Transaction() {
   const processTransaction = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (cart.length === 0) {
-      alert("Cart must not be empty");
+      toast.error("Cart must not be empty");
       return;
     }
     setIsloading(true);
@@ -130,11 +131,11 @@ export default function Transaction() {
       };
       await axiosInstance.post("/transactions", payload);
       console.log(payload);
-      alert("Submission sucess");
+      toast.success("Submission sucess");
       setCart([]);
       navigate(`/events/${eventId}`);
     } catch (err: any) {
-      alert("Submission failed");
+      toast.error("Submission failed");
       console.log(
         err.response?.data?.errors ??
           err.response?.data?.message ??
