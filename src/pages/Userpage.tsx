@@ -115,7 +115,7 @@ export default function formpage() {
               My Bookings
             </h2>
           </div>
-          <div className="w-full  flex-col min-h-[100px] flex rounded-2xl border border-neutral-300 mb-10 overflow-hidden">
+          <div className="w-full  flex-col min-h-25 flex rounded-2xl border border-neutral-300 mb-10 overflow-hidden">
             {/* Bookings content goes here */}
             {txhistory ? (
               txhistory.map((data, index) => (

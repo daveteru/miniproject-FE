@@ -1,20 +1,15 @@
 import { useEffect, useRef, useState } from "react";
-import { useNavigate, useParams } from "react-router";
+import { useParams } from "react-router";
 import ticketicon from "../assets/icons/Ticket_use_fill.svg";
 import Landingpagecategory from "../components/Landingpagecategory";
 import Partners from "../components/Partners";
 import Review from "../components/Review";
 import Revieweditor from "../components/Revieweditor";
-import {
-  default as Smalldetails
-} from "../components/Smalldetails";
+import { default as Smalldetails } from "../components/Smalldetails";
 import Ticketcontent from "../components/Ticketcontent";
 import { axiosInstance } from "../lib/axios";
 import { useAppStore } from "../store/useAppStore";
-import {
-  formatDate,
-  formatThousand
-} from "../utility/dateconvert";
+import { formatDate, formatThousand } from "../utility/dateconvert";
 
 type EventDetailsAPI = {
   id: number;
@@ -60,7 +55,6 @@ type EventDetailsAPI = {
 export default function Events() {
   const targetRef = useRef<HTMLDivElement>(null);
   const { id } = useParams();
-  const navigate = useNavigate();
   const [event, setEvent] = useState<EventDetailsAPI | null>(null);
   const [ispromo, setIspromo] = useState<boolean>(false);
   const [fromprice, setFromprice] = useState<number[]>([]);
@@ -260,7 +254,12 @@ export default function Events() {
             {event?.endDate &&
             new Date(event.endDate).getTime() < new Date().getTime() ? (
               <article>
-                <Revieweditor username={user?.fullName} avatar={user?.avatar ?? undefined} userId={user?.id} eventId={event.id} />
+                <Revieweditor
+                  username={user?.fullName}
+                  avatar={user?.avatar ?? undefined}
+                  userId={user?.id}
+                  eventId={event.id}
+                />
                 {event?.reviews?.map((e) => (
                   <Review
                     text={e.text}

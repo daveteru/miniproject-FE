@@ -13,12 +13,7 @@ export default function UserpageRewards() {
   const userId = useAppStore.getState().user?.id;
   const [page, setPage] = useState<number>(1);
 
-  const {
-    data: points,
-    isPending: loadingPoints,
-    error: errorPoints,
-    refetch: refetchPoints,
-  } = useQuery({
+  const { data: points, isPending: loadingPoints } = useQuery({
     queryKey: ["totalPoints", userId],
     queryFn: async () => {
       const { data } = await axiosInstance.get(`/points/user/${userId}`);
@@ -26,12 +21,7 @@ export default function UserpageRewards() {
     },
   });
 
-  const {
-    data: coupons,
-    isPending: loadingCoupons,
-    error: errorCoupons,
-    refetch: refetchCoupons,
-  } = useQuery({
+  const { data: coupons, isPending: loadingCoupons } = useQuery({
     queryKey: ["coupons", userId, page],
     queryFn: async () => {
       const { data } = await axiosInstance.get<PageableResponse<Coupon>>(
@@ -53,7 +43,7 @@ export default function UserpageRewards() {
               alt="Coupon icon"
               className="w-10 h-10 borer"
             />
-            {points && (
+            {!loadingPoints && (
               <p className="font-extrabold  h-full uppercase flex items-center  text-neutral-700  text-2xl">
                 {formatThousand(points.totalPoints)} POINTS
               </p>
@@ -66,7 +56,7 @@ export default function UserpageRewards() {
           <p className="font-semibold uppercase tracking-wide text-neutral-700 mb-2">
             Coupons
           </p>
-          {coupons ? (
+          {coupons && !loadingCoupons ? (
             coupons.data.length > 0 && (
               <div className="flex flex-col border border-neutral-200 rounded-xl px-5 py-3">
                 <div className="flex flex-col">

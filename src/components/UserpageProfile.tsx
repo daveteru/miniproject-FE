@@ -86,7 +86,9 @@ export default function UserpageProfile() {
                 {...register("birthdate")}
               />
               {errors.birthdate && (
-                <p className="text-red-500 text-xs">{errors.birthdate.message}</p>
+                <p className="text-red-500 text-xs">
+                  {errors.birthdate.message}
+                </p>
               )}
             </div>
 

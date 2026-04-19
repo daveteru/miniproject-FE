@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { axiosInstance } from "../lib/axios";
 
 type revieweditorprops = {
@@ -8,13 +9,6 @@ type revieweditorprops = {
   eventId: number | undefined;
 };
 
-type reviewprops = {
-  rating: number;
-  text: string;
-  eventId: number;
-  reviewerId: string;
-};
-// ★
 export default function Revieweditor({
   username,
   avatar,
@@ -43,7 +37,7 @@ export default function Revieweditor({
   const postreview = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (review == "") {
-      return alert("text must not empty");
+      return toast.error("Text must not empty");
     }
     const payload = {
       text: review,
@@ -53,9 +47,9 @@ export default function Revieweditor({
     };
     try {
       await axiosInstance.post("/reviews", payload);
-      alert("submission success")
+      toast.success("Review submitted!");
     } catch (err) {
-      alert("Review Submission error");
+      toast.error("Something went wrong!");
     }
   };
 

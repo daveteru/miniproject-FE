@@ -4,7 +4,7 @@ import useGetEventDetail from "../hooks/events/useGetEventDetail";
 
 export default function MyEventDetail() {
   const { id } = useParams();
-  const { data: event, isPending, error, refetch } = useGetEventDetail(id);
+  const { data: event, isPending } = useGetEventDetail(id);
 
   return (
     <div className="flex flex-col  px-10 py-8 w-[80%] overflow-y-auto">
@@ -13,11 +13,17 @@ export default function MyEventDetail() {
           Home
         </Link>
         <span className="mx-1">&gt;</span>
-        <Link to="/event-manager/my-events" className="hover:text-neutral-900 cursor-pointer">
+        <Link
+          to="/event-manager/my-events"
+          className="hover:text-neutral-900 cursor-pointer"
+        >
           Event Manager
         </Link>
         <span className="mx-1">&gt;</span>
-        <Link to="/event-manager/my-events" className="hover:text-neutral-900 cursor-pointer">
+        <Link
+          to="/event-manager/my-events"
+          className="hover:text-neutral-900 cursor-pointer"
+        >
           My Events
         </Link>
         <span className="mx-1">&gt;</span>

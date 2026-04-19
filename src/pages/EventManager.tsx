@@ -2,8 +2,6 @@ import { Outlet } from "react-router";
 import EventManagerSidebar from "../components/EventManagerSidebar";
 
 export default function EventManager() {
-  
-
   return (
     <div className="w-full flex min-h-screen">
       <EventManagerSidebar />

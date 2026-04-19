@@ -1,5 +1,5 @@
-import { useRef, useState, useCallback, useEffect } from "react";
 import gsap from "gsap";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export function useCarousel(total: number) {
   const trackRef = useRef<HTMLDivElement>(null);
@@ -17,7 +17,7 @@ export function useCarousel(total: number) {
       currentRef.current = index;
       setCurrent(index);
     },
-    [total]
+    [total],
   );
 
   useEffect(() => {

@@ -14,7 +14,6 @@ export default function Sidebar() {
 
   return (
     <aside className="flex flex-col w-[25%] justify-between bg-neutral-100 border border-neutral-200">
-      {/* User greeting */}
       <div>
         <div className="flex items-center gap-3 px-6 py-6 border-b border-neutral-200">
           {user?.avatar ? (

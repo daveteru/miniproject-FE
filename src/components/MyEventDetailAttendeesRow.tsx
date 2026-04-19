@@ -1,7 +1,5 @@
 import type { Attendee } from "../types/attendee";
 import { formatThousand } from "../utility/dateconvert";
-import accordionicon from "../assets/icons/accordionicon.svg";
-import { useState } from "react";
 
 interface AttendeesRowProps {
   attendee: Attendee;

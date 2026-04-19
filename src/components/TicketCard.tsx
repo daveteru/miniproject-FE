@@ -30,8 +30,14 @@ export default function TicketCard({
     setCart((prev) => {
       const exists = prev.find((item) => item.id === id);
       if (newQty === 0) return prev.filter((item) => item.id !== id);
-      if (exists) return prev.map((item) => item.id === id ? { ...item, qty: newQty } : item);
-      return [...prev, { id, ticketLevel, price, availableTicket, qty: newQty }];
+      if (exists)
+        return prev.map((item) =>
+          item.id === id ? { ...item, qty: newQty } : item,
+        );
+      return [
+        ...prev,
+        { id, ticketLevel, price, availableTicket, qty: newQty },
+      ];
     });
   };
 

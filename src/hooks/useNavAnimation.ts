@@ -1,6 +1,6 @@
 import { useGSAP } from "@gsap/react";
-import { SplitText } from "gsap/SplitText";
 import gsap from "gsap";
+import { SplitText } from "gsap/SplitText";
 import { useRef } from "react";
 
 gsap.registerPlugin(useGSAP, SplitText);
@@ -9,7 +9,9 @@ export function useNavAnimation() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { contextSafe } = useGSAP({ scope: containerRef });
   const tlMap = useRef<Map<HTMLElement, gsap.core.Timeline>>(new Map());
-  const splitMap = useRef<Map<HTMLElement, ReturnType<typeof SplitText.create>>>(new Map());
+  const splitMap = useRef<
+    Map<HTMLElement, ReturnType<typeof SplitText.create>>
+  >(new Map());
 
   const onEnter = contextSafe((e: React.MouseEvent<HTMLButtonElement>) => {
     const btn = e.currentTarget;

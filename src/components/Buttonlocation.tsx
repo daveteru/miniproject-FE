@@ -1,12 +1,11 @@
-import type { ReactFormState } from "react-dom/client";
 import locationpin from "../assets/icons/location_pin.svg";
 
 type buttonlocationprops = {
-  location? : string;
-  setCity?: React.Dispatch<React.SetStateAction<string>>
-}
+  location?: string;
+  setCity?: React.Dispatch<React.SetStateAction<string>>;
+};
 
-export default function Buttonlocation({location,setCity}:buttonlocationprops) {
+export default function Buttonlocation({ setCity }: buttonlocationprops) {
   const cities = ["Jakarta", "Singapore", "Bali", "Malaysia"];
 
   return (
@@ -15,9 +14,12 @@ export default function Buttonlocation({location,setCity}:buttonlocationprops) {
     "
     >
       <img className="h-5" src={locationpin} alt="" />
-      <select 
-      onChange={(e)=>{setCity?.(e.target.value)}}
-      className="appearance-none rounded-full w-40 px-5 py-1 focus:outline-none">
+      <select
+        onChange={(e) => {
+          setCity?.(e.target.value);
+        }}
+        className="appearance-none rounded-full w-40 px-5 py-1 focus:outline-none"
+      >
         {cities.map((city) => (
           <option key={city} value={city}>
             {city}
@@ -30,4 +32,3 @@ export default function Buttonlocation({location,setCity}:buttonlocationprops) {
     </div>
   );
 }
-

@@ -31,7 +31,7 @@ export default function Createpage() {
     },
   });
 
-  const [freetoggle, setFreetoggle] = useState(false);
+  const [freetoggle] = useState(false);
   const [promotoggle, setPromotoggle] = useState(false);
   const [isloading, setIsloading] = useState(false);
   const [thumbnailPreview, setThumbnailPreview] = useState<string | null>(null);
@@ -85,13 +85,13 @@ export default function Createpage() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (form.tickets.length === 0) {
-      alert("at least required 1 ticket");
+      toast.error("At least 1 ticket is required");
       return;
     }
     setIsloading(true);
     try {
       if (!form.event.thumbnail) {
-        alert("Thumbnail is required");
+        toast.error("Thumbnail is required");
         setIsloading(false);
         return;
       }
@@ -113,7 +113,7 @@ export default function Createpage() {
       await axiosInstance.post("/events/bundle", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-       toast.success("Submission success");
+      toast.success("Submission success");
     } catch (error) {
       toast.error("Submission failed");
     } finally {
@@ -129,7 +129,10 @@ export default function Createpage() {
             Home
           </Link>
           <span className="mx-1">&gt;</span>
-          <Link to="/event-manager/my-events" className="hover:text-neutral-900 cursor-pointer">
+          <Link
+            to="/event-manager/my-events"
+            className="hover:text-neutral-900 cursor-pointer"
+          >
             Event Manager
           </Link>
           <span className="mx-1">&gt;</span>
@@ -163,7 +166,9 @@ export default function Createpage() {
                 />
                 <FormDate
                   label="START DATE"
-                  formFunction={(value) => handleEventChange("startDate", value)}
+                  formFunction={(value) =>
+                    handleEventChange("startDate", value)
+                  }
                   value={form.event.startDate}
                 />
                 <FormDate

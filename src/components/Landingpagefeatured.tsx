@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import Featuredcard from "./Featuredcard";
 import { axiosInstance } from "../lib/axios";
-
+import Featuredcard from "./Featuredcard";
 
 type FeaturedEvents = {
   id: number;
@@ -10,8 +9,8 @@ type FeaturedEvents = {
   eventId: number;
   event: {
     name: string;
-    artist:string;
-    category:string;
+    artist: string;
+    category: string;
     startDate: string;
     location: string;
     thumbnail: string;

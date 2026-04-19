@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
-import Sidebar from "../components/Sidebar";
 import Reviewpagecard from "../components/Reviewpagecard";
+import Sidebar from "../components/Sidebar";
 import { axiosInstance } from "../lib/axios";
 
 type ReviewItem = {
@@ -14,7 +14,7 @@ type ReviewItem = {
   };
   reviewer: {
     fullName: string;
-    avatar:string;
+    avatar: string;
   };
 };
 

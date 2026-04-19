@@ -3,10 +3,16 @@ type soonprops = {
   category?: string;
   date?: string;
   city?: string;
-  thumbnail?:string;
+  thumbnail?: string;
 };
 
-export default function Cardsoon({ name, category, date,city,thumbnail }: soonprops) {
+export default function Cardsoon({
+  name,
+  category,
+  date,
+  city,
+  thumbnail,
+}: soonprops) {
   return (
     <div className="border relative border-gray-400 rounded-2xl flex h-30 p-2 text-black justify-between cursor-pointer">
       <div className="flex w-fit gap-5">
