@@ -27,6 +27,7 @@ import ResetPassword from "./pages/ResetPassword";
 import Reviews from "./pages/Reviews";
 import Transaction from "./pages/Transaction";
 import Userpage from "./pages/Userpage";
+import EventManagerTransactions from "./pages/EventManagerTransactions";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -86,6 +87,10 @@ const router = createBrowserRouter([
               { path: "attendees", element: <MyEventDetailAttendees /> },
               { path: "stats", element: <MyEventDetailStats /> },
             ],
+          },
+          {
+            path: "transactions",
+            element: <EventManagerTransactions />,
           },
           {
             path: "create-event",

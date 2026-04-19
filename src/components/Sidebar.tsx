@@ -4,13 +4,17 @@ import { useAppStore } from "../store/useAppStore";
 const NAV_ITEMS = [
   { label: "Profile", href: "/profile" },
   { label: "Privacy", href: "/privacy" },
-  { label: "Event Manager", href: "/event-manager/my-events" },
   { label: "Reviews", href: "/reviews" },
+  { label: "Event Manager", href: "/event-manager/my-events", role: "ORGANIZER" },
 ];
 
 export default function Sidebar() {
   const user = useAppStore((state) => state.user);
   const logout = useAppStore((state) => state.logout);
+
+  const filteredNavItems = NAV_ITEMS.filter(
+    (item) => !item.role || item.role === user?.role
+  );
 
   return (
     <aside className="flex flex-col w-[25%] justify-between bg-neutral-100 border border-neutral-200">
@@ -29,14 +33,14 @@ export default function Sidebar() {
             <span className="text-neutral-500">Hello,</span>
             <br />
             <span className="font-semibold text-neutral-900 uppercase tracking-wide">
-              {user?.fullName || "USER123"}
+              {user?.fullName || "Username"}
             </span>
           </div>
         </div>
 
         {/* Navigation */}
         <nav className="flex flex-col py-2">
-          {NAV_ITEMS.map((item) => (
+          {filteredNavItems.map((item) => (
             <NavLink
               key={item.href}
               to={item.href}

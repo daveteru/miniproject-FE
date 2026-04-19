@@ -79,7 +79,6 @@ export default function formpage() {
         setTxhistory(response?.data ?? []);
         console.table(response);
       } catch (err) {
-        alert(err);
       }
     };
     fetchTransactions();
