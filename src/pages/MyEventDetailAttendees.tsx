@@ -3,6 +3,7 @@ import { useParams } from "react-router";
 import MyEventDetailAttendeesRow from "../components/MyEventDetailAttendeesRow";
 import Pagination from "../components/Pagination";
 import useGetEventAttendees from "../hooks/events/useGetEventAttendees";
+import MyEventDetailAttendeesRowSkeleton from "../components/MyEventDetailAttendeesSkeleton";
 
 export default function MyEventDetailAttendees() {
   const { id } = useParams();
@@ -20,7 +21,7 @@ export default function MyEventDetailAttendees() {
           <p className="">Total Paid</p>
         </div>
         {attendees && !isPending ? (
-          attendees.data.length > 0 && (
+          attendees.data.length > 0 ? (
             <div className="flex flex-col">
               {attendees.data.map((attendee) => (
                 <MyEventDetailAttendeesRow
@@ -38,9 +39,17 @@ export default function MyEventDetailAttendees() {
                 }}
               />
             </div>
+          ) : (
+            <div className="text-center mt-3 text-[14px] text-neutral-500 tracking-wide">
+              <p>This event has no attendants yet...</p>
+            </div>
           )
         ) : (
-          <div></div>
+          <div className="flex flex-col">
+            <MyEventDetailAttendeesRowSkeleton />
+            <MyEventDetailAttendeesRowSkeleton />
+            <MyEventDetailAttendeesRowSkeleton />
+          </div>
         )}
       </div>
     </div>
