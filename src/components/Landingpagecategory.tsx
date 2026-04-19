@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import Card from "./Card";
 import { axiosInstance } from "../lib/axios";
+import Card from "./Card";
 
 type LandingpagecategoryProps = {
   title: string;
@@ -53,7 +53,13 @@ export default function Landingpagecategory({
           </div>
           <div className="w-full h-full  grid md:grid-cols-2 lg:grid-cols-4 gap-5 text-white">
             {events.map((place) => (
-              <Card key={place.id} eventid={place.id} category={place.artist} title={place.name} thumbnail={place.thumbnail}/>
+              <Card
+                key={place.id}
+                eventid={place.id}
+                category={place.artist}
+                title={place.name}
+                thumbnail={place.thumbnail}
+              />
             ))}
           </div>
         </div>

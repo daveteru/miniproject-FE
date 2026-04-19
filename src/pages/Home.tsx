@@ -10,7 +10,7 @@ import Searchbar from "../components/Searchbar";
 export default function Home() {
   return (
     <div className="relative z-9">
-      <Marquee/>
+      <Marquee />
       <Hero />
       <Searchbar />
 
@@ -22,10 +22,10 @@ export default function Home() {
 
       <Landingpagefeatured />
       <Landingpagewhatsup />
-      <Landingpagecategory title="music"/>
-      <Landingpagecategory title="comedy"/>
-      <Landingpagesoon/>
-      <Partners/>
+      <Landingpagecategory title="music" />
+      <Landingpagecategory title="comedy" />
+      <Landingpagesoon />
+      <Partners />
     </div>
   );
 }

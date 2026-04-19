@@ -7,7 +7,7 @@ import type { MyEvent } from "../types/myEvent";
 
 export default function EventManagerMyEvents() {
   const [page, setPage] = useState<number>(1);
-  const { data: events, isPending, error, refetch } = useGetMyEvents(page);
+  const { data: events, isPending } = useGetMyEvents(page);
 
   return (
     <div className="flex flex-col  px-10 py-8 w-[80%] overflow-y-auto">
@@ -16,7 +16,10 @@ export default function EventManagerMyEvents() {
           Home
         </Link>
         <span className="mx-1">&gt;</span>
-        <Link to="/event-manager/my-events" className="hover:text-neutral-900 cursor-pointer">
+        <Link
+          to="/event-manager/my-events"
+          className="hover:text-neutral-900 cursor-pointer"
+        >
           Event Manager
         </Link>
         <span className="mx-1">&gt;</span>
@@ -28,7 +31,7 @@ export default function EventManagerMyEvents() {
       </h1>
 
       <div className="flex flex-col">
-        {events ? (
+        {events && !isPending ? (
           events.data.length > 0 && (
             <div className="flex flex-col border border-neutral-200 rounded-xl px-5 py-3">
               <div className="flex flex-col">
@@ -53,9 +56,16 @@ export default function EventManagerMyEvents() {
             </div>
           )
         ) : (
-          <div className="flex flex-col items-center">
-            <p>You have no events!</p>
-            <Link to="/event-manager/create-event">Create an event</Link>
+          <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+            <p className="text-lg font-semibold text-gray-700 mb-4">
+              You have no events!
+            </p>
+            <Link
+              to="/event-manager/create-event"
+              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+            >
+              Create an event
+            </Link>
           </div>
         )}
       </div>

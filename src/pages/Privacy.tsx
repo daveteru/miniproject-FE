@@ -4,8 +4,8 @@ import { Link } from "react-router";
 import Sidebar from "../components/Sidebar";
 import useChangePassword from "../hooks/users/useChangePassword";
 import {
-    changePasswordSchema,
-    type ChangePasswordSchema,
+  changePasswordSchema,
+  type ChangePasswordSchema,
 } from "../schemas/changePasswordSchema";
 
 export default function Privacy() {

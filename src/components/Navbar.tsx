@@ -14,66 +14,66 @@ export default function Navbar() {
 
   return (
     <div className="h-16">
-        <nav
-          ref={navRef}
-          className={`h-100 fixed lg:relative w-full z-10 -translate-y-81`}
-        >
-          {/* MOBILE MENU */}
-          <div className="relative z-1 w-full bg-[#E6FF06] border-b border-dashed h-80">
-            <div className="h-full w-full flex flex-col lg:hidden font-krona-one">
-              <Navbarbuttton label="ABOUT" />
+      <nav
+        ref={navRef}
+        className={`h-100 fixed lg:relative w-full z-10 -translate-y-81`}
+      >
+        {/* MOBILE MENU */}
+        <div className="relative z-1 w-full bg-[#E6FF06] border-b border-dashed h-80">
+          <div className="h-full w-full flex flex-col lg:hidden font-krona-one">
+            <Navbarbuttton label="ABOUT" />
+            <Navbarbuttton
+              link="/discover"
+              label="DISCOVER"
+              closeFunction={closeMenu}
+            />
+            <Navbarbuttton label="HELP" />
+            <Navbarbuttton
+              key={isLoggedIn ? "mobile-logged-in" : "mobile-logged-out"}
+              link={isLoggedIn ? "/profile" : "/login"}
+              label={isLoggedIn ? `Hello, ${user?.fullName}` : "SIGN IN"}
+              closeFunction={closeMenu}
+            />
+          </div>
+        </div>
+
+        {/* BIG SCREEN MENU */}
+        <div className="relative flex justify-between items-center pl-5 z-1 h-16 ">
+          <Link to="/">
+            <img
+              className="w-35"
+              src={user?.role === "ORGANIZER" ? organizerlogo : navbarlogo}
+              onClick={closeMenu}
+              alt=""
+            />
+          </Link>
+          <div className="h-full lg:flex hidden font-krona-one">
+            <Navbarbuttton label="ABOUT" />
+            <Navbarbuttton link="/discover" label="DISCOVER" />
+            <Navbarbuttton label="HELP" />
+            {isLoggedIn ? (
               <Navbarbuttton
-                link="/discover"
-                label="DISCOVER"
-                closeFunction={closeMenu}
+                key="logged-in"
+                link="/profile"
+                label={`HELLO , ${user.fullName}`}
               />
-              <Navbarbuttton label="HELP" />
-              <Navbarbuttton
-                key={isLoggedIn ? "mobile-logged-in" : "mobile-logged-out"}
-                link={isLoggedIn ? "/profile" : "/login"}
-                label={isLoggedIn ? `Hello, ${user?.fullName}` : "SIGN IN"}
-                closeFunction={closeMenu}
-              />
-            </div>
+            ) : (
+              <Navbarbuttton key="logged-out" link="/login" label="SIGN IN" />
+            )}
           </div>
 
-          {/* BIG SCREEN MENU */}
-          <div className="relative flex justify-between items-center pl-5 z-1 h-16 ">
-            <Link to="/">
-              <img
-                className="w-35"
-                src={user?.role === "ORGANIZER" ? organizerlogo : navbarlogo}
-                onClick={closeMenu}
-                alt=""
-              />
-            </Link>
-            <div className="h-full lg:flex hidden font-krona-one">
-              <Navbarbuttton label="ABOUT" />
-              <Navbarbuttton link="/discover" label="DISCOVER" />
-              <Navbarbuttton label="HELP" />
-              {isLoggedIn ? (
-                <Navbarbuttton
-                  key="logged-in"
-                  link="/profile"
-                  label={`HELLO , ${user.fullName}`}
-                />
-              ) : (
-                <Navbarbuttton key="logged-out" link="/login" label="SIGN IN" />
-              )}
-            </div>
+          {/* REVEAL MOBILE MENU BUTTON */}
+          <button
+            className="lg:hidden h-full font-krona-one wrap w-[27%] md:w-[26%] hover:bg-[#121212] hover:text-white text-sm cursor-pointer"
+            onClick={toggleMenu}
+          >
+            {isMenuOpen ? "Close" : "Menu ↓"}
+          </button>
+        </div>
 
-            {/* REVEAL MOBILE MENU BUTTON */}
-            <button
-              className="lg:hidden h-full font-krona-one wrap w-[27%] md:w-[26%] hover:bg-[#121212] hover:text-white text-sm cursor-pointer"
-              onClick={toggleMenu}
-            >
-              {isMenuOpen ? "Close" : "Menu ↓"}
-            </button>
-          </div>
-
-          {/* AESTHETIC PURPOSES */}
-          <Navbarbackground />
-        </nav>
+        {/* AESTHETIC PURPOSES */}
+        <Navbarbackground />
+      </nav>
     </div>
   );
 }

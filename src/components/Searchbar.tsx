@@ -7,7 +7,7 @@ type searchbar2props = {
   setCity: React.Dispatch<React.SetStateAction<string>>;
   city: string;
   search: string;
-  setSearch :React.Dispatch<React.SetStateAction<string>>;
+  setSearch: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export default function Searchbar() {
@@ -15,7 +15,8 @@ export default function Searchbar() {
   const navigate = useNavigate();
 
   const handleSubmit = () => {
-    if (query.trim()) navigate(`/discover?search=${encodeURIComponent(query.trim())}`);
+    if (query.trim())
+      navigate(`/discover?search=${encodeURIComponent(query.trim())}`);
   };
 
   return (
@@ -25,7 +26,12 @@ export default function Searchbar() {
           className="h-10 w-[75%] rounded-full font-[inter] font-light text-lg bg-white p-2 py-6 border border-[#a7a7a7] flex items-center transition-all ease-in hover:shadow-[0px_10px_23px_0px_rgb(230,255,6,0.5)]
  gap-5"
         >
-          <img src={searchicon} className="w-7 cursor-pointer" alt="Search Icon" onClick={handleSubmit} />
+          <img
+            src={searchicon}
+            className="w-7 cursor-pointer"
+            alt="Search Icon"
+            onClick={handleSubmit}
+          />
           <input
             type="text"
             placeholder={"Search Events..."}
@@ -40,15 +46,20 @@ export default function Searchbar() {
   );
 }
 
-export function Searchbar2({ city, setCity, search , setSearch }: searchbar2props) {
+export function Searchbar2({
+  city,
+  setCity,
+  search,
+  setSearch,
+}: searchbar2props) {
   return (
     <div className="h-10 w-full font-[inter] font-light text-lg border-b border-[#a7a7a7] flex items-center transition-all ease-in gap-5">
       <img src={searchiconwhite} className="w-7" alt="Search Icon" />
       <select
         value={city}
         onChange={(e) => {
-          setCity(e.target.value)
-          console.log({city});
+          setCity(e.target.value);
+          console.log({ city });
         }}
       >
         <option value="Jakarta">Jakarta</option>
@@ -62,7 +73,7 @@ export function Searchbar2({ city, setCity, search , setSearch }: searchbar2prop
         id="searchbar"
         value={search}
         placeholder={"Search Events..."}
-        onChange={(e)=>setSearch(e.target.value)}
+        onChange={(e) => setSearch(e.target.value)}
         className="focus:outline-none w-full"
       />
     </div>

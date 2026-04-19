@@ -4,10 +4,14 @@ import { useNavAnimation } from "../hooks/useNavAnimation";
 type NavbarbuttonProps = {
   label: string;
   link?: string;
-  closeFunction? : ()=>void;
+  closeFunction?: () => void;
 };
 
-export default function Navbarbuttton({ label, link = "/" , closeFunction }: NavbarbuttonProps) {
+export default function Navbarbuttton({
+  label,
+  link = "/",
+  closeFunction,
+}: NavbarbuttonProps) {
   const { containerRef, onEnter, onLeave } = useNavAnimation();
   return (
     <div ref={containerRef} className="h-full lg:w-fit w-full">

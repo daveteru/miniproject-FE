@@ -24,7 +24,7 @@ export default function Register() {
         email: payload.email,
         password: payload.password,
         birthdate: payload.birthdate,
-        referral: payload.referral
+        referral: payload.referral,
       });
       return response.data;
     },
@@ -33,8 +33,6 @@ export default function Register() {
       navigate("/login");
     },
     onError: (error: AxiosError<{ message: string }>) => {
-      console.log(error.response?.data.message);
-      
       toast.error(error.response?.data.message || "Registration failed!");
     },
   });
@@ -60,7 +58,9 @@ export default function Register() {
               onSubmit={handleSubmit(onSubmit)}
               className="flex flex-col gap-2"
             >
-              <label>Full Name<span className="text-red-500">*</span></label>
+              <label>
+                Full Name<span className="text-red-500">*</span>
+              </label>
               <input
                 type="text"
                 id="fullName"
@@ -73,7 +73,9 @@ export default function Register() {
                   {errors.name.message}
                 </p>
               )}
-              <label>E-mail<span className="text-red-500">*</span></label>
+              <label>
+                E-mail<span className="text-red-500">*</span>
+              </label>
               <input
                 type="text"
                 id="email"
@@ -86,7 +88,9 @@ export default function Register() {
                   {errors.email.message}
                 </p>
               )}
-              <label>Birth Date<span className="text-red-500">*</span></label>
+              <label>
+                Birth Date<span className="text-red-500">*</span>
+              </label>
               <input
                 type="date"
                 id="date"
@@ -95,7 +99,7 @@ export default function Register() {
                 {...register("birthdate")}
               ></input>
               {errors.birthdate && (
-                  <p className="text-red-500 text-sm mt-1">
+                <p className="text-red-500 text-sm mt-1">
                   {errors.birthdate.message}
                 </p>
               )}
@@ -111,7 +115,9 @@ export default function Register() {
                   {errors.referral.message}
                 </p>
               )}
-              <label>Password<span className="text-red-500">*</span></label>
+              <label>
+                Password<span className="text-red-500">*</span>
+              </label>
               <input
                 type="password"
                 id="password"
@@ -124,7 +130,9 @@ export default function Register() {
                   {errors.password.message}
                 </p>
               )}
-              <label>Confirm Password<span className="text-red-500">*</span></label>
+              <label>
+                Confirm Password<span className="text-red-500">*</span>
+              </label>
               <input
                 type="password"
                 id="confirmPassword"
@@ -147,7 +155,12 @@ export default function Register() {
             </form>
             <div className="flex flex-row gap-1 text-[12px] mt-10">
               <p>Already have an account?</p>
-              <Link to="/login" className="underline text-blue-500 font-semibold">Login here</Link>
+              <Link
+                to="/login"
+                className="underline text-blue-500 font-semibold"
+              >
+                Login here
+              </Link>
             </div>
           </div>
         </section>

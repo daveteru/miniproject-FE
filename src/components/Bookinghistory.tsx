@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState } from "react";
+import toast from "react-hot-toast";
+import accordionicon from "../assets/icons/accordionicon.svg";
 import ticketicon from "../assets/icons/ticket.svg";
 import uploadicon from "../assets/icons/uploadicon.svg";
-import accordionicon from "../assets/icons/accordionicon.svg";
+import { axiosInstance } from "../lib/axios";
 import {
+  formatCountdown,
   formatDate,
   formatThousand,
-  formatCountdown,
-  formatSnakeCase,
 } from "../utility/dateconvert";
 import TransactionStatusIndicator from "./TransactionStatusIndicator";
-import { axiosInstance } from "../lib/axios";
 
 type TransactionItem = {
   id: string;
@@ -56,8 +56,8 @@ type BookingHistoryProps = {
     startDate: string;
   };
   voucher?: { discamount: number } | null;
-  totalbeforecoupon:number;
-  coupondisc?:number;
+  totalbeforecoupon: number;
+  coupondisc?: number;
   items?: TransactionItem[];
   totalPrice: number;
 };
@@ -80,7 +80,9 @@ export default function Bookinghistory({
   const [isopen, setIsopen] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState(0);
-  const [proofPreview, setProofPreview] = useState<string | null>(paymentProof ?? null);
+  const [proofPreview, setProofPreview] = useState<string | null>(
+    paymentProof ?? null,
+  );
   const [proofFile, setProofFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const proofInputRef = useRef<HTMLInputElement>(null);
@@ -95,8 +97,7 @@ export default function Bookinghistory({
         headers: { "Content-Type": "multipart/form-data" },
       });
     } catch (err) {
-      console.error(err);
-      alert("Upload failed");
+      toast.error("Upload failed!");
     } finally {
       setIsUploading(false);
     }
@@ -187,39 +188,47 @@ export default function Bookinghistory({
                   <p>-IDR {formatThousand(voucher.discamount)}</p>
                 </div>
               )}
-<hr className="border-neutral-200 my-1"></hr>
-                <div className="flex justify-between text-neutral-300">
-                  <p>Sub-Total</p>
-                  <p>IDR {formatThousand(totalbeforecoupon ?? 0)}</p>
-                </div>
-                <div className={`flex justify-between ${coupon?"text-red-300":"text-neutral-300" }`}>
-                  <p>Coupon ({coupon}%):</p>
-                  <p>-IDR {formatThousand(coupondisc ?? 0)}</p>
-                </div>
               <hr className="border-neutral-200 my-1"></hr>
-                <div className="flex justify-between text-black">
-                  <p>Total</p>
-                  <strong>IDR {formatThousand(totalPrice ?? 0)}</strong>
-                </div>
+              <div className="flex justify-between text-neutral-300">
+                <p>Sub-Total</p>
+                <p>IDR {formatThousand(totalbeforecoupon ?? 0)}</p>
+              </div>
+              <div
+                className={`flex justify-between ${coupon ? "text-red-300" : "text-neutral-300"}`}
+              >
+                <p>Coupon ({coupon}%):</p>
+                <p>-IDR {formatThousand(coupondisc ?? 0)}</p>
+              </div>
+              <hr className="border-neutral-200 my-1"></hr>
+              <div className="flex justify-between text-black">
+                <p>Total</p>
+                <strong>IDR {formatThousand(totalPrice ?? 0)}</strong>
+              </div>
             </div>
           </div>
         </div>
         <div className="flex items-center gap-3 mt-2">
           <button
-            disabled={isUploading || paymentStatus === "EXPIRED" || paymentStatus === "PAID" || paymentStatus === "REJECTED" || paymentStatus === "WAITING_FOR_CONFIRM"}
+            disabled={
+              isUploading ||
+              paymentStatus === "EXPIRED" ||
+              paymentStatus === "PAID" ||
+              paymentStatus === "REJECTED" ||
+              paymentStatus === "WAITING_FOR_CONFIRM"
+            }
             onClick={() => proofInputRef.current?.click()}
             className="items-center h-fit flex gap-2 rounded-full px-3 py-1 text-sm transition ease-initial disabled:bg-neutral-300 disabled:text-neutral-400 disabled:cursor-not-allowed bg-amber-300 hover:bg-amber-400 cursor-pointer text-neutral-700"
           >
             <img src={uploadicon} alt="" />
             Upload Proof
           </button>
-            {proofPreview && (
-              <img
-                src={proofPreview}
-                alt="Payment proof preview"
-                className="w-12 h-12 rounded-md object-cover border border-neutral-300"
-              />
-            )}
+          {proofPreview && (
+            <img
+              src={proofPreview}
+              alt="Payment proof preview"
+              className="w-12 h-12 rounded-md object-cover border border-neutral-300"
+            />
+          )}
           <input
             ref={proofInputRef}
             type="file"

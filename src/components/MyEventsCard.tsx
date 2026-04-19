@@ -16,7 +16,10 @@ export default function MyEventsCard({
   description,
 }: MyEventsCardProps) {
   return (
-    <Link to={`${id}/edit`} className="flex flex-row border-b h-25 justify-start items-center border-neutral-200 text-neutral-600 rounded-md hover:bg-neutral-200">
+    <Link
+      to={`${id}/edit`}
+      className="flex flex-row border-b h-25 justify-start items-center border-neutral-200 text-neutral-600 rounded-md hover:bg-neutral-200"
+    >
       <div className="flex items-center justify-center w-40">
         <div className="mx-2">
           {thumbnail ? (

@@ -2,16 +2,17 @@ import ticketicon from "../assets/icons/ticket.svg";
 import { formatThousand } from "../utility/dateconvert";
 
 type cartcardprops = {
-    ticketLevel:string,
-    price:number,
-    qty:number
-}
+  ticketLevel: string;
+  price: number;
+  qty: number;
+};
 
-export default function Cartcard({ticketLevel,price,qty}:cartcardprops) {
+export default function Cartcard({ ticketLevel, price, qty }: cartcardprops) {
   return (
     <div className="border py-2 px-4 gap-2 flex items-center justify-between border-neutral-200 h-15 rounded-lg drop-shadow-lg bg-white">
       <div className="flex gap-1 items-center text-sm">
-        <img src={ticketicon} className="w-6 mr-1"></img> <p>{ticketLevel ?? "Tier"}</p>
+        <img src={ticketicon} className="w-6 mr-1"></img>{" "}
+        <p>{ticketLevel ?? "Tier"}</p>
         <p>x</p>
         <p>{qty ?? "1"}</p>
       </div>

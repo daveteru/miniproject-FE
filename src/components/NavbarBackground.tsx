@@ -1,6 +1,6 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import decor from "../assets/decorative_element.svg"
+import decor from "../assets/decorative_element.svg";
 gsap.registerPlugin(useGSAP);
 
 export default function Navbarbackground() {
@@ -31,7 +31,7 @@ export default function Navbarbackground() {
         </div>
         <div className="w-full col-span-1 lg:col-span-3 flex items-end">
           <svg
-            className="-translate-x-[16px] "
+            className="-translate-x-4"
             xmlns="http://www.w3.org/2000/svg"
             width="32"
             height="18"

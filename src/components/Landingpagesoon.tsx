@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import Cardsoon from "./Cardsoon";
 import { axiosInstance } from "../lib/axios";
 import { formatDate } from "../utility/dateconvert";
+import Cardsoon from "./Cardsoon";
 
 type Eventsprops = {
   id: number;
@@ -25,17 +25,6 @@ type EventsAPI = {
 };
 
 export default function Landingpagesoon() {
-  const placeholder = [
-    { category: "FESTIVAL", title: "HEADS IN THE CLOUD II" },
-    { category: "MUSIC", title: "HONNE" },
-    { category: "COMEDY", title: "Mens Rea" },
-    { category: "COMEDY", title: "SUCRD Raditya Dika" },
-    { category: "FESTIVAL", title: "HEADS IN THE CLOUD II" },
-    { category: "MUSIC", title: "HONNE" },
-    { category: "COMEDY", title: "Mens Rea" },
-    { category: "COMEDY", title: "SUCRD Raditya Dika" },
-  ];
-
   const [soonEvents, setSoonEvents] = useState<Eventsprops[]>([]);
   const [loading, setLoading] = useState(true);
 

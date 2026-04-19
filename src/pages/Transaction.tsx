@@ -57,15 +57,15 @@ type Coupon = {
   amount: number;
 };
 
-type transactiondetails = {
-  userId: string;
-  items: [
-    {
-      ticketId: number;
-      quantity: number;
-    },
-  ];
-};
+// type transactiondetails = {
+//   userId: string;
+//   items: [
+//     {
+//       ticketId: number;
+//       quantity: number;
+//     },
+//   ];
+// };
 
 export default function Transaction() {
   const [isvoucher, setIsvoucher] = useState<boolean>(false);
@@ -105,7 +105,6 @@ export default function Transaction() {
         const { data } = await axiosInstance.get(`/points/user/${user?.id}`);
         setPoints(data.totalPoints);
       } catch (err) {
-        console.log(err);
       }
     };
     fetchpoints();
@@ -166,17 +165,11 @@ export default function Transaction() {
         })),
       };
       await axiosInstance.post("/transactions", payload);
-      console.log(payload);
       toast.success("Submission sucess");
       setCart([]);
       navigate(`/events/${eventId}`);
     } catch (err: any) {
       toast.error("Submission failed");
-      console.log(
-        err.response?.data?.errors ??
-          err.response?.data?.message ??
-          err.message,
-      );
     } finally {
       setIsloading(false);
     }

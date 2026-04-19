@@ -1,23 +1,14 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useParams } from "react-router";
-import useGetEventAttendees from "../hooks/events/useGetEventAttendees";
 import MyEventDetailAttendeesRow from "../components/MyEventDetailAttendeesRow";
 import Pagination from "../components/Pagination";
+import useGetEventAttendees from "../hooks/events/useGetEventAttendees";
 
 export default function MyEventDetailAttendees() {
   const { id } = useParams();
-  const [ page, setPage ] = useState(1);
+  const [page, setPage] = useState(1);
 
-  const {
-    data: attendees,
-    isPending,
-    error,
-    refetch,
-  } = useGetEventAttendees(id, page);
-
-  useEffect(() => {
-    console.log(attendees);
-  }, [attendees]);
+  const { data: attendees, isPending } = useGetEventAttendees(id, page);
 
   return (
     <div>
@@ -29,28 +20,28 @@ export default function MyEventDetailAttendees() {
           <p className="">Total Paid</p>
         </div>
         {attendees && !isPending ? (
-            attendees.data.length > 0 && (
-              <div className="flex flex-col">
-                  {attendees.data.map((attendee) => (
-                    <MyEventDetailAttendeesRow
-                      key={attendee.id}
-                      attendee={attendee}
-                    />
-                  ))}
-                  <Pagination
-                    currentPage={attendees.meta.page}
-                    totalPages={Math.ceil(
-                      attendees.meta.total / attendees.meta.take,
-                    )}
-                    onPageChange={(pg) => {
-                      setPage(pg);
-                    }}
-                  />
-                </div>
-            )
-          ) : (
-            <div></div>
-          )}
+          attendees.data.length > 0 && (
+            <div className="flex flex-col">
+              {attendees.data.map((attendee) => (
+                <MyEventDetailAttendeesRow
+                  key={attendee.id}
+                  attendee={attendee}
+                />
+              ))}
+              <Pagination
+                currentPage={attendees.meta.page}
+                totalPages={Math.ceil(
+                  attendees.meta.total / attendees.meta.take,
+                )}
+                onPageChange={(pg) => {
+                  setPage(pg);
+                }}
+              />
+            </div>
+          )
+        ) : (
+          <div></div>
+        )}
       </div>
     </div>
   );

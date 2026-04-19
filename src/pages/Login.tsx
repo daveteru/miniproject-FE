@@ -1,14 +1,14 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useGoogleLogin } from "@react-oauth/google";
 import { useMutation } from "@tanstack/react-query";
 import type { AxiosError } from "axios";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router";
+import googleicon from "../assets/icons/Social Icons.svg";
 import { axiosInstance } from "../lib/axios";
 import { loginSchema, type LoginSchema } from "../schemas/loginSchema";
 import { useAppStore } from "../store/useAppStore";
-import googleicon from "../assets/icons/Social Icons.svg";
-import { useGoogleLogin } from "@react-oauth/google";
 
 export default function Login() {
   const {
@@ -37,7 +37,7 @@ export default function Login() {
         avatar: response.user.avatar,
         role: response.user.role,
         birthdate: response.user.birthdate,
-        referral: response.user.referral
+        referral: response.user.referral,
       });
       toast.success("Login successful!");
       navigate("/");
@@ -65,7 +65,7 @@ export default function Login() {
           avatar: response.data.user.avatar,
           role: response.data.user.role,
           birthdate: response.data.user.birthdate,
-          referral: response.data.user.referral
+          referral: response.data.user.referral,
         });
 
         toast.success("Login successful!");

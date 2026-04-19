@@ -1,7 +1,7 @@
-import { useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { Draggable } from "gsap/all";
+import { useRef, useState } from "react";
 
 gsap.registerPlugin(Draggable);
 
@@ -63,11 +63,10 @@ export function useNavbarDrag() {
     });
   };
 
-  const closeMenu = () => {                                                 
-    gsap.to(navRef.current, { y: NAVBAR_HIDDEN_Y, duration: 0, ease:      
-  "none" });                                                        
-    setIsMenuOpen(false);                     
-  };      
+  const closeMenu = () => {
+    gsap.to(navRef.current, { y: NAVBAR_HIDDEN_Y, duration: 0, ease: "none" });
+    setIsMenuOpen(false);
+  };
 
-  return { navRef, isMenuOpen, toggleMenu , closeMenu };
+  return { navRef, isMenuOpen, toggleMenu, closeMenu };
 }

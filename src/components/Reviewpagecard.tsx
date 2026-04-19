@@ -15,7 +15,10 @@ export default function Reviewpagecard({
 }: ReviewpagecardProps) {
   return (
     <div className="border rounded-2xl gap-5 h-fit flex border-neutral-300 drop-shadow-md p-5 bg-white">
-      <img src={avatar ?? "https://placehold.co/100"} className="bg-gray-400 rounded-full h-20 aspect-square object-cover" />
+      <img
+        src={avatar ?? "https://placehold.co/100"}
+        className="bg-gray-400 rounded-full h-20 aspect-square object-cover"
+      />
       <div className="h-full flex flex-col gap-2 justify-between">
         <h1>{eventName}</h1>
         <p>{text}</p>

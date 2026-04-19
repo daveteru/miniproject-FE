@@ -1,8 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
-import type { EditProfileSchema } from "../../schemas/editProfileSchema";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
 import { axiosInstance } from "../../lib/axios";
-import toast from "react-hot-toast";
+import type { EditProfileSchema } from "../../schemas/editProfileSchema";
 import { useAppStore } from "../../store/useAppStore";
 
 export default function useEditProfile() {

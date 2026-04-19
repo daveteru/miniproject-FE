@@ -5,7 +5,10 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router";
 import { axiosInstance } from "../lib/axios";
-import { forgotPasswordSchema, type ForgotPasswordSchema } from "../schemas/forgotPasswordSchema";
+import {
+  forgotPasswordSchema,
+  type ForgotPasswordSchema,
+} from "../schemas/forgotPasswordSchema";
 
 export default function ForgotPassword() {
   const {
