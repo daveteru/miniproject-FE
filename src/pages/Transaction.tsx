@@ -165,7 +165,6 @@ export default function Transaction() {
         })),
       };
       await axiosInstance.post("/transactions", payload);
-      console.log(payload);
       alert("Submission sucess");
       setCart([]);
       navigate(`/events/${eventId}`);
