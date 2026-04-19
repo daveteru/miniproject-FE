@@ -5,6 +5,7 @@ const NAV_ITEMS = [
   { label: "Profile", href: "/profile" },
   { label: "Privacy", href: "/privacy" },
   { label: "Event Manager", href: "/event-manager/my-events" },
+  { label: "Reviews", href: "/reviews" },
 ];
 
 export default function Sidebar() {

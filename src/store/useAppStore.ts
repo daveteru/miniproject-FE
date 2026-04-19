@@ -4,7 +4,7 @@ import { axiosInstance } from "../lib/axios";
 
 type AppState = {
   user: {
-    id: string;
+    id: number;
     email: string;
     fullName: string;
     role: string;

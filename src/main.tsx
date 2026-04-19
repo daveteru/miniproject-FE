@@ -1,3 +1,4 @@
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { StrictMode, useEffect } from "react";
 import { createRoot } from "react-dom/client";
@@ -10,10 +11,15 @@ import "./index.css";
 import { authLoader, loggedInLoader } from "./loaders/auth";
 import Createpage from "./pages/Createpage";
 import Discover from "./pages/Discover";
+import EventManager from "./pages/EventManager";
 import Events from "./pages/Events";
+import ForgotPassword from "./pages/ForgotPassword";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import Privacy from "./pages/Privacy";
 import Register from "./pages/Register";
+import ResetPassword from "./pages/ResetPassword";
+import Reviews from "./pages/Reviews";
 import Transaction from "./pages/Transaction";
 import Userpage from "./pages/Userpage";
 import ForgotPassword from "./pages/ForgotPassword";
@@ -54,6 +60,7 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <Home /> },
       { path: "/discover", element: <Discover /> },
+      { path: "/reviews", element: <Reviews /> },
       { path: "/events/:id", element: <Events /> },
       {
         path: "/profile",

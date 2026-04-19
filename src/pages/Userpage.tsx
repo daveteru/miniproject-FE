@@ -43,8 +43,18 @@ type txhistoryprops = {
     | "REJECTED"
     | "";
   pointsUsed: number;
+  coupon: { amount: number };
+  event: {
+    name: string;
+    artist: string;
+    location: string;
+    city: string;
+    startDate: string;
+  };
   voucher: { discamount: number } | null;
   items: TransactionItem[];
+  totalbeforecoupon: number;
+  coupondisc: number;
   totalPrice: number;
 };
 
@@ -67,6 +77,7 @@ export default function formpage() {
           `/transactions/history/${user?.id}`,
         );
         setTxhistory(response?.data ?? []);
+        console.table(response);
       } catch (err) {
         alert(err);
       }
@@ -103,7 +114,6 @@ export default function formpage() {
             <h2 className="text-2xl font-bold text-neutral-900 mb-2">
               My Bookings
             </h2>
-
           </div>
           <div className="w-full  flex-col min-h-[100px] flex rounded-2xl border border-neutral-300 mb-10 overflow-hidden">
             {/* Bookings content goes here */}
@@ -111,13 +121,18 @@ export default function formpage() {
               txhistory.map((data, index) => (
                 <Bookinghistory
                   txno={index + 1}
+                  id={data.id}
                   expiredAt={data.expiredAt}
                   paymentProof={data.paymentProof}
                   paymentStatus={data.paymentStatus}
                   pointsUsed={data.pointsUsed}
+                  coupon={data.coupon?.amount}
+                  event={data.event}
                   voucher={data.voucher}
                   items={data.items}
                   totalPrice={data.totalPrice}
+                  totalbeforecoupon={data.totalbeforecoupon}
+                  coupondisc={data.coupondisc}
                 />
               ))
             ) : (
