@@ -9,6 +9,7 @@ import {
   formatSnakeCase,
 } from "../utility/dateconvert";
 import TransactionStatusIndicator from "./TransactionStatusIndicator";
+import { axiosInstance } from "../lib/axios";
 
 type TransactionItem = {
   id: string;
@@ -46,9 +47,19 @@ type BookingHistoryProps = {
     | "REJECTED"
     | "";
   pointsUsed?: number;
+  coupon?: number;
+  event?: {
+    name: string;
+    artist: string;
+    location: string;
+    city: string;
+    startDate: string;
+  };
   voucher?: { discamount: number } | null;
+  totalbeforecoupon:number;
+  coupondisc?:number;
   items?: TransactionItem[];
-  totalPrice?: number;
+  totalPrice: number;
 };
 
 export default function Bookinghistory({
@@ -56,15 +67,40 @@ export default function Bookinghistory({
   id,
   expiredAt,
   paymentProof,
+  coupon,
+  coupondisc,
+  event,
   paymentStatus,
   pointsUsed,
   voucher,
   items,
+  totalbeforecoupon,
   totalPrice,
 }: BookingHistoryProps) {
   const [isopen, setIsopen] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState(0);
+  const [proofPreview, setProofPreview] = useState<string | null>(paymentProof ?? null);
+  const [proofFile, setProofFile] = useState<File | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const proofInputRef = useRef<HTMLInputElement>(null);
+
+  const handleProofUpload = async (file: File) => {
+    if (!id) return;
+    setIsUploading(true);
+    try {
+      const formData = new FormData();
+      formData.append("paymentProof", file);
+      await axiosInstance.patch(`/transactions/${id}/proof`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+    } catch (err) {
+      console.error(err);
+      alert("Upload failed");
+    } finally {
+      setIsUploading(false);
+    }
+  };
 
   useEffect(() => {
     if (contentRef.current) {
@@ -84,7 +120,7 @@ export default function Bookinghistory({
       >
         <div className="flex items-center gap-2">
           <img src={ticketicon} className="h-8" alt="" />
-          Transaction #{txno} - {items?.[0]?.ticket.event.name}
+          Transaction #{txno} - {event?.name ?? "null"}
         </div>
         <div className="flex gap-5">
           <TransactionStatusIndicator paymentStatus={paymentStatus ?? ""} />
@@ -99,8 +135,9 @@ export default function Bookinghistory({
         <div className="flex justify-between items-center">
           <h1>Transaction Details</h1>
           <div className="text-[12px] font-bold text-red-500 flex gap-2">
-                      {paymentStatus === "WAITING_FOR_PAYMENT" ? "expires in : " + formatCountdown(expiredAt ?? "") : "" }
-            
+            {paymentStatus === "WAITING_FOR_PAYMENT"
+              ? "expires in : " + formatCountdown(expiredAt ?? "")
+              : ""}
           </div>
         </div>
         <hr className="border-neutral-200 my-2" />
@@ -108,15 +145,14 @@ export default function Bookinghistory({
           <div className="h-full w-[50%] text-start text-[12px] gap-1 flex flex-col">
             <h1>INFORMATION</h1>
             <hr className="border-neutral-200 my-1 mr-5" />
-            <p>{items?.[0]?.ticket.event.name ?? "-"}</p>
-            <p>{items?.[0]?.ticket.event.artist ?? "-"}</p>
+            <p>{event?.name ?? "-"}</p>
+            <p>{event?.artist ?? "-"}</p>
             <hr className="border-neutral-200 my-1 mr-5" />
 
             <p>
-              {items?.[0]?.ticket.event.location},{" "}
-              {items?.[0]?.ticket.event.city}
+              {event?.location}, {event?.city}
             </p>
-            <p>{formatDate(items?.[0]?.ticket.event.startDate ?? "")}</p>
+            <p>{formatDate(event?.startDate ?? "")}</p>
           </div>
           <div className="h-full w-full text-start text-[12px] gap-1 flex flex-col">
             <h1>TICKETS</h1>
@@ -139,33 +175,65 @@ export default function Bookinghistory({
                 </div>
               ))}
             </div>
-            <div className="w-full flex justify-between text-[12px]">
-              <div>
-                <p className="text-neutral-300">Points Used:</p>
-                {voucher && <p className="text-red-300">Voucher Discount:</p>}
-                <span className="font-bold">TOTAL:</span>
+            <div className="w-full flex flex-col  text-[12px]">
+              <div className="flex justify-between text-red-300">
+                <p>Points Used:</p>
+                <p>{formatThousand(pointsUsed ?? 0)}</p>
               </div>
-              <div className="text-end">
-                <p className="text-neutral-300">
-                  {" "}
-                  {formatThousand(pointsUsed ?? 0)}
-                </p>
-                {voucher && (
-                  <p className="text-red-300">
-                    -IDR {formatThousand(voucher.discamount)}
-                  </p>
-                )}
-                <p className="font-bold">
-                  IDR {formatThousand(totalPrice ?? 0)}
-                </p>
-              </div>
+
+              {voucher && (
+                <div className="flex justify-between text-red-300">
+                  <p>Voucher Used:</p>
+                  <p>-IDR {formatThousand(voucher.discamount)}</p>
+                </div>
+              )}
+<hr className="border-neutral-200 my-1"></hr>
+                <div className="flex justify-between text-neutral-300">
+                  <p>Sub-Total</p>
+                  <p>IDR {formatThousand(totalbeforecoupon ?? 0)}</p>
+                </div>
+                <div className={`flex justify-between ${coupon?"text-red-300":"text-neutral-300" }`}>
+                  <p>Coupon ({coupon}%):</p>
+                  <p>-IDR {formatThousand(coupondisc ?? 0)}</p>
+                </div>
+              <hr className="border-neutral-200 my-1"></hr>
+                <div className="flex justify-between text-black">
+                  <p>Total</p>
+                  <strong>IDR {formatThousand(totalPrice ?? 0)}</strong>
+                </div>
             </div>
           </div>
         </div>
-        <button className="items-center h-fit cursor-pointer hover:bg-amber-400 mt-2 text-neutral-700 flex gap-2 rounded-full px-3 py-1 text-sm bg-amber-300 transition ease-initial">
-          <img src={uploadicon} alt="" />
-          Upload Proof
-        </button>
+        <div className="flex items-center gap-3 mt-2">
+          <button
+            disabled={isUploading || paymentStatus === "EXPIRED" || paymentStatus === "PAID" || paymentStatus === "REJECTED" || paymentStatus === "WAITING_FOR_CONFIRM"}
+            onClick={() => proofInputRef.current?.click()}
+            className="items-center h-fit flex gap-2 rounded-full px-3 py-1 text-sm transition ease-initial disabled:bg-neutral-300 disabled:text-neutral-400 disabled:cursor-not-allowed bg-amber-300 hover:bg-amber-400 cursor-pointer text-neutral-700"
+          >
+            <img src={uploadicon} alt="" />
+            Upload Proof
+          </button>
+            {proofPreview && (
+              <img
+                src={proofPreview}
+                alt="Payment proof preview"
+                className="w-12 h-12 rounded-md object-cover border border-neutral-300"
+              />
+            )}
+          <input
+            ref={proofInputRef}
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (!file) return;
+              setProofFile(file);
+              setProofPreview(URL.createObjectURL(file));
+              handleProofUpload(file);
+            }}
+          />
+        </div>
       </div>
     </div>
   );

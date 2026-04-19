@@ -50,6 +50,12 @@ type eventdetails = {
   }[];
 };
 
+type Coupon = {
+  id: number;
+  code: string;
+  amount: number;
+};
+
 type transactiondetails = {
   userId: string;
   items: [
@@ -63,17 +69,23 @@ type transactiondetails = {
 export default function Transaction() {
   const [isvoucher, setIsvoucher] = useState<boolean>(false);
   const [ispoints, setIspoints] = useState<boolean>(false);
+  const [iscoupon, setIscoupon] = useState<boolean>(false);
   const [points, setPoints] = useState<number>(0);
   const [tickets, setTickets] = useState<Ticket[]>([]);
   const [eventdetails, setEventdetails] = useState<eventdetails | null>(null);
   const [searchParams] = useSearchParams();
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isloading, setIsloading] = useState(false);
+  const [subtotal, setsubTotal] = useState<number>(0);
   const [total, setTotal] = useState<number>(0);
+  const [coupondiscount, setCoupondiscount] = useState<number>(0);
   const [cartResetKey, setCartResetKey] = useState(0);
+  const [coupons, setCoupons] = useState<Coupon[]>([]);
+  const [selectedCoupon, setSelectedCoupon] = useState<Coupon | null>(null);
   const { user } = useAppStore();
   const navigate = useNavigate();
   const eventId = searchParams.get("eventId");
+  const preselectedTicketId = Number(searchParams.get("ticketId"));
 
   useEffect(() => {
     const fetchTickets = async () => {
@@ -96,17 +108,39 @@ export default function Transaction() {
       }
     };
     fetchpoints();
+
+    const fetchCoupons = async () => {
+      if (!user?.id) return;
+      try {
+        const { data } = await axiosInstance.get(`/coupons/all/${user.id}`);
+        setCoupons(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchCoupons();
   }, [eventId]);
 
   useEffect(() => {
-    const subtotal = cart.reduce((a, item) => a + item.price * item.qty, 0);
-    const voucherdiscount = isvoucher? eventdetails?.vouchers[0]?.discamount ?? 0 : 0
-    const pointsdiscount = ispoints? points ?? 0 : 0
-    const total = subtotal - voucherdiscount - pointsdiscount
+    if (!preselectedTicketId || tickets.length === 0) return;
+    const ticket = tickets.find((t) => t.id === preselectedTicketId);
+    if (!ticket) return;
+    setCart([{ id: ticket.id, ticketLevel: ticket.ticketLevel, price: ticket.price, availableTicket: ticket.availableTicket, qty: 1 }]);
+  }, [tickets]);
 
-    if (total<0) return setTotal(0)
+  useEffect(() => {
+    const subtotal = cart.reduce((a, item) => a + item.price * item.qty, 0);
+    const voucherdiscount = isvoucher ? eventdetails?.vouchers[0]?.discamount ?? 0 : 0;
+    const pointsdiscount = ispoints ? points ?? 0 : 0;
+    const totalbeforecoupon = subtotal - voucherdiscount - pointsdiscount;
+    setsubTotal(totalbeforecoupon)
+    const coupondiscount = selectedCoupon ? totalbeforecoupon * (selectedCoupon.amount / 100) : 0;
+    setCoupondiscount(coupondiscount)
+    const total = totalbeforecoupon - coupondiscount;
+
+    if (total < 0) return setTotal(0);
     return setTotal(total);
-  }, [cart, isvoucher , ispoints]);
+  }, [cart, isvoucher, ispoints, selectedCoupon]);
 
   const processTransaction = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -122,6 +156,8 @@ export default function Transaction() {
       const payload = {
         userId: Number(user?.id),
         pointsUsed:points,
+        eventId: Number(eventId),
+        couponId:selectedCoupon?.id ?? null,
         ...voucherPayload,
         items: cart.map(({ id: ticketId, qty: quantity }) => ({
           ticketId,
@@ -208,6 +244,9 @@ export default function Transaction() {
                     onClick={() => {
                       setCart([]);
                       setCartResetKey((k) => k + 1);
+                      setIscoupon(false)
+                      setIsvoucher(false)
+                      setIspoints(false)
                     }}
                     className="underline hover:text-red-600 cursor-pointer text-sm"
                   >
@@ -241,6 +280,23 @@ export default function Transaction() {
                   </div>
                 ) : (
                   ""
+                )}
+                <hr className="border-neutral-300"></hr>
+                <div className="items-center flex justify-between">
+                    <span className="text-sm">Sub-Total</span>
+                    <strong className="text-neutral-300 text-[12px] flex">
+
+                      IDR {formatThousand(subtotal ?? 0)}
+                    </strong>
+                  </div>
+
+                {selectedCoupon && (
+                  <div className="items-center flex justify-between">
+                    <span className="text-sm">Coupon ({selectedCoupon.amount}%)</span>
+                    <strong className="text-red-300 text-[12px]">
+                      IDR -{formatThousand(coupondiscount)}
+                    </strong>
+                  </div>
                 )}
 
                 <div className="items-center flex justify-between">
@@ -281,6 +337,26 @@ export default function Transaction() {
               </div>
             ) : (
               ""
+            )}
+            {coupons.length > 0 && (
+              <div className="w-full h-fit border justify-between rounded-lg text-neutral-500 font-[inter] flex items-center border-neutral-300 p-5 drop-shadow-lg bg-white gap-3">
+                <p className="whitespace-nowrap">Use Coupon</p>
+                <select
+                  className="flex-1 border border-neutral-300 rounded-md px-2 py-1 text-sm text-neutral-700 bg-white"
+                  value={selectedCoupon?.id ?? ""}
+                  onChange={(e) => {
+                    const found = coupons.find((c) => c.id === Number(e.target.value));
+                    setSelectedCoupon(found ?? null);
+                  }}
+                >
+                  <option value="">-- No coupon --</option>
+                  {coupons.map((c) => (
+                    <option key={c.id} value={c.id}>
+                      {c.code}  {formatThousand(c.amount ?? 0)}% off
+                    </option>
+                  ))}
+                </select>
+              </div>
             )}
           </div>
         </div>
