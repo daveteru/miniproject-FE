@@ -15,6 +15,8 @@ import {
   getCountdown,
 } from "../utility/dateconvert";
 import Ticketcontent from "../components/Ticketcontent";
+import Revieweditor from "../components/Revieweditor";
+import { useAppStore } from "../store/useAppStore";
 
 type EventDetailsAPI = {
   id: number;
@@ -48,12 +50,12 @@ type EventDetailsAPI = {
     amount: number;
     id?: number;
   }[];
-    reviews: {
+  reviews: {
     text: string;
     rating: number;
     reviewer: {
-      fullName:string;
-      avatar:string
+      fullName: string;
+      avatar: string;
     };
   }[];
 };
@@ -64,6 +66,7 @@ export default function Events() {
   const [event, setEvent] = useState<EventDetailsAPI | null>(null);
   const [ispromo, setIspromo] = useState<boolean>(false);
   const [fromprice, setFromprice] = useState<number[]>([]);
+  const user = useAppStore((state) => state.user);
 
   useEffect(() => {
     const fetchEvent = async () => {
@@ -255,13 +258,26 @@ export default function Events() {
                 </ul>
               </div>
             </article>
-
-            <div className=" my-10">
-              <h1 className="my-2">REVIEWS</h1>
-              {event?.reviews?.map((e)=>(
-                <Review text={e.text} rating={e.rating} reviewername={e.reviewer.fullName} revieweravatar={e.reviewer.avatar} />
-              ))}
-            </div>
+            <h1 className="mt-10 mb-5">EVENT REVIEWS</h1>
+            {event?.endDate &&
+            new Date(event.endDate).getTime() < new Date().getTime() ? (
+              <article>
+                <Revieweditor username={user?.fullName} avatar={user?.avatar ?? undefined} userId={user?.id} eventId={event.id} />
+                {event?.reviews?.map((e) => (
+                  <Review
+                    text={e.text}
+                    rating={e.rating}
+                    reviewername={e.reviewer.fullName}
+                    revieweravatar={e.reviewer.avatar}
+                  />
+                ))}
+              </article>
+            ) : (
+              <div className="w-full text-neutral-300 border-2 min-h-100 border-neutral-200  border-dashed rounded-3xl  flex items-center justify-center">
+                {" "}
+                Reviews are available once the event has ended.{" "}
+              </div>
+            )}
           </section>
           {/* end of sticky bar parent */}
 
@@ -277,11 +293,18 @@ export default function Events() {
               </div>
               {ispromo ? (
                 <div className="bg-amber-500 w-full p-5 text-white h-20">
-                 <div className="flex justify-between"> <h1 className="text-sm">LIMITED VOUCHER</h1> <small>{event?.vouchers[0].amount} remaining</small></div>
+                  <div className="flex justify-between">
+                    {" "}
+                    <h1 className="text-sm">LIMITED VOUCHER</h1>{" "}
+                    <small>{event?.vouchers[0].amount} remaining</small>
+                  </div>
                   <div className="flex justify-between items-center">
-                    <strong>IDR {formatThousand(event?.vouchers[0].discamount ?? 0)}</strong>
+                    <strong>
+                      IDR {formatThousand(event?.vouchers[0].discamount ?? 0)}
+                    </strong>
                     <small className="">
-                      Expires at: {formatDate(event?.vouchers[0].expiredDate?? "")}
+                      Expires at:{" "}
+                      {formatDate(event?.vouchers[0].expiredDate ?? "")}
                     </small>
                   </div>
                 </div>
