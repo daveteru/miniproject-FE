@@ -152,6 +152,7 @@ export default function Events() {
                   description={""}
                   price={t.price}
                   eventId={id}
+                  ticketId={t.id}
                   availableTicket={t.availableTicket}
                 />
               ))}
