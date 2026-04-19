@@ -1,7 +1,13 @@
 export interface MyEvent {
-  id: number;
+  id: string;
   name: string;
-  thumbnail: string;
   artist: string;
+  location: string;
+  city: string;
+  startDate: string;
+  endDate: string;
+  thumbnail: string;
+  totalTicket: number;
+  category: string;
   description: string;
 }

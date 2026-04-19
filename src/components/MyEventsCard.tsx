@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 
 interface MyEventsCardProps {
-  id: number;
+  id: string;
   name: string;
   thumbnail: string;
   artist: string;

@@ -36,7 +36,7 @@ export default function MyEventDetail() {
 
       <div className="flex flex-col gap-5">
         <MyEventDetailNav />
-        <Outlet />
+        <Outlet context={ event } />
       </div>
     </div>
   );
