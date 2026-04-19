@@ -4,18 +4,17 @@ import ticketicon from "../assets/icons/Ticket_use_fill.svg";
 import Landingpagecategory from "../components/Landingpagecategory";
 import Partners from "../components/Partners";
 import Review from "../components/Review";
+import Revieweditor from "../components/Revieweditor";
 import {
   default as Smalldetails
 } from "../components/Smalldetails";
 import Ticketcontent from "../components/Ticketcontent";
 import { axiosInstance } from "../lib/axios";
+import { useAppStore } from "../store/useAppStore";
 import {
   formatDate,
   formatThousand
 } from "../utility/dateconvert";
-import Ticketcontent from "../components/Ticketcontent";
-import Revieweditor from "../components/Revieweditor";
-import { useAppStore } from "../store/useAppStore";
 
 type EventDetailsAPI = {
   id: number;
