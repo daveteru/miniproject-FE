@@ -9,13 +9,12 @@ import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import "./index.css";
 import { authLoader, loggedInLoader } from "./loaders/auth";
-import Createpage from "./pages/Createpage";
-import Discover from "./pages/Discover";
+import Createpage from "./pages/Create-event/Createpage";
+import Discover from "./pages/Discover/Discover";
 import EventManager from "./pages/EventManager";
 import EventManagerMyEvents from "./pages/EventManagerMyEvents";
-import Events from "./pages/Events";
 import ForgotPassword from "./pages/ForgotPassword";
-import Home from "./pages/Home";
+import Home from "./pages/Home/Home";
 import Login from "./pages/Login";
 import MyEventDetail from "./pages/MyEventDetail";
 import MyEventDetailAttendees from "./pages/MyEventDetailAttendees";
@@ -24,10 +23,11 @@ import MyEventDetailStats from "./pages/MyEventDetailStats";
 import Privacy from "./pages/Privacy";
 import Register from "./pages/Register";
 import ResetPassword from "./pages/ResetPassword";
-import Reviews from "./pages/Reviews";
-import Transaction from "./pages/Transaction";
-import Userpage from "./pages/Userpage";
+import Reviews from "./pages/Reviews/Reviews";
+import Transaction from "./pages/Transaction/Transaction";
+import Userpage from "./pages/Userpage/Userpage";
 import EventManagerTransactions from "./pages/EventManagerTransactions";
+import Events from "./pages/Events/Events";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -56,7 +56,6 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <Home /> },
       { path: "/discover", element: <Discover /> },
-      { path: "/reviews", element: <Reviews /> },
       { path: "/events/:id", element: <Events /> },
       {
         path: "/profile",
@@ -95,6 +94,11 @@ const router = createBrowserRouter([
           {
             path: "create-event",
             element: <Createpage />,
+          },
+          {
+            path: "reviews",
+            element: <Reviews />,
+            loader: authLoader(["ORGANIZER"]),
           },
         ],
       },

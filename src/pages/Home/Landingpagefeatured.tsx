@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { axiosInstance } from "../lib/axios";
-import Featuredcard from "./Featuredcard";
+import { axiosInstance } from "../../lib/axios";
+import Featuredcard from "../../components/Featuredcard";
 
 type FeaturedEvents = {
   id: number;

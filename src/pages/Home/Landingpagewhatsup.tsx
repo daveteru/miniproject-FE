@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { axiosInstance } from "../lib/axios";
-import Buttonlocation from "./Buttonlocation";
-import Card from "./Card";
+import { axiosInstance } from "../../lib/axios";
+import Buttonlocation from "../../components/Buttonlocation";
+import Card from "../../components/Card";
 
 type EventAPI = {
   data: Eventsprops[];

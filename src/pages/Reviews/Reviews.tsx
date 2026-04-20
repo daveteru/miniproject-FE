@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
-import Reviewpagecard from "../components/Reviewpagecard";
-import Sidebar from "../components/Sidebar";
-import { axiosInstance } from "../lib/axios";
+import Reviewpagecard from "./Reviewpagecard";
+import Sidebar from "../../components/Sidebar";
+import { axiosInstance } from "../../lib/axios";
 
 type ReviewItem = {
   id: number;
@@ -35,8 +35,7 @@ export default function Reviews() {
 
   return (
     <div className="w-full flex min-h-screen">
-      <Sidebar />
-      <div className="w-[70%] max-w-225 flex flex-col bg-white px-5 py-8">
+      <div className="w-[70%] max-w-250 flex flex-col bg-white px-10 py-8">
         <nav className="text-xs uppercase tracking-wide text-neutral-500 mb-1">
           <Link to="/">
             <span className="hover:text-neutral-900 cursor-pointer">Home</span>
@@ -45,7 +44,7 @@ export default function Reviews() {
           <span className="text-neutral-700">Reviews</span>
         </nav>
         <h1 className="text-2xl font-bold text-neutral-900 mb-8">My Reviews</h1>
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col lg:grid lg:grid-cols-3 gap-4">
           {reviews.map((r) => (
             <Reviewpagecard
               key={r.id}

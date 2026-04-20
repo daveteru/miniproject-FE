@@ -1,11 +1,11 @@
-import Hero from "../components/Hero";
-import Landingpagecategory from "../components/Landingpagecategory";
-import Landingpagefeatured from "../components/Landingpagefeatured";
-import Landingpagesoon from "../components/Landingpagesoon";
-import Landingpagewhatsup from "../components/Landingpagewhatsup";
-import Marquee from "../components/Marquee";
-import Partners from "../components/Partners";
-import Searchbar from "../components/Searchbar";
+import Landingpagecategory from "./Home/Landingpagecategory";
+import Landingpagefeatured from "./Home/Landingpagefeatured";
+import Landingpagesoon from "./Home/Landingpagesoon";
+import Landingpagewhatsup from "./Home/Landingpagewhatsup";
+import Partners from "./Home/Partners";
+import Searchbar from "./Home/Searchbar";
+import Hero from "./Home/Hero";
+import Marquee from "./Home/Marquee";
 
 export default function Home() {
   return (

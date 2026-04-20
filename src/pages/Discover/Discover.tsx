@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router";
-import YellowButton from "../components/Buttons";
-import DiscoverCard from "../components/DiscoverCard";
-import { Searchbar2 } from "../components/Searchbar";
-import { axiosInstance } from "../lib/axios";
+import YellowButton from "./Buttons";
+import DiscoverCard from "./DiscoverCard";
+import { Searchbar2 } from "../Home/Searchbar";
+import { axiosInstance } from "../../lib/axios";
 
 type Eventsprops = {
   id: number;

@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router";
-import { formatThousand } from "../utility/dateconvert";
+import { formatThousand } from "../../utility/dateconvert";
 
 type ticketcontentprops = {
   ticketlevel: string;
@@ -33,9 +33,7 @@ export default function Ticketcontent({
       <div className="h-full w-[40%]  flex items-center justify-end">
         <button
           className="w-fit h-fit px-5 py-2 bg-[#E6FF06]  hover:bg-amber-300 rounded-xl cursor-pointer transition ease-in"
-          onClick={() =>
-            navigate(`/transaction?eventId=${eventId}&ticketId=${ticketId}`)
-          }
+          onClick={() => navigate(`/transaction?eventId=${eventId}&ticketId=${ticketId}&amount=1`)}
         >
           IDR {formatThousand(price)}
         </button>

@@ -1,12 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import useEditProfile from "../hooks/users/useEditProfile";
+import useEditProfile from "../../hooks/users/useEditProfile";
 import {
   editProfileSchema,
   type EditProfileSchema,
-} from "../schemas/editProfileSchema";
-import { useAppStore } from "../store/useAppStore";
+} from "../../schemas/editProfileSchema";
+import { useAppStore } from "../../store/useAppStore";
 import UserpageProfileAvatar from "./UserpageProfileAvatar";
 
 export default function UserpageProfile() {

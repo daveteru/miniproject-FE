@@ -1,10 +1,11 @@
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 import { useAppStore } from "../store/useAppStore";
 
 const NAV_ITEMS = [
   { label: "My Events", href: "my-events" },
   { label: "Transactions", href: "transactions" },
   { label: "Create Events", href: "create-event" },
+  { label: "Reviews", href: "reviews" },
 ];
 
 export default function EventManagerSidebar() {
@@ -13,24 +14,26 @@ export default function EventManagerSidebar() {
   return (
     <aside className="flex flex-col w-[25%] justify-between bg-neutral-100 border border-neutral-200">
       <div>
-        <div className="flex items-center gap-3 px-6 py-6 border-b border-neutral-200">
-          {user?.avatar ? (
-            <img
-              src={user.avatar}
-              alt={user?.fullName || "Username"}
-              className="w-10 h-10 rounded-full object-cover"
-            />
-          ) : (
-            <div className="w-10 h-10 rounded-full bg-neutral-300" />
-          )}
-          <div className="text-sm leading-tight">
-            <span className="text-neutral-500">Hello,</span>
-            <br />
-            <span className="font-semibold text-neutral-900 uppercase tracking-wide">
-              {user?.fullName || "USER123"}
-            </span>
+        <Link to="/profile">
+          <div className="flex items-center gap-3 px-6 py-6 border-b border-neutral-200">
+            {user?.avatar ? (
+              <img
+                src={user.avatar}
+                alt={user?.fullName || "Username"}
+                className="w-10 h-10 rounded-full object-cover"
+              />
+            ) : (
+              <div className="w-10 h-10 rounded-full bg-neutral-300" />
+            )}
+            <div className="text-sm leading-tight">
+              <span className="text-neutral-500">Hello,</span>
+              <br />
+              <span className="font-semibold text-neutral-900 uppercase tracking-wide">
+                {user?.fullName || "USER123"}
+              </span>
+            </div>
           </div>
-        </div>
+        </Link>
 
         <nav className="flex flex-col py-2">
           {NAV_ITEMS.map((item) => (

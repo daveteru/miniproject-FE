@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router";
-import ticketicon from "../assets/icons/Ticket_use_fill.svg";
-import Landingpagecategory from "../components/Landingpagecategory";
-import Partners from "../components/Partners";
-import Review from "../components/Review";
-import Revieweditor from "../components/Revieweditor";
-import { default as Smalldetails } from "../components/Smalldetails";
-import Ticketcontent from "../components/Ticketcontent";
-import { axiosInstance } from "../lib/axios";
-import { useAppStore } from "../store/useAppStore";
-import { formatDate, formatThousand } from "../utility/dateconvert";
+import ticketicon from "../../assets/icons/Ticket_use_fill.svg";
+import Landingpagecategory from "../Home/Landingpagecategory";
+import Partners from "../Home/Partners";
+import Review from "./Review";
+import Revieweditor from "./Revieweditor";
+import { default as Smalldetails } from "../../components/Smalldetails";
+import Ticketcontent from "./Ticketcontent";
+import { axiosInstance } from "../../lib/axios";
+import { useAppStore } from "../../store/useAppStore";
+import { formatDate, formatThousand } from "../../utility/dateconvert";
 
 type EventDetailsAPI = {
   id: number;
@@ -82,7 +82,7 @@ export default function Events() {
         <img
           src={event?.thumbnail}
           alt=""
-          className="object-cover w-full h-full blur scale-110"
+          className="object-cover w-full h-full  scale-110"
         />
       </div>
       <div className="w-full h-10 bg-black"></div>
