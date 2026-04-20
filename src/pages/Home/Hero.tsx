@@ -2,19 +2,19 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
 import { useEffect, useRef, useState } from "react";
-import { useNavAnimation } from "../hooks/useNavAnimation";
-import { axiosInstance } from "../lib/axios";
+import { useNavAnimation } from "../../hooks/useNavAnimation";
+import { axiosInstance } from "../../lib/axios";
+import { useNavigate } from "react-router";
 
 gsap.registerPlugin(SplitText);
-// const heroImg3 =
-//   "https://res.cloudinary.com/dbjnkjxli/image/upload/f_auto,q_auto/1_jar4xn";
+const heroImg3 = "https://res.cloudinary.com/dbjnkjxli/image/upload/f_auto,q_auto/1_jar4xn";
 
 // 2. Define the type matching your backend response
 type HeroSlide = {
   id: number;
-  priority: string;
-  status: string;
-  eventId: number;
+  priority:string;
+  status:string
+  eventId:number;
   event: {
     name: string;
     startDate: string;
@@ -30,6 +30,7 @@ export default function Hero() {
   const [herocontent, setHerocontent] = useState<HeroSlide[]>([]);
   const [loading, setLoading] = useState(true);
   const carousellcontainer = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate()
 
   // Carousell Animation
 
@@ -61,10 +62,11 @@ export default function Hero() {
       .get<HeroSlide[]>("/promotions/hero")
       .then((res) => {
         setHerocontent(res.data);
-      })
+            })
       .catch((err) => console.error(err))
       .finally(() => setLoading(false));
   }, []);
+
 
   if (loading || herocontent.length === 0) {
     return (
@@ -128,9 +130,10 @@ export default function Hero() {
 
       {/* Gradient overlay on top of image */}
 
-      <div className="absolute inset-0 z-0 bg-linear-to-t from-black/50 to-black/20 lg:to-transparent " />
+      <div className="absolute inset-0 z-0 bg-gradient-to-t from-black/50 to-black/20 lg:to-transparent " />
 
       <div className="container w-screen mx-auto py-12 px-5 lg:px-30 relative z-2 flex flex-col lg:flex-row h-full  justify-end items-end">
+        
         {/* text content top layer */}
         <div className="flex flex-col justify-between  w-full h-full  mb-5 lg:mb-0">
           <div>
@@ -143,9 +146,7 @@ export default function Hero() {
                 day: "2-digit",
                 month: "2-digit",
                 year: "numeric",
-              }).format(
-                new Date(herocontent[carousellpage - 1].event.startDate),
-              )}
+              }).format(new Date(herocontent[carousellpage - 1].event.startDate))}
             </h1>
           </div>
           <div
@@ -159,6 +160,7 @@ export default function Hero() {
               onMouseEnter={onEnter}
               onMouseLeave={onLeave}
               className="w-fit transition-all ease-in-out h-fit py-2 px-5 bg-[#E6FF06] text-black  hover:bg-[#dbb303] rounded-xl font-krona-one"
+              onClick={()=>navigate(`/events/${herocontent[carousellpage-1].eventId}`)}
             >
               BUY TICKETS
             </button>

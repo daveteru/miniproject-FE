@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
-import { useAppStore } from "../store/useAppStore";
-import { axiosInstance } from "../lib/axios";
-import type { Coupon } from "../types/coupon";
+import { useAppStore } from "../../store/useAppStore";
+import { axiosInstance } from "../../lib/axios";
+import type { Coupon } from "../../types/coupon";
 import UserpageRewardsCouponCard from "./UserpageRewardsCouponCard";
-import pointsIcon from "../assets/icons/points_icon.svg";
-import { formatThousand } from "../utility/dateconvert";
+import pointsIcon from "../../assets/icons/points_icon.svg";
+import { formatThousand } from "../../utility/dateconvert";
 import { useState } from "react";
-import type { PageableResponse } from "../types/pagination";
-import Pagination from "./Pagination";
+import type { PageableResponse } from "../../types/pagination";
+import Pagination from "../../components/Pagination";
 
 export default function UserpageRewards() {
   const userId = useAppStore.getState().user?.id;

@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router";
-import discountticket from "../assets/icons/discount.svg";
-import Cartcard from "../components/Cartcard";
-import { Smalldetailstransaction } from "../components/Smalldetails";
-import TicketCard, { type CartItem } from "../components/TicketCard";
-import Toggler from "../components/Toggler";
-import { axiosInstance } from "../lib/axios";
-import { useAppStore } from "../store/useAppStore";
-import { formatThousand } from "../utility/dateconvert";
-import pointsicon from "../assets/icons/points_icon.svg";
+import discountticket from "../../assets/icons/discount.svg";
+import Cartcard from "./Cartcard";
+import { Smalldetailstransaction } from "../../components/Smalldetails";
+import TicketCard, { type CartItem } from "./TicketCard";
+import Toggler from "./Toggler";
+import { axiosInstance } from "../../lib/axios";
+import { useAppStore } from "../../store/useAppStore";
+import { formatThousand } from "../../utility/dateconvert";
+import pointsicon from "../../assets/icons/points_icon.svg";
 import toast from "react-hot-toast";
 
 type Ticket = {
@@ -57,20 +57,10 @@ type Coupon = {
   amount: number;
 };
 
-// type transactiondetails = {
-//   userId: string;
-//   items: [
-//     {
-//       ticketId: number;
-//       quantity: number;
-//     },
-//   ];
-// };
-
 export default function Transaction() {
   const [isvoucher, setIsvoucher] = useState<boolean>(false);
   const [ispoints, setIspoints] = useState<boolean>(false);
-  const [iscoupon, setIscoupon] = useState<boolean>(false);
+  const [, setIscoupon] = useState<boolean>(false);
   const [points, setPoints] = useState<number>(0);
   const [tickets, setTickets] = useState<Ticket[]>([]);
   const [eventdetails, setEventdetails] = useState<eventdetails | null>(null);
@@ -119,23 +109,36 @@ export default function Transaction() {
       }
     };
     fetchCoupons();
-  }, [eventId]);
+  }, [eventId, user?.id]);
 
   useEffect(() => {
     if (!preselectedTicketId || tickets.length === 0) return;
     const ticket = tickets.find((t) => t.id === preselectedTicketId);
     if (!ticket) return;
-    setCart([{ id: ticket.id, ticketLevel: ticket.ticketLevel, price: ticket.price, availableTicket: ticket.availableTicket, qty: 1 }]);
+    setCart([
+      {
+        id: ticket.id,
+        ticketLevel: ticket.ticketLevel,
+        price: ticket.price,
+        availableTicket: ticket.availableTicket,
+        qty: 1,
+      },
+    ]);
   }, [tickets]);
 
+  //------->cart total calculator
   useEffect(() => {
     const subtotal = cart.reduce((a, item) => a + item.price * item.qty, 0);
-    const voucherdiscount = isvoucher ? eventdetails?.vouchers[0]?.discamount ?? 0 : 0;
-    const pointsdiscount = ispoints ? points ?? 0 : 0;
+    const voucherdiscount = isvoucher
+      ? (eventdetails?.vouchers[0]?.discamount ?? 0)
+      : 0;
+    const pointsdiscount = ispoints ? (points ?? 0) : 0;
     const totalbeforecoupon = subtotal - voucherdiscount - pointsdiscount;
-    setsubTotal(totalbeforecoupon)
-    const coupondiscount = selectedCoupon ? totalbeforecoupon * (selectedCoupon.amount / 100) : 0;
-    setCoupondiscount(coupondiscount)
+    setsubTotal(totalbeforecoupon);
+    const coupondiscount = selectedCoupon
+      ? totalbeforecoupon * (selectedCoupon.amount / 100)
+      : 0;
+    setCoupondiscount(coupondiscount);
     const total = totalbeforecoupon - coupondiscount;
 
     if (total < 0) return setTotal(0);
@@ -155,9 +158,9 @@ export default function Transaction() {
         : {};
       const payload = {
         userId: Number(user?.id),
-        pointsUsed:points,
+        pointsUsed: points,
         eventId: Number(eventId),
-        couponId:selectedCoupon?.id ?? null,
+        couponId: selectedCoupon?.id ?? null,
         ...voucherPayload,
         items: cart.map(({ id: ticketId, qty: quantity }) => ({
           ticketId,
@@ -168,8 +171,8 @@ export default function Transaction() {
       toast.success("Submission sucess");
       setCart([]);
       navigate(`/events/${eventId}`);
-    } catch (err: any) {
-      toast.error("Submission failed");
+    } catch (err: unknown) {
+      alert("Submission failed");
     } finally {
       setIsloading(false);
     }
@@ -238,9 +241,9 @@ export default function Transaction() {
                     onClick={() => {
                       setCart([]);
                       setCartResetKey((k) => k + 1);
-                      setIscoupon(false)
-                      setIsvoucher(false)
-                      setIspoints(false)
+                      setIscoupon(false);
+                      setIsvoucher(false);
+                      setIspoints(false);
                     }}
                     className="underline hover:text-red-600 cursor-pointer text-sm"
                   >
@@ -277,16 +280,17 @@ export default function Transaction() {
                 )}
                 <hr className="border-neutral-300"></hr>
                 <div className="items-center flex justify-between">
-                    <span className="text-sm">Sub-Total</span>
-                    <strong className="text-neutral-300 text-[12px] flex">
-
-                      IDR {formatThousand(subtotal ?? 0)}
-                    </strong>
-                  </div>
+                  <span className="text-sm">Sub-Total</span>
+                  <strong className="text-neutral-300 text-[12px] flex">
+                    IDR {formatThousand(subtotal ?? 0)}
+                  </strong>
+                </div>
 
                 {selectedCoupon && (
                   <div className="items-center flex justify-between">
-                    <span className="text-sm">Coupon ({selectedCoupon.amount}%)</span>
+                    <span className="text-sm">
+                      Coupon ({selectedCoupon.amount}%)
+                    </span>
                     <strong className="text-red-300 text-[12px]">
                       IDR -{formatThousand(coupondiscount)}
                     </strong>
@@ -339,14 +343,16 @@ export default function Transaction() {
                   className="flex-1 border border-neutral-300 rounded-md px-2 py-1 text-sm text-neutral-700 bg-white"
                   value={selectedCoupon?.id ?? ""}
                   onChange={(e) => {
-                    const found = coupons.find((c) => c.id === Number(e.target.value));
+                    const found = coupons.find(
+                      (c) => c.id === Number(e.target.value),
+                    );
                     setSelectedCoupon(found ?? null);
                   }}
                 >
                   <option value="">-- No coupon --</option>
                   {coupons.map((c) => (
                     <option key={c.id} value={c.id}>
-                      {c.code}  {formatThousand(c.amount ?? 0)}% off
+                      {c.code} {formatThousand(c.amount ?? 0)}% off
                     </option>
                   ))}
                 </select>

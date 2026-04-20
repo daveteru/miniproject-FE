@@ -38,7 +38,7 @@ export default function EventManagerMyEvents() {
                 {events.data.map((myEvent: MyEvent) => (
                   <MyEventsCard
                     key={myEvent.id}
-                    id={myEvent.id as number}
+                    id={myEvent.id}
                     name={myEvent.name}
                     thumbnail={myEvent.thumbnail}
                     artist={myEvent.artist}

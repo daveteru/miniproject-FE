@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import searchicon from "../assets/icons/Search Icon.svg";
-import searchiconwhite from "../assets/icons/Search_icon_white.svg";
+import searchicon from "../../assets/icons/Search Icon.svg";
+import searchiconwhite from "../../assets/icons/Search_icon_white.svg";
 
 type searchbar2props = {
   setCity: React.Dispatch<React.SetStateAction<string>>;

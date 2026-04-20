@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 
 import { Link } from "react-router";
-import Bookinghistory from "../components/Bookinghistory";
-import Sidebar from "../components/Sidebar";
-import UserpageProfile from "../components/UserpageProfile";
-import UserpageRewards from "../components/UserpageRewards";
-import { axiosInstance } from "../lib/axios";
-import { useAppStore } from "../store/useAppStore";
+import Bookinghistory from "./Bookinghistory";
+import Sidebar from "../../components/Sidebar";
+import UserpageProfile from "./UserpageProfile";
+import UserpageRewards from "./UserpageRewards";
+import { axiosInstance } from "../../lib/axios";
+import { useAppStore } from "../../store/useAppStore";
 
 type TransactionItem = {
   id: string;
@@ -88,7 +88,7 @@ export default function formpage() {
     <div className="w-full  flex min-h-screen">
       <Sidebar />
       <div className="flex-1 flex overflow-y-auto bg-neutral-100">
-        <div className="w-[70%] max-w-275 flex flex-col  bg-white px-5  py-8">
+        <div className="w-[70%] max-w-275 flex flex-col  bg-white px-10  py-8">
           {/* Breadcrumb */}
           <nav className="text-xs uppercase tracking-wide text-neutral-500 mb-1">
             <Link to="/">

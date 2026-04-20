@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { axiosInstance } from "../lib/axios";
-import Card from "./Card";
+import { axiosInstance } from "../../lib/axios";
+import Card from "../../components/Card";
 
 type LandingpagecategoryProps = {
   title: string;

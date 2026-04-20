@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
-import accordionicon from "../assets/icons/accordionicon.svg";
-import ticketicon from "../assets/icons/ticket.svg";
-import uploadicon from "../assets/icons/uploadicon.svg";
-import { axiosInstance } from "../lib/axios";
+import accordionicon from "../../assets/icons/accordionicon.svg";
+import ticketicon from "../../assets/icons/ticket.svg";
+import uploadicon from "../../assets/icons/uploadicon.svg";
+import { axiosInstance } from "../../lib/axios";
 import {
   formatCountdown,
   formatDate,
   formatThousand,
-} from "../utility/dateconvert";
+} from "../../utility/dateconvert";
 import TransactionStatusIndicator from "./TransactionStatusIndicator";
 
 type TransactionItem = {
@@ -83,7 +83,7 @@ export default function Bookinghistory({
   const [proofPreview, setProofPreview] = useState<string | null>(
     paymentProof ?? null,
   );
-  const [proofFile, setProofFile] = useState<File | null>(null);
+  const [, setProofFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const proofInputRef = useRef<HTMLInputElement>(null);
 
@@ -128,7 +128,7 @@ export default function Bookinghistory({
           <img
             src={accordionicon}
             alt=""
-            className={`${isopen ? "rotate-[270deg] duration-400" : "rotate-180 duration-400"}  transition-transform ease-in-out`}
+            className={`${isopen ? "rotate-270 duration-400" : "rotate-180 duration-400"}  transition-transform ease-in-out`}
           />
         </div>
       </button>

@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { useAppStore } from "../store/useAppStore";
+import { useAppStore } from "../../store/useAppStore";
 
 interface AvatarProps {
   onFileSelect: (file: File) => void;

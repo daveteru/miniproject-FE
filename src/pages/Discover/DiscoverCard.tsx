@@ -26,10 +26,7 @@ export default function DiscoverCard({
         </div>
         <div className="">
           <h1>{title}</h1>
-          <p>
-            {artist} - {category} - {city}
-          </p>
-          <p>FROM IDR 100.000 - ★ 4.0 - 4 Reviews</p>
+          <p>{artist} - {category} - {city}</p>
         </div>
       </div>
     </Link>

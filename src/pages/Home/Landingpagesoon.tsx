@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { axiosInstance } from "../lib/axios";
-import { formatDate } from "../utility/dateconvert";
-import Cardsoon from "./Cardsoon";
+import { axiosInstance } from "../../lib/axios";
+import { formatDate } from "../../utility/dateconvert";
+import Cardsoon from "../../components/Cardsoon";
 
 type Eventsprops = {
   id: number;
@@ -55,6 +55,7 @@ export default function Landingpagesoon() {
                 date={formatDate(e.startDate)}
                 city={e.city}
                 thumbnail={e.thumbnail}
+                id={e.id}
               />
             ))}
           </div>
