@@ -8,7 +8,6 @@ type Ticket = {
 
 type Props = {
   tickets: Ticket[];
-  freetoggle: boolean;
   onTicketChange: (index: number, field: string, value: string | number) => void;
   onAddTicket: () => void;
   onRemoveTicket: (index: number) => void;
