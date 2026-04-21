@@ -35,7 +35,7 @@ export default function Ticketcontent({
           className="w-fit h-fit px-5 py-2 bg-[#E6FF06]  hover:bg-amber-300 rounded-xl cursor-pointer transition ease-in"
           onClick={() => navigate(`/transaction?eventId=${eventId}&ticketId=${ticketId}&amount=1`)}
         >
-          IDR {formatThousand(price)}
+         {price===0? "FREE":formatThousand(price)}
         </button>
       </div>
     </div>

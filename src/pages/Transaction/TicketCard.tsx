@@ -15,6 +15,7 @@ type ticketcardprops = {
   price: number;
   availableTicket: number;
   setCart: Dispatch<SetStateAction<CartItem[]>>;
+  initialQty?: number;
 };
 
 export default function TicketCard({
@@ -23,8 +24,9 @@ export default function TicketCard({
   price,
   availableTicket,
   setCart,
+  initialQty = 0,
 }: ticketcardprops) {
-  const [qty, setQty] = useState(0);
+  const [qty, setQty] = useState(initialQty);
 
   const updateCart = (newQty: number) => {
     setCart((prev) => {

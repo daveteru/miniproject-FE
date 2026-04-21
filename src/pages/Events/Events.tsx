@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
 import ticketicon from "../../assets/icons/Ticket_use_fill.svg";
 import Landingpagecategory from "../Home/Landingpagecategory";
 import Partners from "../Home/Partners";
@@ -101,9 +101,9 @@ export default function Events() {
                 <div className="font-bold">
                   <p className="font-bold">
                     IDR{" "}
-                    {fromprice.length > 0
-                      ? formatThousand(Math.min(...fromprice))
-                      : "-"}
+                    {fromprice[0] === 0
+                      ? "-"
+                      : formatThousand(Math.min(...fromprice))}
                   </p>
                 </div>
               </div>
@@ -113,7 +113,7 @@ export default function Events() {
                   targetRef.current?.scrollIntoView({ behavior: "smooth" })
                 }
               >
-                BUY TICKETS
+                GET TICKETS
               </button>
             </div>
           </div>
@@ -136,9 +136,12 @@ export default function Events() {
               ref={targetRef}
               className="scroll-mt-25 w-full h-fit drop-shadow-xl bg-white border border-gray-100  rounded-2xl my-15 flex flex-col gap-2 p-5"
             >
-              <div className=" w-full h-10 items-center flex gap-2">
-                <img src={ticketicon} alt="" />
-                <h1>TICKETS</h1>
+              <div className=" w-full h-10 items-center flex justify-between">
+                <div className="flex gap-2">
+                  <img src={ticketicon} alt="" />
+                  <h1>TICKETS</h1>
+                </div>
+                {fromprice.length===0 ?<button className="font-krona-one  bg-[#e5ff07] px-5 py-2 rounded-2xl hover:bg-amber-300 transition ease-in">OPEN FOR PUBLIC</button>:""}
               </div>
               {event?.tickets?.map((t) => (
                 <Ticketcontent

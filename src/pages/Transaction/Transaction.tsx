@@ -77,6 +77,7 @@ export default function Transaction() {
   const navigate = useNavigate();
   const eventId = searchParams.get("eventId");
   const preselectedTicketId = Number(searchParams.get("ticketId"));
+  const preselectedAmount = Number(searchParams.get("amount")) || 1;
 
   useEffect(() => {
     const fetchTickets = async () => {
@@ -94,8 +95,7 @@ export default function Transaction() {
       try {
         const { data } = await axiosInstance.get(`/points/user/${user?.id}`);
         setPoints(data.totalPoints);
-      } catch (err) {
-      }
+      } catch (err) {}
     };
     fetchpoints();
 
@@ -121,7 +121,7 @@ export default function Transaction() {
         ticketLevel: ticket.ticketLevel,
         price: ticket.price,
         availableTicket: ticket.availableTicket,
-        qty: 1,
+        qty: preselectedAmount,
       },
     ]);
   }, [tickets]);
@@ -202,6 +202,7 @@ export default function Transaction() {
                   price={t.price}
                   availableTicket={t.availableTicket}
                   setCart={setCart}
+                  initialQty={t.id === preselectedTicketId ? preselectedAmount : 0}
                 />
               ))}
             </div>

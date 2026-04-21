@@ -39,9 +39,11 @@ export default function Featuredcard({
           </div>
 
           <div className="px-5 py-1 border rounded-full flex items-center">
-            {lowestPrice !== null
-              ? `from IDR ${formatThousand(lowestPrice)}`
-              : "FREE"}
+            {lowestPrice === null
+              ? "OPEN FOR PUBLIC"
+              : lowestPrice === 0
+              ? "FREE"
+              : `from IDR ${formatThousand(lowestPrice)}`}
           </div>
         </div>
       </div>
