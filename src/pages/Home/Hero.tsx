@@ -7,7 +7,6 @@ import { axiosInstance } from "../../lib/axios";
 import { useNavigate } from "react-router";
 
 gsap.registerPlugin(SplitText);
-const heroImg3 = "https://res.cloudinary.com/dbjnkjxli/image/upload/f_auto,q_auto/1_jar4xn";
 
 // 2. Define the type matching your backend response
 type HeroSlide = {
@@ -130,7 +129,7 @@ export default function Hero() {
 
       {/* Gradient overlay on top of image */}
 
-      <div className="absolute inset-0 z-0 bg-gradient-to-t from-black/50 to-black/20 lg:to-transparent " />
+      <div className="absolute inset-0 z-0 bg-linear-to-t from-black/50 to-black/20 lg:to-transparent " />
 
       <div className="container w-screen mx-auto py-12 px-5 lg:px-30 relative z-2 flex flex-col lg:flex-row h-full  justify-end items-end">
         
