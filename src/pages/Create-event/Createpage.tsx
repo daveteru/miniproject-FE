@@ -6,10 +6,22 @@ import Createpage_promotions from "./Createpage_promotions";
 import FormText, { FormDate } from "../../components/FormComponent";
 import { axiosInstance } from "../../lib/axios";
 import { useAppStore } from "../../store/useAppStore";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { editEventSchema, type EditEventSchema } from "../../schemas/editEventSchema";
 
 export default function Createpage() {
   const user = useAppStore((state) => state.user);
   const EMPTY_TICKET = { ticketLevel: "reguler", price: 0, availableTicket: 0 };
+  
+    const {
+      register,
+      handleSubmit,
+      formState: { errors },
+      setValue,
+    } = useForm<EditEventSchema>({
+      resolver: zodResolver(editEventSchema),
+    });
 
   const [form, setForm] = useState({
     event: {
@@ -85,7 +97,7 @@ export default function Createpage() {
     setForm((prev) => ({ ...prev, event: { ...prev.event, thumbnail: file } }));
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmitEvent = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (form.tickets.length === 0) {
       alert("at least required 1 ticket");
@@ -144,7 +156,7 @@ export default function Createpage() {
           Create new Event
         </h1>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmitEvent}>
           {/* Top section: fields + thumbnail */}
           <div className="flex gap-8 mb-6">
             {/* Left column — inputs */}
