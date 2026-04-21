@@ -1,7 +1,7 @@
 import calendaricon from "../assets/icons/Calendar.svg";
 import locationicon from "../assets/icons/location_pin.svg";
 import categoryicon from "../assets/icons/Shopping Tag.svg";
-import { formatDate } from "../utility/dateconvert";
+import { formatDate } from "../utility/utils";
 
 type smalldetailsprops = {
   location: string | undefined;

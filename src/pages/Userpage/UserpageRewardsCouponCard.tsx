@@ -1,6 +1,6 @@
 import couponIcon from "../../assets/icons/coupon_icon.svg";
 import type { Coupon } from "../../types/coupon";
-import { formatDate } from "../../utility/dateconvert";
+import { formatDate } from "../../utility/utils";
 
 interface CouponsListProps {
   coupon: Coupon;

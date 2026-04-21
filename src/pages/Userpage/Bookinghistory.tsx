@@ -8,7 +8,7 @@ import {
   formatCountdown,
   formatDate,
   formatThousand,
-} from "../../utility/dateconvert";
+} from "../../utility/utils";
 import TransactionStatusIndicator from "./TransactionStatusIndicator";
 
 type TransactionItem = {

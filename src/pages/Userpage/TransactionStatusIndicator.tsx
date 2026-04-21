@@ -1,4 +1,4 @@
-import { formatSnakeCase } from "../../utility/dateconvert";
+import { formatSnakeCase } from "../../utility/utils";
 
 type indicatorprops = {
   paymentStatus: string;

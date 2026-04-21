@@ -3,7 +3,7 @@ import { useParams } from "react-router";
 import MyEventDetailAttendeesRow from "../components/MyEventDetailAttendeesRow";
 import Pagination from "../components/Pagination";
 import useGetEventAttendees from "../hooks/events/useGetEventAttendees";
-import MyEventDetailAttendeesRowSkeleton from "../components/MyEventDetailAttendeesSkeleton";
+import MyEventDetailAttendeesRowSkeleton from "./MyEventDetailAttendeesSkeleton";
 
 export default function MyEventDetailAttendees() {
   const { id } = useParams();

@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import { formatThousand } from "../utility/dateconvert";
+import { formatThousand } from "../utility/utils";
 
 type FeaturedcardProps = {
   artistName: string;

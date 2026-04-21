@@ -4,7 +4,7 @@ import { axiosInstance } from "../../lib/axios";
 import type { Coupon } from "../../types/coupon";
 import UserpageRewardsCouponCard from "./UserpageRewardsCouponCard";
 import pointsIcon from "../../assets/icons/points_icon.svg";
-import { formatThousand } from "../../utility/dateconvert";
+import { formatThousand } from "../../utility/utils";
 import { useState } from "react";
 import type { PageableResponse } from "../../types/pagination";
 import Pagination from "../../components/Pagination";

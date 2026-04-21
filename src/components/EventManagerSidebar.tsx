@@ -58,7 +58,7 @@ export default function EventManagerSidebar() {
         to="/profile"
         className="px-6 py-3 text-sm sticky bottom-0 font-semibold uppercase tracking-wide transition-colors bg-neutral-600 text-neutral-100 cursor-pointer text-center"
       >
-        BACK TO PROFILE
+        TO PROFILE PAGE
       </NavLink>
     </aside>
   );

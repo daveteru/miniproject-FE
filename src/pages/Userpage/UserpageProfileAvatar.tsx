@@ -26,7 +26,7 @@ export default function UserpageProfileAvatar({ onFileSelect }: AvatarProps) {
   return (
     <div
       onClick={handleClick}
-      className="w-24 h-24 rounded-full bg-neutral-200 overflow-hidden cursor-pointer hover:ring-2 hover:ring-neutral-300 transition-shadow"
+      className="w-full h-24 rounded-full bg-neutral-200 overflow-hidden cursor-pointer hover:ring-2 hover:ring-neutral-300 transition-shadow"
     >
       <input
         type="file"
