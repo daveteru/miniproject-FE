@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router";
-import MyEventsCard from "../components/MyEventsCard";
-import Pagination from "../components/Pagination";
-import useGetMyEvents from "../hooks/events/useGetMyEvents";
-import type { MyEvent } from "../types/myEvent";
+import MyEventsCard from "../../components/my-event/MyEventsCard";
+import Pagination from "../../components/Pagination";
+import useGetMyEvents from "../../hooks/events/useGetMyEvents";
+import type { MyEvent } from "../../types/myEvent";
 
 export default function EventManagerMyEvents() {
   const [page, setPage] = useState<number>(1);

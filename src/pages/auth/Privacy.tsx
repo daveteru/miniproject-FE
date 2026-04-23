@@ -1,12 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router";
-import Sidebar from "../components/Sidebar";
-import useChangePassword from "../hooks/users/useChangePassword";
+import Sidebar from "../../components/Sidebar";
+import useChangePassword from "../../hooks/auth/useChangePassword";
 import {
   changePasswordSchema,
   type ChangePasswordSchema,
-} from "../schemas/changePasswordSchema";
+} from "../../schemas/changePasswordSchema";
 import { useState } from "react";
 
 export default function Privacy() {

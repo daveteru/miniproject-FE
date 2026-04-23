@@ -9,25 +9,6 @@ import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import "./index.css";
 import { authLoader, loggedInLoader } from "./loaders/auth";
-import Createpage from "./pages/Create-event/Createpage";
-import Discover from "./pages/Discover/Discover";
-import EventManager from "./pages/EventManager";
-import EventManagerMyEvents from "./pages/EventManagerMyEvents";
-import ForgotPassword from "./pages/ForgotPassword";
-import Home from "./pages/Home/Home";
-import Login from "./pages/Login";
-import MyEventDetail from "./pages/MyEventDetail";
-import MyEventDetailAttendees from "./pages/MyEventDetailAttendees";
-import MyEventDetailEdit from "./pages/MyEventDetailEdit";
-import MyEventDetailStats from "./pages/MyEventDetailStats";
-import Privacy from "./pages/Privacy";
-import Register from "./pages/Register";
-import ResetPassword from "./pages/ResetPassword";
-import Reviews from "./pages/Reviews/Reviews";
-import Transaction from "./pages/Transaction/Transaction";
-import Userpage from "./pages/Userpage/Userpage";
-import EventManagerTransactions from "./pages/EventManagerTransactions";
-import Events from "./pages/Events/Events";
 import Err_404 from "./pages/Err_404";
 
 function ScrollToTop() {
@@ -61,60 +42,159 @@ const router = createBrowserRouter([
           return { Component: Home };
         },
       },
-      { path: "/discover", element: <Discover /> },
-      { path: "/events/:id", element: <Events /> },
+      {
+        path: "/discover",
+        lazy: async () => {
+          const { default: Discover } =
+            await import("./pages/Discover/Discover");
+          return { Component: Discover };
+        },
+      },
+      {
+        path: "/events/:id",
+        lazy: async () => {
+          const { default: Events } = await import("./pages/Events/Events");
+          return { Component: Events };
+        },
+      },
       {
         path: "/profile",
-        element: <Userpage />,
-        loader: authLoader(["USER", "ORGANIZER"]),
+        lazy: async () => {
+          const { default: Userpage } =
+            await import("./pages/user-page/Userpage");
+          return {
+            Component: Userpage,
+            loader: authLoader(["USER", "ORGANIZER"]),
+          };
+        },
       },
       {
         path: "/transaction",
-        element: <Transaction />,
-        loader: authLoader(["USER"]),
+        lazy: async () => {
+          const { default: Transaction } =
+            await import("./pages/Transaction/Transaction");
+          return { Component: Transaction, loader: authLoader(["USER"]) };
+        },
       },
       {
         path: "/privacy",
-        element: <Privacy />,
-        loader: authLoader(["USER", "ORGANIZER"]),
+        lazy: async () => {
+          const { default: Privacy } = await import("./pages/auth/Privacy");
+          return {
+            Component: Privacy,
+            loader: authLoader(["USER", "ORGANIZER"]),
+          };
+        },
       },
       { path: "/*", element: <Err_404 /> },
       {
         path: "/event-manager",
-        element: <EventManager />,
-        loader: authLoader(["ORGANIZER"]),
+        lazy: async () => {
+          const { default: EventManager } =
+            await import("./pages/event-manager/EventManager");
+          return { Component: EventManager, loader: authLoader(["ORGANIZER"]) };
+        },
         children: [
-          { path: "my-events", element: <EventManagerMyEvents /> },
+          {
+            path: "my-events",
+            lazy: async () => {
+              const { default: EventManagerMyEvents } =
+                await import("./pages/event-manager/EventManagerMyEvents");
+              return { Component: EventManagerMyEvents };
+            },
+          },
           {
             path: "my-events/:id",
-            element: <MyEventDetail />,
+            lazy: async () => {
+              const { default: MyEventDetail } =
+                await import("./pages/my-event/MyEventDetail");
+              return { Component: MyEventDetail };
+            },
             children: [
-              { path: "edit", element: <MyEventDetailEdit /> },
-              { path: "attendees", element: <MyEventDetailAttendees /> },
-              { path: "stats", element: <MyEventDetailStats /> },
+              {
+                path: "edit",
+                lazy: async () => {
+                  const { default: MyEventDetailEdit } =
+                    await import("./pages/my-event/MyEventDetailEdit");
+                  return { Component: MyEventDetailEdit };
+                },
+              },
+              {
+                path: "attendees",
+                lazy: async () => {
+                  const { default: MyEventDetailAttendees } =
+                    await import("./pages/my-event/MyEventDetailAttendees");
+                  return { Component: MyEventDetailAttendees };
+                },
+              },
             ],
           },
           {
             path: "transactions",
-            element: <EventManagerTransactions />,
+            lazy: async () => {
+              const { default: EventManagerTransactions } =
+                await import("./pages/event-manager/EventManagerTransactions");
+              return { Component: EventManagerTransactions };
+            },
           },
           {
             path: "create-event",
-            element: <Createpage />,
+            lazy: async () => {
+              const { default: Createpage } =
+                await import("./pages/event-manager/Createpage");
+              return { Component: Createpage };
+            },
+          },
+          {
+            path: "stats",
+            lazy: async () => {
+              const { default: EventManagerStats } =
+                await import("./pages/event-manager/EventManagerStats");
+              return { Component: EventManagerStats };
+            },
           },
           {
             path: "reviews",
-            element: <Reviews />,
-            loader: authLoader(["ORGANIZER"]),
+            lazy: async () => {
+              const { default: Reviews } =
+                await import("./pages/event-manager/Reviews");
+              return { Reviews, loader: authLoader(["ORGANIZER"]) };
+            },
           },
         ],
       },
     ],
   },
-  { path: "/login", element: <Login />, loader: loggedInLoader },
-  { path: "/register", element: <Register />, loader: loggedInLoader },
-  { path: "/forgot-password", element: <ForgotPassword /> },
-  { path: "/reset-password/:token", element: <ResetPassword /> },
+  {
+    path: "/login",
+    lazy: async () => {
+      const { default: Login } = await import("./pages/auth/Login");
+      return { Component: Login, loader: loggedInLoader };
+    },
+  },
+  {
+    path: "/register",
+    lazy: async () => {
+      const { default: Register } = await import("./pages/auth/Register");
+      return { Component: Register, loader: loggedInLoader };
+    },
+  },
+  {
+    path: "/forgot-password",
+    lazy: async () => {
+      const { default: ForgotPassword } =
+        await import("./pages/auth/ForgotPassword");
+      return { Component: ForgotPassword };
+    },
+  },
+  {
+    path: "/reset-password/:token",
+    lazy: async () => {
+      const { default: ResetPassword } =
+        await import("./pages/auth/ResetPassword");
+      return { Component: ResetPassword };
+    },
+  },
 ]);
 
 const queryClient = new QueryClient();

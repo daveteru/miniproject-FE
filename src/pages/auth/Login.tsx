@@ -1,14 +1,10 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useGoogleLogin } from "@react-oauth/google";
-import { useMutation } from "@tanstack/react-query";
-import type { AxiosError } from "axios";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
-import { Link, useNavigate } from "react-router";
-import googleicon from "../assets/icons/Social Icons.svg";
-import { axiosInstance } from "../lib/axios";
-import { loginSchema, type LoginSchema } from "../schemas/loginSchema";
-import { useAppStore } from "../store/useAppStore";
+import { Link } from "react-router";
+import googleicon from "../../assets/icons/Social Icons.svg";
+import useLogin from "../../hooks/auth/useLogin";
+import useLoginByGoogle from "../../hooks/auth/useLoginByGoogle";
+import { loginSchema, type LoginSchema } from "../../schemas/loginSchema";
 
 export default function Login() {
   const {
@@ -18,64 +14,14 @@ export default function Login() {
   } = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
   });
-  const setUser = useAppStore((state) => state.setUser);
-  const navigate = useNavigate();
 
-  const { mutateAsync: loginMutation, isPending } = useMutation({
-    mutationFn: async (payload: LoginSchema) => {
-      const response = await axiosInstance.post("/auth/login", {
-        email: payload.email,
-        password: payload.password,
-      });
-      return response.data;
-    },
-    onSuccess: (response) => {
-      setUser({
-        id: response.user.id,
-        fullName: response.user.fullName,
-        email: response.user.email,
-        avatar: response.user.avatar,
-        role: response.user.role,
-        birthdate: response.user.birthdate,
-        referral: response.user.referral,
-      });
-      toast.success("Login successful!");
-      if (response.user.role === "USER") navigate("/");
-      if (response.user.role === "ORGANIZER") navigate("/event-manager/my-events");
-    },
-    onError: (error: AxiosError<{ message: string }>) => {
-      toast.error(error.response?.data.message || "Login failed!");
-    },
-  });
+  const { mutateAsync: loginMutation, isPending } = useLogin();
 
   const onSubmit = async (data: LoginSchema) => {
     await loginMutation(data);
   };
 
-  const handleloginbyGoogle = useGoogleLogin({
-    onSuccess: async ({ access_token }) => {
-      try {
-        const response = await axiosInstance.post("/auth/google", {
-          accessToken: access_token,
-        });
-
-        setUser({
-          id: response.data.user.id,
-          fullName: response.data.user.fullName,
-          email: response.data.user.email,
-          avatar: response.data.user.avatar,
-          role: response.data.user.role,
-          birthdate: response.data.user.birthdate,
-          referral: response.data.user.referral,
-        });
-
-        toast.success("Login successful!");
-        navigate("/");
-      } catch (error) {
-        toast.error("Login Failed");
-      }
-    },
-  });
+  const handleloginbyGoogle = useLoginByGoogle();
 
   return (
     <div className="w-full h-screen bg-black ">

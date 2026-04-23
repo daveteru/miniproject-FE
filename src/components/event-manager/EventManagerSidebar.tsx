@@ -1,7 +1,8 @@
 import { Link, NavLink } from "react-router";
-import { useAppStore } from "../store/useAppStore";
+import { useAppStore } from "../../store/useAppStore";
 
 const NAV_ITEMS = [
+  { label: "Dashboard", href: "stats" },
   { label: "My Events", href: "my-events" },
   { label: "Transactions", href: "transactions" },
   { label: "Create Events", href: "create-event" },

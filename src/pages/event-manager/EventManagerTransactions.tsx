@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router";
-import EventManagerTransactionsTable from "../components/EventManagerTransactionsTable";
-import useGetOrganizerTransactions from "../hooks/users/useGetOrganizerTransactions";
+import EventManagerTransactionsTable from "../../components/event-manager/EventManagerTransactionsTable";
+import useGetOrganizerTransactions from "../../hooks/users/useGetOrganizerTransactions";
 
 export default function EventManagerTransactions() {
   const [page, setPage] = useState<number>(1);

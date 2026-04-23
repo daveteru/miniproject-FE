@@ -1,14 +1,11 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
-import type { AxiosError } from "axios";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
-import { Link, useNavigate } from "react-router";
-import { axiosInstance } from "../lib/axios";
+import { Link } from "react-router";
+import useForgotPassword from "../../hooks/auth/useForgotPassword";
 import {
   forgotPasswordSchema,
   type ForgotPasswordSchema,
-} from "../schemas/forgotPasswordSchema";
+} from "../../schemas/forgotPasswordSchema";
 
 export default function ForgotPassword() {
   const {
@@ -18,26 +15,11 @@ export default function ForgotPassword() {
   } = useForm<ForgotPasswordSchema>({
     resolver: zodResolver(forgotPasswordSchema),
   });
-  const navigate = useNavigate();
 
-  const { mutateAsync: loginMutation, isPending } = useMutation({
-    mutationFn: async (payload: ForgotPasswordSchema) => {
-      const response = await axiosInstance.post("/auth/forgot-password", {
-        email: payload.email,
-      });
-      return response.data;
-    },
-    onSuccess: () => {
-      toast.success("Email sent! Token expires in 15 minutes.");
-      navigate("/");
-    },
-    onError: (error: AxiosError<{ message: string }>) => {
-      toast.error(error.response?.data.message || "Something went wrong!");
-    },
-  });
+  const { mutateAsync: forgotPasswordMutation, isPending } = useForgotPassword();
 
   const onSubmit = async (data: ForgotPasswordSchema) => {
-    await loginMutation(data);
+    await forgotPasswordMutation(data);
   };
 
   return (

@@ -40,6 +40,10 @@ export default function Reviews() {
             <span className="hover:text-neutral-900 cursor-pointer">Home</span>
           </Link>
           <span className="mx-1">&gt;</span>
+          <Link to="/profile" className="hover:text-neutral-900 cursor-pointer">
+            Event Manager
+          </Link>
+          <span className="mx-1">&gt;</span>
           <span className="text-neutral-700">Reviews</span>
         </nav>
         <h1 className="text-2xl font-bold text-neutral-900 mb-8">My Reviews</h1>

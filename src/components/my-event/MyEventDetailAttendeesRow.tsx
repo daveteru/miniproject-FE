@@ -1,5 +1,5 @@
-import type { Attendee } from "../types/attendee";
-import { formatThousand } from "../utility/utils";
+import type { Attendee } from "../../types/attendee";
+import { formatThousand } from "../../utility/utils";
 
 interface AttendeesRowProps {
   attendee: Attendee;

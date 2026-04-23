@@ -1,5 +1,5 @@
 import { Outlet } from "react-router";
-import EventManagerSidebar from "../components/EventManagerSidebar";
+import EventManagerSidebar from "../../components/event-manager/EventManagerSidebar";
 
 export default function EventManager() {
   return (
