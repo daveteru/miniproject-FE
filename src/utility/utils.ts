@@ -37,6 +37,11 @@ export function formatDate(date: string | Date): string {
   });
 }
 
+export function formatDateTime(date: string | Date): string {
+  const formattedDate = new Date(date);
+  return formattedDate.toLocaleString("en-GB");
+}
+
 export function formatThousand(n: number): string {
   return n.toLocaleString("id-ID");
 }
