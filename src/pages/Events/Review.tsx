@@ -1,4 +1,4 @@
-type reviewprops = {
+type ReviewProps = {
   text: string;
   rating: number;
   reviewername: string;
@@ -10,7 +10,7 @@ export default function Review({
   rating,
   reviewername,
   revieweravatar,
-}: reviewprops) {
+}: ReviewProps) {
   return (
     <div className="border-t border-gray-200 flex items-center p-5 gap-5">
       <img

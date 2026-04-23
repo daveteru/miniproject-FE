@@ -10,52 +10,12 @@ import Ticketcontent from "./Ticketcontent";
 import { axiosInstance } from "../../lib/axios";
 import { useAppStore } from "../../store/useAppStore";
 import { formatDate, formatThousand } from "../../utility/utils";
+import type { EventDetails } from "../../types/eventDetails";
 
-type EventDetailsAPI = {
-  id: number;
-  name: string;
-  artist: string;
-  location: string;
-  city: string;
-  startDate: string;
-  endDate: string;
-  thumbnail: string;
-  totalTicket: number;
-  category: string;
-  description: string;
-  deletedAt: string | null;
-  organizerId: number;
-  tickets: {
-    id: number;
-    ticketLevel: string;
-    availableTicket: number;
-    deletedAt: string | null;
-    eventId: number;
-    price: number;
-  }[];
-  organizer: {
-    fullName: string;
-    avatar: string | null;
-  };
-  vouchers: {
-    expiredDate: string;
-    discamount: number;
-    amount: number;
-    id?: number;
-  }[];
-  reviews: {
-    text: string;
-    rating: number;
-    reviewer: {
-      fullName: string;
-      avatar: string;
-    };
-  }[];
-};
 export default function Events() {
   const targetRef = useRef<HTMLDivElement>(null);
   const { id } = useParams();
-  const [event, setEvent] = useState<EventDetailsAPI | null>(null);
+  const [event, setEvent] = useState<EventDetails | null>(null);
   const [ispromo, setIspromo] = useState<boolean>(false);
   const [fromprice, setFromprice] = useState<number[]>([]);
   const user = useAppStore((state) => state.user);
@@ -63,7 +23,7 @@ export default function Events() {
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const { data } = await axiosInstance.get<EventDetailsAPI>(
+        const { data } = await axiosInstance.get<EventDetails>(
           `/events/detail/${id}`,
         );
         setEvent(data);
