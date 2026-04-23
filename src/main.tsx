@@ -37,6 +37,7 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       {
+        path:"/",
         lazy: async () => {
           const { default: Home } = await import("./pages/Home/Home");
           return { Component: Home };
@@ -158,7 +159,7 @@ const router = createBrowserRouter([
             lazy: async () => {
               const { default: Reviews } =
                 await import("./pages/event-manager/Reviews");
-              return { Reviews, loader: authLoader(["ORGANIZER"]) };
+              return { Component: Reviews, loader: authLoader(["ORGANIZER"]) };
             },
           },
         ],

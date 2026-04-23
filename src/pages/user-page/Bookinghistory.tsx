@@ -87,6 +87,9 @@ export default function Bookinghistory({
   const [isUploading, setIsUploading] = useState(false);
   const proofInputRef = useRef<HTMLInputElement>(null);
 
+
+  //---> upload mechanic
+
   const handleProofUpload = async (file: File) => {
     if (!id) return;
     setIsUploading(true);
@@ -96,8 +99,12 @@ export default function Bookinghistory({
       await axiosInstance.patch(`/transactions/${id}/proof`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-    } catch (err) {
-      toast.error("Upload failed!");
+    } catch (err: any) {
+      toast.error(
+        err?.response?.data?.message ??
+          "Upload Failed: Check your filesize or format",
+      );
+      setProofPreview(null);
     } finally {
       setIsUploading(false);
     }
@@ -107,7 +114,7 @@ export default function Bookinghistory({
     if (contentRef.current) {
       setHeight(contentRef.current.scrollHeight);
     }
-  }, []);
+  }, [proofPreview]);
 
   return (
     <div
@@ -177,12 +184,14 @@ export default function Bookinghistory({
               ))}
             </div>
             <div className="w-full flex flex-col  text-[12px]">
-              {pointsUsed?  (
+              {pointsUsed ? (
                 <div className="flex justify-between text-red-300">
                   <p>Points Used:</p>
                   <p>{formatThousand(pointsUsed ?? 0)}</p>
                 </div>
-              ):""}
+              ) : (
+                ""
+              )}
 
               {voucher && (
                 <div className="flex justify-between text-red-300">
@@ -195,12 +204,16 @@ export default function Bookinghistory({
                 <p>Sub-Total</p>
                 <p>IDR {formatThousand(totalbeforecoupon ?? 0)}</p>
               </div>
-{  coupon?            <div
-                className={`flex justify-between ${coupon ? "text-red-300" : "text-neutral-300"}`}
-              >
-                <p>Coupon ({coupon}%):</p>
-                <p>-IDR {formatThousand(coupondisc ?? 0)}</p>
-              </div>:""}
+              {coupon ? (
+                <div
+                  className={`flex justify-between ${coupon ? "text-red-300" : "text-neutral-300"}`}
+                >
+                  <p>Coupon ({coupon}%):</p>
+                  <p>-IDR {formatThousand(coupondisc ?? 0)}</p>
+                </div>
+              ) : (
+                ""
+              )}
               <hr className="border-neutral-200 my-1"></hr>
               <div className="flex justify-between text-black">
                 <p>Total</p>
@@ -231,6 +244,9 @@ export default function Bookinghistory({
               className="w-12 h-12 rounded-md object-cover border border-neutral-300"
             />
           )}
+          <small className="text-[8px] text-neutral-500 italic">
+            Please only include filesize under 1MB & in .jpg / .png format
+          </small>
           <input
             ref={proofInputRef}
             type="file"

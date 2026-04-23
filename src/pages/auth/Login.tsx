@@ -75,7 +75,7 @@ export default function Login() {
               <div className="flex w-full flex-col md:flex-row gap-1 my-5 justify-center">
                 <button
                   type="submit"
-                  className="px-5 py-3 flex w-full justify-center  rounded-lg font-krona-one bg-[#E6FF06] hover:bg-amber-400"
+                  className="px-5 py-3 flex  justify-center items-center rounded-lg font-krona-one bg-[#E6FF06] hover:bg-amber-400"
                   disabled={isPending}
                 >
                   {isPending ? "Loading" : "Login"}

@@ -56,7 +56,7 @@ export default function Createpage_promotions({ promotoggle, voucher, onToggle, 
           </div>
           <div className="w-[20%]">
             <label className="block text-xs font-semibold uppercase tracking-wide text-neutral-700 mb-1">
-              TOTAL AVAILABLE VOUCHER
+              TOTAL  VOUCHER
             </label>
             <div className="border flex rounded-xl gap-2 border-neutral-300 px-4 py-2">
               <input

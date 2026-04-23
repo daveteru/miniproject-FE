@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { axiosInstance } from "../../lib/axios";
 import Card from "../../components/Card";
+import { useNavigate } from "react-router";
 
 type LandingpagecategoryProps = {
   title: string;
@@ -32,6 +33,7 @@ export default function Landingpagecategory({
 }: LandingpagecategoryProps) {
   const [events, setEvents] = useState<Eventsprops[]>([]);
   const [, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axiosInstance
@@ -49,7 +51,7 @@ export default function Landingpagecategory({
         <div className="h-full flex flex-col gap-5">
           <div className="font-krona-one flex justify-between gap-5 items-center ">
             <span className="w-fit  text-xl uppercase">Discover {title}</span>
-            <span className="underline hover:text-blue-700">VIEW ALL</span>
+            <span onClick={() => navigate(`/discover?category=${encodeURIComponent(title.trim())}`)} className="underline hover:text-blue-700">VIEW ALL</span>
           </div>
           <div className="w-full h-full  grid md:grid-cols-2 lg:grid-cols-4 gap-5 text-white">
             {events.map((place) => (

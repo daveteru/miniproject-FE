@@ -15,7 +15,7 @@ import {
 
 export default function Createpage() {
   const user = useAppStore((state) => state.user);
-  const EMPTY_TICKET = { ticketLevel: "reguler", price: 0, availableTicket: 0 };
+  const EMPTY_TICKET = { ticketLevel: "Reguler", price: 0, availableTicket: 0 };
 
   const {
     register,
@@ -39,6 +39,7 @@ export default function Createpage() {
   const [thumbnailPreview, setThumbnailPreview] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
+  const [areyousure, setAreyousure] = useState<Boolean>(false);
 
   const handleTicketChange = (
     index: number,
@@ -78,7 +79,7 @@ export default function Createpage() {
     try {
       const formData = new FormData();
       formData.append("thumbnail", data.thumbnail);
-      
+
       const { thumbnail, ...eventFields } = data;
       formData.append(
         "event",
@@ -108,7 +109,7 @@ export default function Createpage() {
             Home
           </Link>
           <span className="mx-1">&gt;</span>
-          <Link to="/profile" className="hover:text-neutral-900 cursor-pointer">
+          <Link to="/event-manager/stats" className="hover:text-neutral-900 cursor-pointer">
             Event Manager
           </Link>
           <span className="mx-1">&gt;</span>
@@ -235,14 +236,29 @@ export default function Createpage() {
 
           <div className="flex items-center gap-6">
             <button
-              type="submit"
+              type="button"
+              onClick={handleSubmit(() => setAreyousure(true))}
               className={`${isloading ? "bg-neutral-500" : "bg-[#d4f531]"} hover:bg-[#c5e620] text-neutral-900 font-bold uppercase tracking-wider text-sm px-8 py-3 rounded-xl transition-colors`}
             >
               {isloading ? "Loading..." : "Submit Event"}
             </button>
-            <p className="text-xs text-red-500">
-              Make sure all details are correct.
-            </p>
+            {areyousure ? (
+              <button
+                type="submit"
+                className="w-fit h-fit bg-[#d4f531] rounded-xl px-5 py-[10px] hover:bg-amber-500 transition ease-in"
+              >
+                Confirm
+              </button>
+            ) : (
+              ""
+            )}
+            {areyousure ? (
+              <p className="text-xs text-red-500">
+                Make sure all details are correct.
+              </p>
+            ) : (
+              ""
+            )}
           </div>
         </form>
       </div>
