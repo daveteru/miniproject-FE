@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { axiosInstance } from "../../lib/axios";
-import { formatDate } from "../../utility/dateconvert";
+import { formatDate } from "../../utility/utils";
 import Cardsoon from "../../components/Cardsoon";
 
 type Eventsprops = {

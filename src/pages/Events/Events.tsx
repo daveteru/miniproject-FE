@@ -9,7 +9,7 @@ import { default as Smalldetails } from "../../components/Smalldetails";
 import Ticketcontent from "./Ticketcontent";
 import { axiosInstance } from "../../lib/axios";
 import { useAppStore } from "../../store/useAppStore";
-import { formatDate, formatThousand } from "../../utility/dateconvert";
+import { formatDate, formatThousand } from "../../utility/utils";
 
 type EventDetailsAPI = {
   id: number;

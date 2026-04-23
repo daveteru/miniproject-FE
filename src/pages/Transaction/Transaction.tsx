@@ -7,7 +7,7 @@ import TicketCard, { type CartItem } from "./TicketCard";
 import Toggler from "./Toggler";
 import { axiosInstance } from "../../lib/axios";
 import { useAppStore } from "../../store/useAppStore";
-import { formatThousand } from "../../utility/dateconvert";
+import { formatThousand } from "../../utility/utils";
 import pointsicon from "../../assets/icons/points_icon.svg";
 import toast from "react-hot-toast";
 

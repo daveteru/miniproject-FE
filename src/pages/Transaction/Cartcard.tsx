@@ -1,5 +1,5 @@
 import ticketicon from "../../assets/icons/ticket.svg";
-import { formatThousand } from "../../utility/dateconvert";
+import { formatThousand } from "../../utility/utils";
 
 type cartcardprops = {
   ticketLevel: string;

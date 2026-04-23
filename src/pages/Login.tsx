@@ -40,7 +40,8 @@ export default function Login() {
         referral: response.user.referral,
       });
       toast.success("Login successful!");
-      navigate("/");
+      if (response.user.role === "USER") navigate("/");
+      if (response.user.role === "ORGANIZER") navigate("/event-manager/my-events");
     },
     onError: (error: AxiosError<{ message: string }>) => {
       toast.error(error.response?.data.message || "Login failed!");
