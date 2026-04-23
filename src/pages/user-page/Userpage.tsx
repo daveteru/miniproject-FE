@@ -77,7 +77,6 @@ export default function formpage() {
           `/transactions/history/${user?.id}`,
         );
         setTxhistory(response?.data ?? []);
-        console.table(response);
       } catch (err) {
       }
     };

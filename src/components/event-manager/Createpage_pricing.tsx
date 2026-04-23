@@ -1,4 +1,4 @@
-import Eventticketform from "../../components/Eventticketform";
+import Eventticketform from "../Eventticketform";
 
 type Ticket = {
   ticketLevel: string;

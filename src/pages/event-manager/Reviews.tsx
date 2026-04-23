@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
-import Reviewpagecard from "./Reviewpagecard";
-import Sidebar from "../../components/Sidebar";
 import { axiosInstance } from "../../lib/axios";
+import Reviewpagecard from "./Reviewpagecard";
 
 type ReviewItem = {
   id: number;
@@ -39,6 +38,10 @@ export default function Reviews() {
         <nav className="text-xs uppercase tracking-wide text-neutral-500 mb-1">
           <Link to="/">
             <span className="hover:text-neutral-900 cursor-pointer">Home</span>
+          </Link>
+          <span className="mx-1">&gt;</span>
+          <Link to="/profile" className="hover:text-neutral-900 cursor-pointer">
+            Event Manager
           </Link>
           <span className="mx-1">&gt;</span>
           <span className="text-neutral-700">Reviews</span>

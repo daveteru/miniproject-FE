@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useParams } from "react-router";
-import MyEventDetailAttendeesRow from "../components/MyEventDetailAttendeesRow";
-import Pagination from "../components/Pagination";
-import useGetEventAttendees from "../hooks/events/useGetEventAttendees";
-import MyEventDetailAttendeesRowSkeleton from "./MyEventDetailAttendeesSkeleton";
+import MyEventDetailAttendeesRow from "../../components/my-event/MyEventDetailAttendeesRow";
+import Pagination from "../../components/Pagination";
+import useGetEventAttendees from "../../hooks/events/useGetEventAttendees";
+import MyEventDetailAttendeesRowSkeleton from "../../components/my-event/MyEventDetailAttendeesSkeleton";
 
 export default function MyEventDetailAttendees() {
   const { id } = useParams();

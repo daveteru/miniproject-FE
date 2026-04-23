@@ -1,6 +1,6 @@
 import { Link, Outlet, useParams } from "react-router";
-import MyEventDetailNav from "../components/MyEventDetailNav";
-import useGetEventDetail from "../hooks/events/useGetEventDetail";
+import MyEventDetailNav from "../../components/my-event/MyEventDetailNav";
+import useGetEventDetail from "../../hooks/events/useGetEventDetail";
 
 export default function MyEventDetail() {
   const { id } = useParams();

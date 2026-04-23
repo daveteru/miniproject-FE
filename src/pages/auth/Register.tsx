@@ -1,11 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
-import type { AxiosError } from "axios";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
-import { Link, useNavigate } from "react-router";
-import { axiosInstance } from "../lib/axios";
-import { registerSchema, type RegisterSchema } from "../schemas/registerSchema";
+import { Link } from "react-router";
+import useRegister from "../../hooks/auth/useRegister";
+import { registerSchema, type RegisterSchema } from "../../schemas/registerSchema";
 
 export default function Register() {
   const {
@@ -15,27 +12,8 @@ export default function Register() {
   } = useForm<RegisterSchema>({
     resolver: zodResolver(registerSchema),
   });
-  const navigate = useNavigate();
 
-  const { mutateAsync: registerMutation, isPending } = useMutation({
-    mutationFn: async (payload: RegisterSchema) => {
-      const response = await axiosInstance.post("/auth/register", {
-        fullName: payload.name,
-        email: payload.email,
-        password: payload.password,
-        birthdate: payload.birthdate,
-        referral: payload.referral,
-      });
-      return response.data;
-    },
-    onSuccess: () => {
-      toast.success("Registration successful!");
-      navigate("/login");
-    },
-    onError: (error: AxiosError<{ message: string }>) => {
-      toast.error(error.response?.data.message || "Registration failed!");
-    },
-  });
+  const { mutateAsync: registerMutation, isPending } = useRegister();
 
   const onSubmit = async (data: RegisterSchema) => {
     await registerMutation(data);

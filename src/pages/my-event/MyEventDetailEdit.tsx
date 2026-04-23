@@ -2,13 +2,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useOutletContext } from "react-router";
-import MyEventDetailEditThumbnail from "../components/MyEventDetailEditThumbnail";
-import useEditEvent from "../hooks/events/useEditEvent";
+import MyEventDetailEditThumbnail from "../../components/my-event/MyEventDetailEditThumbnail";
+import useEditEvent from "../../hooks/events/useEditEvent";
 import {
   editEventSchema,
   type EditEventSchema,
-} from "../schemas/editEventSchema";
-import type { MyEvent } from "../types/myEvent";
+} from "../../schemas/editEventSchema";
+import type { MyEvent } from "../../types/myEvent";
 
 export default function MyEventDetailEdit() {
   const event = useOutletContext<MyEvent>();
