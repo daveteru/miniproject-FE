@@ -57,13 +57,17 @@ export default function Hero() {
   //Data Fetching from DB
 
   useEffect(() => {
-    axiosInstance
-      .get<HeroSlide[]>("/promotions/hero")
-      .then((res) => {
-        setHerocontent(res.data);
-            })
-      .catch((err) => console.error(err))
-      .finally(() => setLoading(false));
+    const fetch = async () => {
+      try {
+        const { data } = await axiosInstance.get<HeroSlide[]>("/promotions/hero");
+        setHerocontent(data);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetch();
   }, []);
 
 
@@ -155,6 +159,7 @@ export default function Hero() {
             <p className="md:w-100 text-sm text-white">
               {herocontent[carousellpage - 1].event.description}
             </p>
+            {/* //-----> on demand ticket buy button */}
             <button
               onMouseEnter={onEnter}
               onMouseLeave={onLeave}

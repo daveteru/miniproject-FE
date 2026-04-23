@@ -68,6 +68,8 @@ type txhistoryresponse = {
 };
 export default function formpage() {
   const [txhistory, setTxhistory] = useState<txhistoryprops[]>([]);
+  const [burger, setBurger] = useState<boolean>(false);
+
   const user = useAppStore((state) => state.user);
 
   useEffect(() => {
@@ -77,18 +79,20 @@ export default function formpage() {
           `/transactions/history/${user?.id}`,
         );
         setTxhistory(response?.data ?? []);
-      } catch (err) {
-      }
+      } catch (err) {}
     };
     fetchTransactions();
   }, [user?.id]);
 
+  
+
   return (
-    <div className="w-full  flex min-h-screen">
-      <Sidebar />
+    <div className="w-full h-full flex min-h-screen">
+      <Sidebar burger={burger} setBurger={setBurger} />
       <div className="flex-1 flex overflow-y-auto bg-neutral-100">
-        <div className="w-[70%] max-w-275 flex flex-col  bg-white px-10  py-8">
+        <div className="w-full lg:w-[70%] lg:max-w-275 flex flex-col  bg-white md:px-10 px-5  py-8 ">
           {/* Breadcrumb */}
+          <button onClick={()=>setBurger(true)} className="md:hidden px-2 py-1 bg-amber-300 w-fit rounded-full text-sm mb-2">SIDE MENU</button>
           <nav className="text-xs uppercase tracking-wide text-neutral-500 mb-1">
             <Link to="/">
               <span className="hover:text-neutral-900 cursor-pointer">

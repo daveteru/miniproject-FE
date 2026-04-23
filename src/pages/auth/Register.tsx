@@ -20,10 +20,10 @@ export default function Register() {
   };
 
   return (
-    <div className="w-full h-fit bg-black ">
+    <div className="w-full h-screen bg-black ">
       <div className="w-full h-full flex justify-center items-center m-auto container">
-        <section className="w-200 h-fit mt-20 border text-left p-5 py-20 justify-center items-center border-neutral-200 rounded-3xl drop-shadow-2xl flex bg-white -translate-y-8">
-          <div className="flex flex-col">
+        <section className="md:w-fit w-screen h-fit mt-20 border text-left px-5 py-20 justify-center items-center border-neutral-200 rounded-3xl drop-shadow-2xl flex bg-white -translate-y-8">
+          <div className="flex flex-col w-full items-center">
             <Link
               to="/login"
               className="mb-2 hover:underline hover:text-blue-600 cursor-pointer"
@@ -34,7 +34,7 @@ export default function Register() {
             <h1 className="my-5 text-2xl">REGISTER</h1>
             <form
               onSubmit={handleSubmit(onSubmit)}
-              className="flex flex-col gap-2"
+              className="flex flex-col gap-2 w-full"
             >
               <label>
                 Full Name<span className="text-red-500">*</span>
@@ -42,7 +42,7 @@ export default function Register() {
               <input
                 type="text"
                 id="fullName"
-                className="border border-neutral-200 w-120 rounded-xl px-5 py-2"
+                className="border border-neutral-200 w-full md:w-100 rounded-xl px-5 py-2"
                 placeholder="Your Name"
                 {...register("name")}
               ></input>
@@ -57,7 +57,7 @@ export default function Register() {
               <input
                 type="text"
                 id="email"
-                className="border border-neutral-200 w-120 rounded-xl px-5 py-2"
+                className="border border-neutral-200 w-full md:w-100 rounded-xl px-5 py-2"
                 placeholder="youremail@example.com"
                 {...register("email")}
               ></input>
@@ -72,7 +72,7 @@ export default function Register() {
               <input
                 type="date"
                 id="date"
-                className="border border-neutral-200 w-120 rounded-xl px-5 py-2"
+                className="border border-neutral-200 w-full md:w-100 rounded-xl px-5 py-2"
                 placeholder="DD/MM/YYYY"
                 {...register("birthdate")}
               ></input>
@@ -85,7 +85,7 @@ export default function Register() {
               <input
                 type="text"
                 id="referral"
-                className="border border-neutral-200 w-120 rounded-xl px-5 py-2"
+                className="border border-neutral-200 w-full md:w-100 rounded-xl px-5 py-2"
                 {...register("referral")}
               ></input>
               {errors.referral && (

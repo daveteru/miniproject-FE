@@ -26,7 +26,7 @@ type Eventsprops = {
 
 export default function Landingpagewhatsup() {
   const [cityContent, setCityContent] = useState<Eventsprops[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
   const [city, setCity] = useState("jakarta");
 
   useEffect(() => {

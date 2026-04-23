@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router";
 import YellowButton from "./Buttons";
 import DiscoverCard from "./DiscoverCard";
-import { Searchbar2 } from "../home/Searchbar";
+import { Searchbar2 } from "../Home/Searchbar";
 import { axiosInstance } from "../../lib/axios";
 
 type Eventsprops = {
@@ -32,7 +32,7 @@ export default function Discover() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState(searchParams.get("search") ?? "");
   const [city, setCity] = useState("");
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState(searchParams.get("category") ?? "");
 
   useEffect(() => {
     const timeout = setTimeout(() => {

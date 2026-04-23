@@ -11,7 +11,7 @@ const NAV_ITEMS = [
   },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ burger, setBurger }: { burger: boolean; setBurger: (value: boolean) => void }) {
   const user = useAppStore((state) => state.user);
   const logout = useAppStore((state) => state.logout);
 
@@ -20,30 +20,32 @@ export default function Sidebar() {
   );
 
   return (
-    <aside className="flex flex-col w-[25%] justify-between bg-neutral-100 border border-neutral-200">
-      <div>
-<Link to="/profile">
-            <div className="flex items-center gap-3 cursor-pointer px-6 py-6 border-b border-neutral-200">
-              {user?.avatar ? (
-                <img
-                  src={user.avatar}
-                  alt={user?.fullName || "Username"}
-                  className="w-10 h-10 rounded-full object-cover"
-                />
-              ) : (
-                <div className="w-10 h-10 rounded-full bg-neutral-300" />
-              )}
-              <div className="text-sm leading-tight">
-                <span className="text-neutral-500">Hello,</span>
-                <br />
-                <span className="font-semibold text-neutral-900 uppercase tracking-wide">
-                  {user?.fullName || "Username"}
-                </span>
-              </div>
+    <aside
+      className={`flex flex-col w-50 min-h-screen ${!burger ? "-translate-x-50" : ""} md:translate-x-0 z-2 fixed md:relative transition-all ease-in md:w-[25%] justify-between bg-neutral-100 border border-neutral-200`}
+    >
+      <div className="flex flex-col ">
+        <Link to="/profile">
+          <div className="flex items-center gap-3 cursor-pointer px-6 py-6 border-b border-neutral-200">
+            {user?.avatar ? (
+              <img
+                src={user.avatar}
+                alt={user?.fullName || "Username"}
+                className="w-10 h-10 rounded-full object-cover"
+              />
+            ) : (
+              <div className="w-10 h-10 rounded-full bg-neutral-300" />
+            )}
+            <div className="text-sm leading-tight">
+              <span className="text-neutral-500">Hello,</span>
+              <br />
+              <span className="font-semibold text-neutral-900 uppercase tracking-wide">
+                {user?.fullName || "Username"}
+              </span>
             </div>
-</Link>
+          </div>
+        </Link>
 
-
+        <button onClick={()=>setBurger(false)} className=" bg-neutral-800 md:hidden text-white flex hover:bg-neutral-400  transition-all ease-in items-center justify-center w-full h-15 px-2 py-1">Close Menu</button>
         {/* Navigation */}
         <nav className="flex flex-col py-2">
           {filteredNavItems.map((item) => (
@@ -70,7 +72,7 @@ export default function Sidebar() {
               `}
         onClick={logout}
       >
-        Log out
+        Logout
       </button>
     </aside>
   );

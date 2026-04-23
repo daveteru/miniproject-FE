@@ -21,7 +21,7 @@ type FeaturedEvents = {
 
 export default function Landingpagefeatured() {
   const [featuredContent, setFeaturedContent] = useState<FeaturedEvents[]>([]);
-  const [isloading, setisLoading] = useState(true);
+  const [, setisLoading] = useState(true);
 
   useEffect(() => {
     axiosInstance

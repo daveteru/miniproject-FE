@@ -13,7 +13,7 @@ export default function Navbar() {
   const isLoggedIn = !!user;
 
   return (
-    <div className="h-16">
+    <div className="h-14">
       <nav
         ref={navRef}
         className={`h-100 fixed lg:relative w-full z-10 -translate-y-81`}
@@ -64,7 +64,7 @@ export default function Navbar() {
 
           {/* REVEAL MOBILE MENU BUTTON */}
           <button
-            className="lg:hidden h-full font-krona-one wrap w-[27%] md:w-[26%] hover:bg-[#121212] hover:text-white text-sm cursor-pointer"
+            className="lg:hidden h-full font-krona-one wrap w-[27%] md:w-[26%] hover:bg-[#262626] hover:text-white text-sm cursor-pointer"
             onClick={toggleMenu}
           >
             {isMenuOpen ? "Close" : "Menu ↓"}

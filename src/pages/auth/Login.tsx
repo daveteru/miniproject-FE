@@ -25,9 +25,9 @@ export default function Login() {
 
   return (
     <div className="w-full h-screen bg-black ">
-      <div className="w-full h-full flex justify-center items-center mx-auto container">
-        <section className="w-fit h-fit border text-left px-15 py-15 justify-center items-center border-neutral-200 rounded-3xl drop-shadow-2xl flex  bg-white -translate-y-8">
-          <div className="flex flex-col">
+      <div className="w-full h-screen flex justify-center items-center mx-auto container">
+        <section className="w-screen md:w-fit h-fit border text-left px-1  py-5 justify-center items-center border-neutral-200 rounded-3xl drop-shadow-2xl flex  bg-white -translate-y-8">
+          <div className="flex flex-col w-screen md:w-fit p-8">
             <Link
               to="/"
               className="mb-2 hover:underline hover:text-blue-600 cursor-pointer"
@@ -44,7 +44,7 @@ export default function Login() {
               <input
                 type="text"
                 id="email"
-                className="border border-neutral-200 w-120 rounded-xl px-5 py-2"
+                className="border border-neutral-200 w-full rounded-xl px-5 py-2"
                 placeholder="youremail@example.com"
                 {...register("email")}
               ></input>
@@ -72,10 +72,10 @@ export default function Login() {
               >
                 Forgot password?
               </Link>
-              <div className="flex w-full  gap-10 justify-center">
+              <div className="flex w-full flex-col md:flex-row gap-1 my-5 justify-center">
                 <button
                   type="submit"
-                  className="px-5 py-3 flex w-fit mt-5 rounded-lg font-krona-one bg-[#E6FF06] hover:bg-amber-400"
+                  className="px-5 py-3 flex  justify-center items-center rounded-lg font-krona-one bg-[#E6FF06] hover:bg-amber-400"
                   disabled={isPending}
                 >
                   {isPending ? "Loading" : "Login"}
@@ -83,7 +83,7 @@ export default function Login() {
                 <button
                   type="button"
                   onClick={() => handleloginbyGoogle()}
-                  className="px-5 py-3 flex gap-2 w-fit mt-5 rounded-lg font-krona-one bg-[#E6FF06] hover:bg-amber-400"
+                  className="px-5 py-3 flex gap-2 w-full rounded-lg justify-center font-krona-one bg-[#E6FF06] hover:bg-amber-400"
                 >
                   <img src={googleicon} alt="" className="w-5" /> Login by
                   Google

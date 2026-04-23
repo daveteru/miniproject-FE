@@ -87,6 +87,9 @@ export default function Bookinghistory({
   const [isUploading, setIsUploading] = useState(false);
   const proofInputRef = useRef<HTMLInputElement>(null);
 
+
+  //---> upload mechanic
+
   const handleProofUpload = async (file: File) => {
     if (!id) return;
     setIsUploading(true);
@@ -96,8 +99,12 @@ export default function Bookinghistory({
       await axiosInstance.patch(`/transactions/${id}/proof`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-    } catch (err) {
-      toast.error("Upload failed!");
+    } catch (err: any) {
+      toast.error(
+        err?.response?.data?.message ??
+          "Upload Failed: Check your filesize or format",
+      );
+      setProofPreview(null);
     } finally {
       setIsUploading(false);
     }
@@ -107,7 +114,7 @@ export default function Bookinghistory({
     if (contentRef.current) {
       setHeight(contentRef.current.scrollHeight);
     }
-  }, []);
+  }, [proofPreview]);
 
   return (
     <div
@@ -119,9 +126,9 @@ export default function Bookinghistory({
         onClick={() => setIsopen(!isopen)}
         className="border-b w-full h-15 px-5 py-3 flex items-center justify-between border-neutral-200 cursor-pointer hover:bg-neutral-100 bg-white drop-shadow-sm transition-all "
       >
-        <div className="flex items-center gap-2">
-          <img src={ticketicon} className="h-8" alt="" />
-          Transaction #{txno} - {event?.name ?? "null"}
+        <div className="flex items-center gap-2 text-sm line-clamp-1">
+          <img src={ticketicon} className="h-8" alt="" />#{txno} -{" "}
+          {event?.name ?? "null"}
         </div>
         <div className="flex gap-5">
           <TransactionStatusIndicator paymentStatus={paymentStatus ?? ""} />
@@ -142,13 +149,13 @@ export default function Bookinghistory({
           </div>
         </div>
         <hr className="border-neutral-200 my-2" />
-        <div className="w-full flex pb-5 text-sm">
-          <div className="h-full w-[50%] text-start text-[12px] gap-1 flex flex-col">
+        <div className="w-full flex flex-col md:flex-row pb-5 text-sm">
+          <div className="h-full w-full md:w-[50%] text-start text-[12px] gap-1 flex flex-col">
             <h1>INFORMATION</h1>
-            <hr className="border-neutral-200 my-1 mr-5" />
+            <hr className="border-neutral-200 my-1 md:mr-5" />
             <p>{event?.name ?? "-"}</p>
             <p>{event?.artist ?? "-"}</p>
-            <hr className="border-neutral-200 my-1 mr-5" />
+            <hr className="border-neutral-200 my-1 md:mr-5" />
 
             <p>
               {event?.location}, {event?.city}
@@ -177,10 +184,14 @@ export default function Bookinghistory({
               ))}
             </div>
             <div className="w-full flex flex-col  text-[12px]">
-              <div className="flex justify-between text-red-300">
-                <p>Points Used:</p>
-                <p>{formatThousand(pointsUsed ?? 0)}</p>
-              </div>
+              {pointsUsed ? (
+                <div className="flex justify-between text-red-300">
+                  <p>Points Used:</p>
+                  <p>{formatThousand(pointsUsed ?? 0)}</p>
+                </div>
+              ) : (
+                ""
+              )}
 
               {voucher && (
                 <div className="flex justify-between text-red-300">
@@ -193,12 +204,16 @@ export default function Bookinghistory({
                 <p>Sub-Total</p>
                 <p>IDR {formatThousand(totalbeforecoupon ?? 0)}</p>
               </div>
-              <div
-                className={`flex justify-between ${coupon ? "text-red-300" : "text-neutral-300"}`}
-              >
-                <p>Coupon ({coupon}%):</p>
-                <p>-IDR {formatThousand(coupondisc ?? 0)}</p>
-              </div>
+              {coupon ? (
+                <div
+                  className={`flex justify-between ${coupon ? "text-red-300" : "text-neutral-300"}`}
+                >
+                  <p>Coupon ({coupon}%):</p>
+                  <p>-IDR {formatThousand(coupondisc ?? 0)}</p>
+                </div>
+              ) : (
+                ""
+              )}
               <hr className="border-neutral-200 my-1"></hr>
               <div className="flex justify-between text-black">
                 <p>Total</p>
@@ -229,6 +244,9 @@ export default function Bookinghistory({
               className="w-12 h-12 rounded-md object-cover border border-neutral-300"
             />
           )}
+          <small className="text-[8px] text-neutral-500 italic">
+            Please only include filesize under 1MB & in .jpg / .png format
+          </small>
           <input
             ref={proofInputRef}
             type="file"

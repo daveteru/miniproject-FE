@@ -26,7 +26,7 @@ type EventsAPI = {
 
 export default function Landingpagesoon() {
   const [soonEvents, setSoonEvents] = useState<Eventsprops[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
 
   useEffect(() => {
     axiosInstance

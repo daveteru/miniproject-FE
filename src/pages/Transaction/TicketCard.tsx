@@ -56,15 +56,16 @@ export default function TicketCard({
   };
 
   return (
-    <div className="w-[95%] h-30 rounded-xl bg-white border border-neutral-300 flex justify-between items-center px-8">
-      <div className="flex flex-col gap-1">
+    <div className="w-full h-35 flex-col md:flex-row rounded-xl bg-white border border-neutral-300 flex justify-between items-center px-8 py-5">
+      <div className="flex flex-col items-center md:items-start gap-1">
         <h1 className="text-lg font-semibold">{ticketLevel}</h1>
         <small className="text-neutral-500">
           {availableTicket} tickets left
         </small>
       </div>
       <div className="flex items-center gap-4">
-        <p className="font-bold">IDR {formatThousand(price)}</p>
+              <p className="font-bold">IDR {formatThousand(price)}</p>
+
         <div className="flex items-center gap-2">
           <button
             onClick={handleMinus}
