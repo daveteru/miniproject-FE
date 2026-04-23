@@ -1,13 +1,16 @@
+import { useState } from "react";
 import { Link } from "react-router";
+import EventManagerTransactionsTable from "../components/EventManagerTransactionsTable";
 import useGetOrganizerTransactions from "../hooks/users/useGetOrganizerTransactions";
 
 export default function EventManagerTransactions() {
-  
-  const { data: transactions } = useGetOrganizerTransactions();
+  const [page, setPage] = useState<number>(1);
+
+  const { data: transactions, isPending } = useGetOrganizerTransactions(page);
 
   return (
-    <div className="flex flex-col  px-10 py-8 w-[80%] overflow-y-auto">
-        <nav className="text-xs uppercase tracking-wide text-neutral-500 mb-1">
+    <div className="flex flex-col  px-10 py-8 w-full overflow-y-auto">
+      <nav className="text-xs uppercase tracking-wide text-neutral-500 mb-1">
         <Link to="/" className="hover:text-neutral-900 cursor-pointer">
           Home
         </Link>
@@ -25,6 +28,15 @@ export default function EventManagerTransactions() {
       <h1 className="text-2xl font-bold uppercase text-neutral-900 mb-8">
         Transactions
       </h1>
+
+      {!isPending && (
+        <div>
+          <EventManagerTransactionsTable
+            transactions={transactions}
+            onPageChange={(pg) => setPage(pg)}
+          />
+        </div>
+      )}
     </div>
-  )
+  );
 }
