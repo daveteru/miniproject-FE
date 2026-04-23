@@ -28,7 +28,7 @@ export default function ForgotPassword() {
       return response.data;
     },
     onSuccess: () => {
-      toast.success("Email sent! Link expires in 15 minutes.");
+      toast.success("Email sent! Token expires in 15 minutes.");
       navigate("/");
     },
     onError: (error: AxiosError<{ message: string }>) => {

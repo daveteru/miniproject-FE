@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router";
-import { formatThousand } from "../../utility/dateconvert";
+import { formatThousand } from "../../utility/utils";
 
 type ticketcontentprops = {
   ticketlevel: string;

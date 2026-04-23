@@ -18,14 +18,14 @@ export default function MyEventsCard({
   return (
     <Link
       to={`${id}/edit`}
-      className="flex flex-row border-b h-25 justify-start items-center border-neutral-200 text-neutral-600 rounded-md hover:bg-neutral-200"
+      className="grid grid-cols-[1fr_4fr] border-b h-25 justify-start items-center border-neutral-200 text-neutral-600 rounded-md hover:bg-neutral-200"
     >
       <div className="flex items-center justify-center w-40">
         <div className="mx-2">
           {thumbnail ? (
             <img
               src={thumbnail}
-              alt="Coupon icon"
+              alt="Event thumbnail"
               className="rounded-md h-15 w-25"
             />
           ) : (

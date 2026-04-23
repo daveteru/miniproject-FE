@@ -1,5 +1,5 @@
 import { useState, type Dispatch, type SetStateAction } from "react";
-import { formatThousand } from "../../utility/dateconvert";
+import { formatThousand } from "../../utility/utils";
 
 export type CartItem = {
   id: number;
