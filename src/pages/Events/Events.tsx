@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, useParams } from "react-router";
+import { useParams } from "react-router";
 import ticketicon from "../../assets/icons/Ticket_use_fill.svg";
 import Landingpagecategory from "../Home/Landingpagecategory";
 import Partners from "../Home/Partners";

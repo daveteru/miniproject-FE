@@ -55,7 +55,12 @@ const router = createBrowserRouter([
   {
     element: <Layout />,
     children: [
-      { path: "/", element: <Home /> },
+      {
+        lazy: async () => {
+          const { default: Home } = await import("./pages/Home/Home");
+          return { Component: Home };
+        },
+      },
       { path: "/discover", element: <Discover /> },
       { path: "/events/:id", element: <Events /> },
       {
@@ -73,7 +78,7 @@ const router = createBrowserRouter([
         element: <Privacy />,
         loader: authLoader(["USER", "ORGANIZER"]),
       },
-        { path: "/*", element: <Err_404/>},
+      { path: "/*", element: <Err_404 /> },
       {
         path: "/event-manager",
         element: <EventManager />,
@@ -110,7 +115,6 @@ const router = createBrowserRouter([
   { path: "/register", element: <Register />, loader: loggedInLoader },
   { path: "/forgot-password", element: <ForgotPassword /> },
   { path: "/reset-password/:token", element: <ResetPassword /> },
-
 ]);
 
 const queryClient = new QueryClient();

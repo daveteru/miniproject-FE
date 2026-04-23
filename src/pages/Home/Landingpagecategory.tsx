@@ -31,7 +31,7 @@ export default function Landingpagecategory({
   title,
 }: LandingpagecategoryProps) {
   const [events, setEvents] = useState<Eventsprops[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
 
   useEffect(() => {
     axiosInstance

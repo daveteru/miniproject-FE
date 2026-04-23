@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import Reviewpagecard from "./Reviewpagecard";
-import Sidebar from "../../components/Sidebar";
 import { axiosInstance } from "../../lib/axios";
 
 type ReviewItem = {

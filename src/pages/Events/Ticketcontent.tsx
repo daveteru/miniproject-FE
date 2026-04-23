@@ -12,7 +12,6 @@ type ticketcontentprops = {
 
 export default function Ticketcontent({
   ticketlevel,
-  description,
   price,
   eventId,
   ticketId,
