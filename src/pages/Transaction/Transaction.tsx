@@ -71,6 +71,7 @@ export default function Transaction() {
   const [total, setTotal] = useState<number>(0);
   const [coupondiscount, setCoupondiscount] = useState<number>(0);
   const [cartResetKey, setCartResetKey] = useState(0);
+  const [isReset, setIsReset] = useState(false);
   const [coupons, setCoupons] = useState<Coupon[]>([]);
   const [selectedCoupon, setSelectedCoupon] = useState<Coupon | null>(null);
   const { user } = useAppStore();
@@ -180,9 +181,9 @@ export default function Transaction() {
 
   return (
     <div className="w-full mih-h-screen border border-transparent bg-neutral-100 h-min-screen ">
-      <section className="bg-white container mx-auto w-full max-w-250 h-full mt-20 rounded-t-2xl border-t border-x overflow-hidden border-neutral-300 ">
-        <div className="w-full h-80 bg-neutral-400 overflow-hidden ">
-          <img src={eventdetails?.thumbnail} alt="" className="object-cover " />
+      <section className="bg-white container mx-auto w-full max-w-250 h-full lg:mt-20 lg:rounded-t-2xl border-t border-x overflow-hidden lg:border-neutral-300 ">
+        <div className="w-full lg:h-80 bg-neutral-400 overflow-hidden ">
+          <img src={eventdetails?.thumbnail} alt="" className="object-cover scal " />
         </div>
         <div className="flex w-full text-center items-center mt-4 justify-center p-2">
           <hr className="flex-1 border-neutral-200 mx-5" />
@@ -190,9 +191,9 @@ export default function Transaction() {
           <hr className="flex-1 border-neutral-200 mx-5" />
         </div>
         <h1 className="text-xl mt-5 pb-3 px-10 ">ONLINE SALE</h1>
-        <div className="w-full h-full flex px-10  mb-50 gap-5">
+        <div className="w-full h-full flex px-10 flex-col lg:flex-row mb-50 gap-5">
           {" "}
-          <div className="w-[60%] h-full  gap-2 flex flex-col">
+          <div className="lg:w-[60%] h-full  gap-2 flex flex-col">
             <div className="flex flex-col gap-4">
               {tickets.map((t) => (
                 <TicketCard
@@ -202,7 +203,7 @@ export default function Transaction() {
                   price={t.price}
                   availableTicket={t.availableTicket}
                   setCart={setCart}
-                  initialQty={t.id === preselectedTicketId ? preselectedAmount : 0}
+                  initialQty={!isReset && t.id === preselectedTicketId ? preselectedAmount : 0}
                 />
               ))}
             </div>
@@ -242,6 +243,7 @@ export default function Transaction() {
                     onClick={() => {
                       setCart([]);
                       setCartResetKey((k) => k + 1);
+                      setIsReset(true);
                       setIscoupon(false);
                       setIsvoucher(false);
                       setIspoints(false);

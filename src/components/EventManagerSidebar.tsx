@@ -12,7 +12,7 @@ export default function EventManagerSidebar() {
   const user = useAppStore((state) => state.user);
 
   return (
-    <aside className="flex flex-col w-[25%] justify-between bg-neutral-100 border border-neutral-200">
+    <aside className="flex flex-col w-[50%] md:relative fixed h-screen z-2 md:w-[25%] justify-between bg-neutral-100 border border-neutral-200">
       <div>
         <Link to="/profile">
           <div className="flex items-center gap-3 px-6 py-6 border-b border-neutral-200">

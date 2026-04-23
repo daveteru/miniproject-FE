@@ -78,7 +78,28 @@ export default function Events() {
 
   return (
     <div className="w-full flex flex-col items-center ">
-      <div className="w-full h-115 bg-gray-500 overflow-hidden">
+      {/* //----> bottom button for mobile only */}
+      <div className="flex justify-between w-full px-5 py-5 md:hidden fixed bottom-0 bg-white border-neutral-300 border-t z-10 ">
+        <div className="w-fit h-full   ">
+          <small className="text-[10px]">TICKET PRICE FROM</small>
+          <div className="font-bold">
+            <p className="font-bold">
+              IDR{" "}
+              {fromprice[0] === 0 ? "-" : formatThousand(Math.min(...fromprice))}
+            </p>
+          </div>
+        </div>
+        <button
+          className="w-fit h-fit font-krona-one px-5 py-2 bg-[#E6FF06] hover:bg-amber-400 transition-colors  rounded-xl"
+          onClick={() =>
+            targetRef.current?.scrollIntoView({ behavior: "smooth" })
+          }
+        >
+          GET TICKETS
+        </button>
+      </div>
+
+      <div className="w-full lg:h-180 bg-gray-500 overflow-hidden">
         <img
           src={event?.thumbnail}
           alt=""
@@ -89,13 +110,13 @@ export default function Events() {
       <div className=" w-full h-fit ">
         {" "}
         {/* start of sticky bar parent */}
-        <div className="w-full h-20 border-b-gray-400 drop-shadow-xl flex bg-white sticky z-5 top-0">
-          <div className="container mx-auto w-full flex   h-full pl-25">
-            <div className="flex justify-center px-5 flex-col   h-full w-[70%]">
+        <div className="w-full h-20 border-b-gray-400 drop-shadow-xl flex bg-white sticky z-5  md:top-16  lg:top-0">
+          <div className="container mx-auto w-full flex  h-full  justify-between">
+            <div className="flex justify-center px-5 flex-col  h-full lg:w-[70%]">
               <h1 className="text-xl">{event?.name}</h1>
               <p>{event?.artist}</p>
             </div>
-            <div className="border-2 border-gray-100 w-[30%] h-20 flex justify-between items-center p-3 bg-white">
+            <div className="border-l-2 border-gray-100 lg:w-[30%] w-[50%] h-20 md:flex justify-between gap-5 p-3 items-center bg-white hidden  md:relative ">
               <div className="w-fit h-full  ">
                 <small className="text-[10px]">TICKET PRICE FROM</small>
                 <div className="font-bold">
@@ -118,8 +139,28 @@ export default function Events() {
             </div>
           </div>
         </div>
-        <div className="container mx-auto w-full  flex-1 flex  pl-25">
-          <section className="w-[70%] h-fit  pl-5 pr-10 mb-25">
+        {/* //------>  */}
+        {ispromo ? (
+          <div className="bg-amber-500 w-full h-20 lg:hidden md:px-12 px-5 flex flex-col justify-center text-white ">
+            <div className="flex justify-between">
+              {" "}
+              <h1 className="text-sm">LIMITED VOUCHER</h1>{" "}
+              <small>{event?.vouchers[0].amount} remaining</small>
+            </div>
+            <div className="flex justify-between items-center">
+              <strong>
+                IDR {formatThousand(event?.vouchers[0].discamount ?? 0)}
+              </strong>
+              <small className="">
+                Expires at: {formatDate(event?.vouchers[0].expiredDate ?? "")}
+              </small>
+            </div>
+          </div>
+        ) : (
+          ""
+        )}
+        <div className="container mx-auto w-full flex-col bg-red flex-1 flex lg:flex-row ">
+          <section className=" lg:w-[70%] h-fit  pl-5 pr-10 mb-25">
             <Smalldetails
               location={event?.location ?? ""}
               city={event?.city ?? ""}
@@ -134,14 +175,21 @@ export default function Events() {
 
             <div
               ref={targetRef}
-              className="scroll-mt-25 w-full h-fit drop-shadow-xl bg-white border border-gray-100  rounded-2xl my-15 flex flex-col gap-2 p-5"
+              className="lg:scroll-mt-25 scroll-mt-25 md:scroll-mt-40 w-full h-fit drop-shadow-xl bg-white border border-gray-100  rounded-2xl my-15 flex flex-col gap-2 p-5"
             >
-              <div className=" w-full h-10 items-center flex justify-between">
-                <div className="flex gap-2">
+              <div className=" w-full h-fit items-center flex flex-col md:flex-row justify-between">
+                <div className="flex gap-2 my-2">
                   <img src={ticketicon} alt="" />
                   <h1>TICKETS</h1>
                 </div>
-                {fromprice.length===0 ?<button className="font-krona-one  bg-[#e5ff07] px-5 py-2 rounded-2xl hover:bg-amber-300 transition ease-in">OPEN FOR PUBLIC</button>:""}
+
+                {fromprice.length === 0 ? (
+                  <button className="font-krona-one w-full md:w-fit bg-[#e5ff07] px-5 py-2 rounded-2xl hover:bg-amber-300 transition ease-in">
+                    OPEN FOR PUBLIC
+                  </button>
+                ) : (
+                  ""
+                )}
               </div>
               {event?.tickets?.map((t) => (
                 <Ticketcontent
@@ -273,7 +321,7 @@ export default function Events() {
                 ))}
               </article>
             ) : (
-              <div className="w-full text-neutral-300 border-2 min-h-100 border-neutral-200  border-dashed rounded-3xl  flex items-center justify-center">
+              <div className="w-full px-10 text-center text-neutral-300 border-2 min-h-100 border-neutral-200  border-dashed rounded-3xl  flex items-center justify-center">
                 {" "}
                 Reviews are available once the event has ended.{" "}
               </div>
@@ -281,10 +329,10 @@ export default function Events() {
           </section>
           {/* end of sticky bar parent */}
 
-          {/* sidebar sticky ticket window */}
-          <div className="flex-1 sticky top-20 h-fit ">
+          {/* //----->sidebar sticky ticket window */}
+          <div className="flex-1 lg:sticky top-20 h-fit hidden lg:block  ">
             <div className="flex bg-white flex-1 h-fit rounded-b-2xl  overflow-hidden drop-shadow-md flex-col">
-              <div className="w-full aspect-16/10 bg-gray-400 ">
+              <div className="w-full aspect-16/10 bg-gray-400 hidden lg:block ">
                 <img
                   src={event?.thumbnail}
                   alt=""

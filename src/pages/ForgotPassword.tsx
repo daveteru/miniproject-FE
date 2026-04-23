@@ -43,8 +43,8 @@ export default function ForgotPassword() {
   return (
     <div className="w-full h-screen bg-black ">
       <div className="w-full h-full flex justify-center items-center mx-auto container">
-        <section className="w-200 h-100 border text-left p-5 justify-center items-center border-neutral-200 rounded-3xl drop-shadow-2xl flex  bg-white -translate-y-8">
-          <div className="flex flex-col">
+        <section className="w-screen md:w-fit h-fit border text-left px-5 py-15 md:p-15 justify-center items-center border-neutral-200 rounded-3xl drop-shadow-2xl flex  bg-white -translate-y-8">
+          <div className="flex flex-col w-full">
             <Link
               to="/login"
               className="mb-2 hover:underline hover:text-blue-600 cursor-pointer"
@@ -61,7 +61,7 @@ export default function ForgotPassword() {
               <input
                 type="text"
                 id="email"
-                className="border border-neutral-200 w-120 rounded-xl px-5 py-2"
+                className="border border-neutral-200 w-full min-w-70 rounded-xl px-5 py-2"
                 placeholder="youremail@example.com"
                 {...register("email")}
               ></input>

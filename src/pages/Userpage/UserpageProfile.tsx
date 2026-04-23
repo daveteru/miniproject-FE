@@ -44,7 +44,7 @@ export default function UserpageProfile() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="flex gap-8 mb-6">
+      <div className="flex flex-col md:flex-row items-center md:items-start gap-8 mb-6">
         <UserpageProfileAvatar onFileSelect={handleFileChange} />
 
         <div className="flex-1 space-y-4">

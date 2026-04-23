@@ -28,6 +28,7 @@ import Transaction from "./pages/Transaction/Transaction";
 import Userpage from "./pages/Userpage/Userpage";
 import EventManagerTransactions from "./pages/EventManagerTransactions";
 import Events from "./pages/Events/Events";
+import Err_404 from "./pages/Err_404";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -72,6 +73,7 @@ const router = createBrowserRouter([
         element: <Privacy />,
         loader: authLoader(["USER", "ORGANIZER"]),
       },
+        { path: "/*", element: <Err_404/>},
       {
         path: "/event-manager",
         element: <EventManager />,
@@ -108,6 +110,7 @@ const router = createBrowserRouter([
   { path: "/register", element: <Register />, loader: loggedInLoader },
   { path: "/forgot-password", element: <ForgotPassword /> },
   { path: "/reset-password/:token", element: <ResetPassword /> },
+
 ]);
 
 const queryClient = new QueryClient();
