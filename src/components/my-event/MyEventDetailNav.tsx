@@ -3,7 +3,6 @@ import { NavLink } from "react-router";
 const NAV_ITEMS = [
   { label: "View & Edit", href: "edit" },
   { label: "Attendees", href: "attendees" },
-  { label: "Statistics", href: "stats" },
 ];
 
 export default function EventManagerSidebar() {

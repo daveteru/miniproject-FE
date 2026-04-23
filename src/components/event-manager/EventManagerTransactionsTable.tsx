@@ -1,11 +1,11 @@
 import { useState } from "react";
-import type { PageableResponse } from "../types/pagination";
-import type { Transaction } from "../types/transaction";
-import { formatThousand } from "../utility/utils";
-import Pagination from "./Pagination";
-import Popup from "./Popup";
-import useAcceptTransaction from "../hooks/transactions/useAcceptTransaction";
-import useRejectTransaction from "../hooks/transactions/useRejectTransaction";
+import type { PageableResponse } from "../../types/pagination";
+import type { Transaction } from "../../types/transaction";
+import { formatThousand } from "../../utility/utils";
+import Pagination from "../Pagination";
+import Popup from "../Popup";
+import useAcceptTransaction from "../../hooks/transactions/useAcceptTransaction";
+import useRejectTransaction from "../../hooks/transactions/useRejectTransaction";
 
 interface TransactionsTableProps {
   transactions: PageableResponse<Transaction> | undefined;

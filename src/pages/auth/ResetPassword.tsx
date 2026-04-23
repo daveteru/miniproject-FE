@@ -4,11 +4,11 @@ import type { AxiosError } from "axios";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Link, useNavigate, useParams } from "react-router";
-import { axiosInstance } from "../lib/axios";
+import { axiosInstance } from "../../lib/axios";
 import {
   resetPasswordSchema,
   type ResetPasswordSchema,
-} from "../schemas/resetPasswordSchema";
+} from "../../schemas/resetPasswordSchema";
 
 export default function ResetPassword() {
   const { token } = useParams<{ token: string }>();

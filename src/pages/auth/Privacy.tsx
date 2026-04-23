@@ -1,12 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router";
-import Sidebar from "../components/Sidebar";
-import useChangePassword from "../hooks/users/useChangePassword";
+import Sidebar from "../../components/Sidebar";
+import useChangePassword from "../../hooks/auth/useChangePassword";
 import {
   changePasswordSchema,
   type ChangePasswordSchema,
-} from "../schemas/changePasswordSchema";
+} from "../../schemas/changePasswordSchema";
 
 export default function Privacy() {
   const {
@@ -29,7 +29,6 @@ export default function Privacy() {
       <Sidebar />
       <div className="flex-1 flex overflow-y-auto bg-neutral-100">
         <div className="w-[70%] max-w-275 flex flex-col  bg-white px-5  py-8">
-          {/* Breadcrumb */}
           <nav className="text-xs uppercase tracking-wide text-neutral-500 mb-1">
             <Link to="/">
               <span className="hover:text-neutral-900 cursor-pointer">

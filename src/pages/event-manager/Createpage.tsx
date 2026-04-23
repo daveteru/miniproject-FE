@@ -1,8 +1,8 @@
 import { useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router";
-import Createpage_pricing from "./Createpage_pricing";
-import Createpage_promotions from "./Createpage_promotions";
+import Createpage_pricing from "../../components/event-manager/Createpage_pricing";
+import Createpage_promotions from "../../components/event-manager/Createpage_promotions";
 import FormText, { FormDate } from "../../components/FormComponent";
 import { axiosInstance } from "../../lib/axios";
 import { useAppStore } from "../../store/useAppStore";
@@ -109,7 +109,7 @@ export default function Createpage() {
           </Link>
           <span className="mx-1">&gt;</span>
           <Link to="/profile" className="hover:text-neutral-900 cursor-pointer">
-            Admin Page
+            Event Manager
           </Link>
           <span className="mx-1">&gt;</span>
           <span className="text-neutral-700">Create New Event</span>

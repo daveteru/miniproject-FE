@@ -9,25 +9,25 @@ import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import "./index.css";
 import { authLoader, loggedInLoader } from "./loaders/auth";
-import Createpage from "./pages/Create-event/Createpage";
-import Discover from "./pages/Discover/Discover";
-import EventManager from "./pages/EventManager";
-import EventManagerMyEvents from "./pages/EventManagerMyEvents";
-import ForgotPassword from "./pages/ForgotPassword";
-import Home from "./pages/Home/Home";
-import Login from "./pages/Login";
-import MyEventDetail from "./pages/MyEventDetail";
-import MyEventDetailAttendees from "./pages/MyEventDetailAttendees";
-import MyEventDetailEdit from "./pages/MyEventDetailEdit";
-import MyEventDetailStats from "./pages/MyEventDetailStats";
-import Privacy from "./pages/Privacy";
-import Register from "./pages/Register";
-import ResetPassword from "./pages/ResetPassword";
-import Reviews from "./pages/Reviews/Reviews";
-import Transaction from "./pages/Transaction/Transaction";
-import Userpage from "./pages/Userpage/Userpage";
-import EventManagerTransactions from "./pages/EventManagerTransactions";
-import Events from "./pages/Events/Events";
+import Createpage from "./pages/event-manager/Createpage";
+import Discover from "./pages/discover/Discover";
+import EventManager from "./pages/event-manager/EventManager";
+import EventManagerMyEvents from "./pages/event-manager/EventManagerMyEvents";
+import EventManagerStats from "./pages/event-manager/EventManagerStats";
+import EventManagerTransactions from "./pages/event-manager/EventManagerTransactions";
+import Events from "./pages/events/Events";
+import ForgotPassword from "./pages/auth/ForgotPassword";
+import Home from "./pages/home/Home";
+import Login from "./pages/auth/Login";
+import MyEventDetail from "./pages/my-event/MyEventDetail";
+import MyEventDetailAttendees from "./pages/my-event/MyEventDetailAttendees";
+import MyEventDetailEdit from "./pages/my-event/MyEventDetailEdit";
+import Privacy from "./pages/auth/Privacy";
+import Register from "./pages/auth/Register";
+import ResetPassword from "./pages/auth/ResetPassword";
+import Reviews from "./pages/event-manager/Reviews";
+import Transaction from "./pages/transaction/Transaction";
+import Userpage from "./pages/user-page/Userpage";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -84,7 +84,6 @@ const router = createBrowserRouter([
             children: [
               { path: "edit", element: <MyEventDetailEdit /> },
               { path: "attendees", element: <MyEventDetailAttendees /> },
-              { path: "stats", element: <MyEventDetailStats /> },
             ],
           },
           {
@@ -95,6 +94,7 @@ const router = createBrowserRouter([
             path: "create-event",
             element: <Createpage />,
           },
+          { path: "stats", element: <EventManagerStats /> },
           {
             path: "reviews",
             element: <Reviews />,

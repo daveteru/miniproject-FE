@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router";
 import ticketicon from "../../assets/icons/Ticket_use_fill.svg";
-import Landingpagecategory from "../Home/Landingpagecategory";
-import Partners from "../Home/Partners";
+import Landingpagecategory from "../home/Landingpagecategory";
+import Partners from "../home/Partners";
 import Review from "./Review";
 import Revieweditor from "./Revieweditor";
 import { default as Smalldetails } from "../../components/Smalldetails";

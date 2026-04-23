@@ -6,7 +6,7 @@ const NAV_ITEMS = [
   { label: "Privacy", href: "/privacy" },
   {
     label: "Event Manager",
-    href: "/event-manager/my-events",
+    href: "/event-manager/stats",
     role: "ORGANIZER",
   },
 ];
