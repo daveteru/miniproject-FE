@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { axiosInstance } from "../../lib/axios";
 
-type revieweditorprops = {
+type ReviewEditorProps = {
   username: string | undefined;
   avatar: string | undefined;
   userId: number | undefined;
@@ -14,8 +14,8 @@ export default function Revieweditor({
   avatar,
   userId,
   eventId,
-}: revieweditorprops) {
-  const [previewstar, setpreviewstar] = useState<number>(0);
+}: ReviewEditorProps) {
+  const [previewStar, setPreviewStar] = useState<number>(0);
   const [star, setStar] = useState<number>(0);
   const [review, setReview] = useState("");
   const [attendance, setAttendance] = useState([]);
@@ -74,15 +74,15 @@ export default function Revieweditor({
           {/* custom star UI */}
           <div
             className="flex cursor-pointer"
-            onMouseLeave={() => setpreviewstar(0)}
+            onMouseLeave={() => setPreviewStar(0)}
           >
             {[1, 2, 3, 4, 5].map((n) => (
               <div key={n} className="flex text-amber-500">
                 <div
-                  onMouseEnter={() => setpreviewstar(n)}
+                  onMouseEnter={() => setPreviewStar(n)}
                   onClick={() => setStar(n)}
                 >
-                  {(previewstar || star) < n ? "☆" : "★"}
+                  {(previewStar || star) < n ? "☆" : "★"}
                 </div>
               </div>
             ))}

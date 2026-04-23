@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router";
 import { formatThousand } from "../../utility/utils";
 
-type ticketcontentprops = {
+type TicketContentProps = {
   ticketlevel: string;
   description: string;
   price: number;
@@ -16,7 +16,7 @@ export default function Ticketcontent({
   eventId,
   ticketId,
   availableTicket,
-}: ticketcontentprops) {
+}: TicketContentProps) {
   const navigate = useNavigate();
   return (
     <div className="border-t border-gray-200 w-full h-fit items-center flex flex-col md:flex-row gap-2 pt-2">

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { PageableResponse } from "../../types/pagination";
 import type { Transaction } from "../../types/transaction";
-import { formatThousand } from "../../utility/utils";
+import { formatDateTime, formatThousand } from "../../utility/utils";
 import Pagination from "../Pagination";
 import Popup from "../Popup";
 import useAcceptTransaction from "../../hooks/transactions/useAcceptTransaction";
@@ -43,9 +43,10 @@ export default function EventManagerTransactionsTable({
     <div>
       <div className="overflow-x-auto">
         <div className="w-full min-w-420 border-y border-black bg-[#f2ff7b]">
-          <div className="grid grid-cols-[200px_300px_150px_150px_150px_120px_120px_150px_180px_150px] font-bold text-[14px]">
+          <div className="grid grid-cols-[200px_300px_200px_150px_150px_150px_120px_120px_150px_180px_150px] font-bold text-[14px]">
             <div className="px-4 py-2">Event</div>
             <div className="px-4 py-2">Email</div>
+            <div className="px-4 py-2">Date</div>
             <div className="px-4 py-2">Tickets</div>
             <div className="px-4 py-2">Total Price</div>
             <div className="px-4 py-2">Voucher Used</div>
@@ -61,11 +62,14 @@ export default function EventManagerTransactionsTable({
           transactions.data.map((transaction, index) => (
             <div
               key={index}
-              className="grid grid-cols-[200px_300px_150px_150px_150px_120px_120px_150px_180px_150px] min-w-420 border-b border-neutral-300 font-medium text-[14px]"
+              className="grid grid-cols-[200px_300px_200px_150px_150px_150px_120px_120px_150px_180px_150px] min-w-420 border-b border-neutral-300 font-medium text-[14px]"
             >
               <div className="px-4 py-2">{transaction.eventName}</div>
               <div className="px-4 py-2 wrap-break-word">
                 {transaction.email}
+              </div>
+              <div className="px-4 py-2">
+                {formatDateTime(transaction.createdAt)}
               </div>
               <div className="px-4 py-2">
                 {transaction.tickets.map((ticket, index) => (
