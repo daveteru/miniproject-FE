@@ -10,7 +10,7 @@ export default function EventManagerMyEvents() {
   const { data: events, isPending } = useGetMyEvents(page);
 
   return (
-    <div className="flex flex-col  px-10 py-8 w-[80%] overflow-y-auto">
+    <div className="flex flex-col  px-10 py-2 md:w-[80%] overflow-y-auto">
       <nav className="text-xs uppercase tracking-wide text-neutral-500 mb-1">
         <Link to="/" className="hover:text-neutral-900 cursor-pointer">
           Home
@@ -33,7 +33,7 @@ export default function EventManagerMyEvents() {
       <div className="flex flex-col">
         {events && !isPending ? (
           events.data.length > 0 && (
-            <div className="flex flex-col border border-neutral-200 rounded-xl px-5 py-3">
+            <div className="flex flex-col border  border-neutral-200 rounded-xl md:px-5 py-3 overflow-hidden">
               <div className="flex flex-col">
                 {events.data.map((myEvent: MyEvent) => (
                   <MyEventsCard

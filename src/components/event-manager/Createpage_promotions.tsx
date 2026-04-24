@@ -39,12 +39,12 @@ export default function Createpage_promotions({ promotoggle, voucher, onToggle, 
       <div
         className={`px-6 py-8 mb-10 rounded-2xl border-neutral-300 border-dashed border-2 ${promotoggle ? "" : "hidden"}`}
       >
-        <div className="flex w-full items-center gap-4">
-          <div className="w-[40%]">
+        <div className="flex w-full flex-col md:flex-row items-center gap-4">
+          <div className="md:w-[40%] w-full">
             <label className="block text-xs font-semibold uppercase tracking-wide text-neutral-700 mb-1">
               DISCOUNT AMOUNT
             </label>
-            <div className="border flex rounded-xl gap-2 border-neutral-300 px-4 py-1.5">
+            <div className="border w-full flex rounded-xl gap-2 border-neutral-300 px-4 py-1.5">
               <span className="text-neutral-400">IDR</span>
               <input
                 type="number"
@@ -54,7 +54,7 @@ export default function Createpage_promotions({ promotoggle, voucher, onToggle, 
               />
             </div>
           </div>
-          <div className="w-[20%]">
+          <div className="md:w-[20%] w-full">
             <label className="block text-xs font-semibold uppercase tracking-wide text-neutral-700 mb-1">
               TOTAL  VOUCHER
             </label>
@@ -67,7 +67,7 @@ export default function Createpage_promotions({ promotoggle, voucher, onToggle, 
               />
             </div>
           </div>
-          <div className="flex-1">
+          <div className="md:flex-1 w-full">
             <label className="block text-xs font-semibold uppercase tracking-wide text-neutral-700 mb-1">
               Expired Date
             </label>

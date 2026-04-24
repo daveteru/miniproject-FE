@@ -24,7 +24,7 @@ export default function Revieweditor({
     async function fetchAttendance() {
       try {
         const { data } = await axiosInstance.post(`/transactions/attendance/`, {
-          data: { eventId: eventId, userId: userId },
+          data: { eventId: eventId},
         });
         setAttendance(data);
       } catch (error) {
@@ -48,8 +48,8 @@ export default function Revieweditor({
     try {
       await axiosInstance.post("/reviews", payload);
       toast.success("Review submitted!");
-    } catch (err) {
-      toast.error("Something went wrong!");
+    } catch (err : any) {
+      toast.error(err?.response?.data?.message);
     }
   };
 

@@ -9,7 +9,7 @@ export default function EventManagerTransactions() {
   const { data: transactions, isPending } = useGetOrganizerTransactions(page);
 
   return (
-    <div className="flex flex-col  px-10 py-8 w-full overflow-y-auto">
+    <div className="flex flex-col  px-10 py-2 w-full overflow-y-auto">
       <nav className="text-xs uppercase tracking-wide text-neutral-500 mb-1">
         <Link to="/" className="hover:text-neutral-900 cursor-pointer">
           Home

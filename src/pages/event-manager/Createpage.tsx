@@ -103,7 +103,7 @@ export default function Createpage() {
 
   return (
     <div className="w-full  flex min-h-screen">
-      <div className="flex flex-col  bg-white px-10 py-8 w-[80%] max-w-250 overflow-y-auto">
+      <div className="flex flex-col bg-white px-10 py-8 md:w-[80%] max-w-250 overflow-y-auto">
         <nav className="text-xs uppercase tracking-wide text-neutral-500 mb-1">
           <Link to="/" className="hover:text-neutral-900 cursor-pointer">
             Home
@@ -122,7 +122,7 @@ export default function Createpage() {
 
         <form onSubmit={handleSubmit(onSubmit)}>
           {/* Top section: fields + thumbnail */}
-          <div className="flex gap-8 mb-6">
+          <div className="flex md:flex-row flex-col-reverse items-center md:items-start gap-8 mb-6">
             {/* Left column — inputs */}
             <div className="flex-1 space-y-4">
               <FormText
@@ -135,7 +135,7 @@ export default function Createpage() {
                 error={errors.artist?.message}
                 {...register("artist")}
               />
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid md:grid-cols-3 gap-4">
                 <FormText
                   label="Category"
                   error={errors.category?.message}

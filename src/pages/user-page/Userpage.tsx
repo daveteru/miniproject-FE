@@ -33,6 +33,7 @@ type TransactionItem = {
 
 type txhistoryprops = {
   id: number;
+  uuid:string;
   expiredAt: string;
   paymentProof: string | null;
   paymentStatus:
@@ -123,6 +124,7 @@ export default function formpage() {
               txhistory.map((data, index) => (
                 <Bookinghistory
                   txno={index + 1}
+                  uuid={data.uuid}
                   id={data.id}
                   expiredAt={data.expiredAt}
                   paymentProof={data.paymentProof}

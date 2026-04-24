@@ -18,7 +18,7 @@ export default function Navbar() {
         ref={navRef}
         className={`h-100 fixed lg:relative w-full z-10 -translate-y-81`}
       >
-        {/* MOBILE MENU */}
+        {/* //---->MOBILE MENU */}
         <div className="relative z-1 w-full bg-[#E6FF06] border-b border-dashed h-80">
           <div className="h-full w-full flex flex-col lg:hidden font-krona-one">
             <Navbarbuttton label="ABOUT" />
@@ -37,7 +37,7 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* BIG SCREEN MENU */}
+        {/* //---> BIG SCREEN MENU */}
         <div className="relative flex justify-between items-center pl-5 z-1 h-16 ">
           <Link to="/">
             <img
