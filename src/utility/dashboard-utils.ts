@@ -144,8 +144,6 @@ export function getTotalTicketsSold(transactions: Transaction[]) {
       return transaction.tickets;
     });
 
-  console.log(soldTicketsByTransaction);
-
   let totalTicketsSold = 0;
   soldTicketsByTransaction.map((transaction) => {
     const ticketAmtsByTransaction = transaction.map((ticket) => ticket.amount);
@@ -155,8 +153,6 @@ export function getTotalTicketsSold(transactions: Transaction[]) {
     );
     totalTicketsSold += ticketTotByTransaction;
   });
-
-  console.log(totalTicketsSold);
 
   return totalTicketsSold;
 }
@@ -170,14 +166,15 @@ export function getTransactionCount(transactions: Transaction[]) {
   return paidTransactions.length;
 }
 
-export function getFirstSixTransactions(transactions: Transaction[]) {
+export function getFirstNthTransactions(
+  transactions: Transaction[],
+  length: number,
+) {
   if (!transactions) return [];
 
   const result: Transaction[] = [];
 
-  for (let i = 0; i < 6; i++) {
-    if (!transactions[i]) return result;
-
+  for (let i = 0; i < transactions.length && result.length < length; i++) {
     if (transactions[i].paymentStatus === "PAID") {
       result.push(transactions[i]);
     }

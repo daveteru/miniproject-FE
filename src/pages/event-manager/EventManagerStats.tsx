@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import DashboardBarChart from "../../components/event-manager/DashboardBarChart";
 import useGetOrganizerTransactions from "../../hooks/users/useGetOrganizerTransactions";
 import {
-  getFirstSixTransactions,
+  getFirstNthTransactions,
   getThisMonthsRevenue,
   getThisYearsRevenue,
   getTodaysRevenue,
@@ -27,7 +27,7 @@ export default function EventManagerStats() {
   const [totalTicketSold, setTotalTicketSold] = useState<number>(0);
   const [totalTransactions, setTotalTransactions] = useState<number>(0);
 
-  const [firstSixTransactions, setFirstSixTransactions] = useState<
+  const [firstSevenTransactions, setFirstSevenTransactions] = useState<
     Transaction[]
   >([]);
 
@@ -41,15 +41,13 @@ export default function EventManagerStats() {
 
   useEffect(() => {
     if (transactions) {
-      console.log(transactions);
-
       setTotalRevenue(getTotalRevenue(transactions.data));
       setYearRevenue(getThisYearsRevenue(transactions.data));
       setMonthRevenue(getThisMonthsRevenue(transactions.data));
       setTodaysRevenue(getTodaysRevenue(transactions.data));
       setTotalTicketSold(getTotalTicketsSold(transactions.data));
       setTotalTransactions(getTransactionCount(transactions.data));
-      setFirstSixTransactions(getFirstSixTransactions(transactions.data));
+      setFirstSevenTransactions(getFirstNthTransactions(transactions.data, 7));
       setChartData(revenuePerYear(transactions.data, year));
     }
   }, [transactions, year]);
@@ -148,7 +146,7 @@ export default function EventManagerStats() {
             </p>
           </div>
           <div className="flex flex-col mt-3">
-            {firstSixTransactions.map((transaction) => (
+            {firstSevenTransactions.map((transaction) => (
               <DashboardRecentsRow
                 key={transaction.uuid}
                 name={transaction.customerName}
