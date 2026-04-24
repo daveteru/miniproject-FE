@@ -36,6 +36,7 @@ type TransactionItem = {
 
 type BookingHistoryProps = {
   txno: number;
+  uuid: string;
   id?: number;
   expiredAt?: string;
   paymentProof?: string | null;
@@ -45,6 +46,7 @@ type BookingHistoryProps = {
     | "PAID"
     | "EXPIRED"
     | "REJECTED"
+    | "CANCELLED"
     | "";
   pointsUsed?: number;
   coupon?: number;
@@ -64,6 +66,7 @@ type BookingHistoryProps = {
 
 export default function Bookinghistory({
   txno,
+  uuid,
   id,
   expiredAt,
   paymentProof,
@@ -86,7 +89,8 @@ export default function Bookinghistory({
   const [, setProofFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const proofInputRef = useRef<HTMLInputElement>(null);
-
+  const [isDisabled] = useState(false);
+  const [confirm, setConfirm] = useState<boolean>(false);
 
   //---> upload mechanic
 
@@ -99,6 +103,8 @@ export default function Bookinghistory({
       await axiosInstance.patch(`/transactions/${id}/proof`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
+      toast.success("Upload Success!");
+      window.location.reload();
     } catch (err: any) {
       toast.error(
         err?.response?.data?.message ??
@@ -107,6 +113,19 @@ export default function Bookinghistory({
       setProofPreview(null);
     } finally {
       setIsUploading(false);
+    }
+  };
+
+  const handleCancel = async () => {
+    try {
+      await axiosInstance.patch(`/transactions/cancel/${uuid}`);
+      toast.success("Transaction cancelled!");
+      window.location.reload();
+    } catch (err: any) {
+      toast.error(
+        err?.response?.data?.message ??
+          "Cancel Failed: Please check network or refresh the page",
+      );
     }
   };
 
@@ -120,7 +139,7 @@ export default function Bookinghistory({
     <div
       ref={contentRef}
       style={{ height: isopen ? height : 60 }}
-      className={`w-full  border-b border-dashed border-neutral-200 transition-[height] overflow-hidden  duration-400 ease-in-out   `}
+      className={`w-full  border-b border-dashed relative border-neutral-200 transition-[height] overflow-hidden  duration-400 ease-in-out bg-red   `}
     >
       <button
         onClick={() => setIsopen(!isopen)}
@@ -139,6 +158,31 @@ export default function Bookinghistory({
           />
         </div>
       </button>
+
+      {/* //----> Confirmation Layer */}
+
+      <div
+        className={`bg-gray-300/60 absolute w-full h-full flex justify-center items-center overflow-hidden transition-all ${confirm ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
+      >
+        <div className="w-[50%] bg-white h-[50%] flex-col mb-20 rounded-2xl p-5 gap-5 flex justify-center items-center">
+          <p>Are you sure you want to cancel this transaction?</p>
+          <div className="flex gap-5">
+            <button
+              onClick={() => handleCancel()}
+              className="border-2 border-amber-400 rounded-md px-5 py-1 cursor-pointer"
+            >
+              Yes
+            </button>
+            <button
+              onClick={() => setConfirm(false)}
+              className="bg-amber-400 rounded-md px-5 py-1 cursor-pointer hover:bg-amber-500"
+            >
+              No
+            </button>
+          </div>
+        </div>
+      </div>
+
       <div className="mx-5 my-3 h-fit font-[inter]">
         <div className="flex justify-between items-center">
           <h1>Transaction Details</h1>
@@ -222,44 +266,63 @@ export default function Bookinghistory({
             </div>
           </div>
         </div>
-        <div className="flex items-center gap-3 mt-2">
+        <div className="flex items-center  gap-3 mt-2 justify-between">
+          <div className="flex gap-3 items-center">
+            <button
+              disabled={
+                isDisabled ||
+                isUploading ||
+                paymentStatus === "EXPIRED" ||
+                paymentStatus === "PAID" ||
+                paymentStatus === "REJECTED" ||
+                paymentStatus === "CANCELLED" ||
+                paymentStatus === "WAITING_FOR_CONFIRM"
+              }
+              onClick={() => proofInputRef.current?.click()}
+              className="items-center h-fit flex gap-2 rounded-full px-3 py-1 text-sm transition ease-initial disabled:bg-neutral-300 disabled:text-neutral-400 disabled:cursor-not-allowed bg-amber-300 hover:bg-amber-400 cursor-pointer text-neutral-700"
+            >
+              <img src={uploadicon} alt="" />
+              Upload Proof
+            </button>
+            {proofPreview && (
+              <img
+                src={proofPreview}
+                alt="Payment proof preview"
+                className="w-12 h-12 rounded-md object-cover border border-neutral-300"
+              />
+            )}
+            <small className="text-[8px] text-neutral-500 italic">
+              Please only include filesize under 1MB & in .jpg / .png format
+            </small>
+            <input
+              ref={proofInputRef}
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (!file) return;
+                setProofFile(file);
+                setProofPreview(URL.createObjectURL(file));
+                handleProofUpload(file);
+              }}
+            />
+          </div>
           <button
+            onClick={() => setConfirm(true)}
             disabled={
+              isDisabled ||
               isUploading ||
               paymentStatus === "EXPIRED" ||
               paymentStatus === "PAID" ||
               paymentStatus === "REJECTED" ||
-              paymentStatus === "WAITING_FOR_CONFIRM"
+              paymentStatus === "WAITING_FOR_CONFIRM" ||
+              paymentStatus === "CANCELLED"
             }
-            onClick={() => proofInputRef.current?.click()}
-            className="items-center h-fit flex gap-2 rounded-full px-3 py-1 text-sm transition ease-initial disabled:bg-neutral-300 disabled:text-neutral-400 disabled:cursor-not-allowed bg-amber-300 hover:bg-amber-400 cursor-pointer text-neutral-700"
+            className="items-center h-fit flex gap-2 rounded-full px-3 py-1 text-sm transition ease-initial disabled:bg-neutral-300 disabled:text-neutral-400 disabled:cursor-not-allowed bg-red-300 hover:bg-red-400 cursor-pointer text-black"
           >
-            <img src={uploadicon} alt="" />
-            Upload Proof
+            Cancel
           </button>
-          {proofPreview && (
-            <img
-              src={proofPreview}
-              alt="Payment proof preview"
-              className="w-12 h-12 rounded-md object-cover border border-neutral-300"
-            />
-          )}
-          <small className="text-[8px] text-neutral-500 italic">
-            Please only include filesize under 1MB & in .jpg / .png format
-          </small>
-          <input
-            ref={proofInputRef}
-            type="file"
-            accept="image/*"
-            className="hidden"
-            onChange={(e) => {
-              const file = e.target.files?.[0];
-              if (!file) return;
-              setProofFile(file);
-              setProofPreview(URL.createObjectURL(file));
-              handleProofUpload(file);
-            }}
-          />
         </div>
       </div>
     </div>

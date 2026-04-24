@@ -45,7 +45,9 @@ export default function Events() {
           <div className="font-bold">
             <p className="font-bold">
               IDR{" "}
-              {fromprice[0] === 0 ? "-" : formatThousand(Math.min(...fromprice))}
+              {fromprice[0] === 0
+                ? "-"
+                : formatThousand(Math.min(...fromprice))}
             </p>
           </div>
         </div>
@@ -273,6 +275,7 @@ export default function Events() {
                 />
                 {event?.reviews?.map((e) => (
                   <Review
+                    key={e.id}
                     text={e.text}
                     rating={e.rating}
                     reviewername={e.reviewer.fullName}
