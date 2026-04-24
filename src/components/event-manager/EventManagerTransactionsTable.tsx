@@ -42,7 +42,7 @@ export default function EventManagerTransactionsTable({
   return (
     <div>
       <div className="overflow-x-auto">
-        <div className="w-full min-w-420 border-y border-black bg-[#f2ff7b]">
+        <div className="w-full min-w-470 border-y border-black bg-[#f2ff7b]">
           <div className="grid grid-cols-[200px_300px_200px_150px_150px_150px_120px_120px_150px_180px_150px] font-bold text-[14px]">
             <div className="px-4 py-2">Event</div>
             <div className="px-4 py-2">Email</div>
@@ -62,7 +62,7 @@ export default function EventManagerTransactionsTable({
           transactions.data.map((transaction, index) => (
             <div
               key={index}
-              className="grid grid-cols-[200px_300px_200px_150px_150px_150px_120px_120px_150px_180px_150px] min-w-420 border-b border-neutral-300 font-medium text-[14px]"
+              className="grid grid-cols-[200px_300px_200px_150px_150px_150px_120px_120px_150px_180px_150px] min-w-470 border-b border-neutral-300 font-medium text-[14px]"
             >
               <div className="px-4 py-2">{transaction.eventName}</div>
               <div className="px-4 py-2 wrap-break-word">
