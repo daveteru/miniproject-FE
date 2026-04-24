@@ -31,7 +31,6 @@ export interface EventDetails {
     id?: number;
   }[];
   reviews: {
-    id: number;
     text: string;
     rating: number;
     reviewer: {

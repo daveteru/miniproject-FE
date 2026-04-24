@@ -273,7 +273,6 @@ export default function Events() {
                 />
                 {event?.reviews?.map((e) => (
                   <Review
-                  key={e.id}
                     text={e.text}
                     rating={e.rating}
                     reviewername={e.reviewer.fullName}
