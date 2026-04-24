@@ -40,6 +40,7 @@ export default function UserpageProfileAvatar({ onFileSelect }: AvatarProps) {
             src={preview}
             alt="Avatar"
             className="w-full h-full object-cover"
+            referrerPolicy="no-referrer" 
           />
         ) : (
           <div className="w-full h-full bg-neutral-300" />

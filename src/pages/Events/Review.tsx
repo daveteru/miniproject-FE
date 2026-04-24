@@ -1,4 +1,5 @@
 type ReviewProps = {
+  key:number;
   text: string;
   rating: number;
   reviewername: string;

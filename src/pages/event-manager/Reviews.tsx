@@ -34,7 +34,7 @@ export default function Reviews() {
 
   return (
     <div className="w-full flex min-h-screen">
-      <div className="w-[70%] max-w-250 flex flex-col bg-white px-10 py-8">
+      <div className="md:w-[70%] max-w-250 flex flex-col bg-white px-10 py-8">
         <nav className="text-xs uppercase tracking-wide text-neutral-500 mb-1">
           <Link to="/">
             <span className="hover:text-neutral-900 cursor-pointer">Home</span>

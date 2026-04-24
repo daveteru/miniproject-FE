@@ -27,8 +27,8 @@ export default function useLoginByGoogle() {
 
         toast.success("Login successful!");
         navigate("/");
-      } catch (error) {
-        toast.error("Login Failed");
+      } catch (error:any) {
+        toast.error(error?.response?.data?.message);
       }
     },
   });

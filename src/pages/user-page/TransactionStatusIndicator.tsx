@@ -36,6 +36,11 @@ export default function TransactionStatusIndicator({
       text: "text-red-600",
       outline: "outline-red-600",
     },
+    CANCELLED: {
+      bg: "bg-red-100",
+      text: "text-red-600",
+      outline: "outline-red-600",
+    },
   };
 
   return (
