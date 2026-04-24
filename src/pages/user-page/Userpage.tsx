@@ -10,6 +10,7 @@ import { useAppStore } from "../../store/useAppStore";
 
 type TransactionItem = {
   id: string;
+  uuid:string;
   transactionId: number;
   ticketId: number;
   quantity: number;
