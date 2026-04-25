@@ -20,8 +20,8 @@ export default function Privacy() {
 
   const { mutateAsync: changePasswordMutation, isPending } =
     useChangePassword();
-      const [burger, setBurger] = useState<boolean>(false);
     
+  const [burger, setBurger] = useState<boolean>(false);
 
   const onSubmit = async (data: ChangePasswordSchema) => {
     await changePasswordMutation(data);
@@ -31,10 +31,14 @@ export default function Privacy() {
     <div className="w-full  flex min-h-screen">
       <Sidebar burger={burger} setBurger={setBurger} />
       <div className="flex-1 flex overflow-y-auto bg-neutral-100">
-        
         <div className="lg:w-[70%] lg:max-w-275 w-full flex flex-col  bg-white px-5  py-8">
           {/* Breadcrumb */}
-                    <button onClick={()=>setBurger(true)} className="md:hidden px-2 py-1 bg-amber-300 w-fit rounded-full text-sm mb-2">SIDE MENU</button>
+          <button
+            onClick={() => setBurger(true)}
+            className="md:hidden px-2 py-1 bg-amber-300 w-fit rounded-full text-sm mb-2"
+          >
+            SIDE MENU
+          </button>
 
           <nav className="text-xs uppercase tracking-wide text-neutral-500 mb-1">
             <Link to="/">

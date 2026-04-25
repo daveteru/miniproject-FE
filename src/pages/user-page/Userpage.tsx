@@ -126,7 +126,6 @@ export default function formpage() {
                 <Bookinghistory
                   txno={index + 1}
                   uuid={data.uuid}
-                  id={data.id}
                   expiredAt={data.expiredAt}
                   paymentProof={data.paymentProof}
                   paymentStatus={data.paymentStatus}
