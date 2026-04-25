@@ -25,6 +25,7 @@ export interface EventDetails {
     avatar: string | null;
   };
   vouchers: {
+    startDate:string;
     expiredDate: string;
     discamount: number;
     amount: number;

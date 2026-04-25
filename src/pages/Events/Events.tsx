@@ -28,7 +28,15 @@ export default function Events() {
         );
         setEvent(data);
         setFromprice(data.tickets?.map((t) => t.price) ?? []);
-        data.vouchers.length == 0 ? setIspromo(false) : setIspromo(true);
+        const now = new Date();
+        setIspromo(
+          data.vouchers.some(
+            (v) =>
+              v.amount > 0 &&
+              new Date(v.startDate) <= now &&
+              new Date(v.expiredDate) >= now,
+          ),
+        );
       } catch (err) {
         console.error(err);
       }
@@ -295,7 +303,7 @@ export default function Events() {
           {/* //----->sidebar sticky ticket window */}
           <div className="flex-1 lg:sticky top-20 h-fit hidden lg:block  ">
             <div className="flex bg-white flex-1 h-fit rounded-b-2xl  overflow-hidden drop-shadow-md flex-col">
-              <div className="w-full aspect-16/10 bg-gray-400 hidden lg:block ">
+              <div className="w-full h-72 aspect-16/10 bg-gray-400 hidden lg:block ">
                 <img
                   src={event?.thumbnail}
                   alt=""

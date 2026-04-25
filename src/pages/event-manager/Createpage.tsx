@@ -31,6 +31,7 @@ export default function Createpage() {
     amount: 0,
     discamount: 0,
     expiredDate: "",
+    startDate:"",
     userId: 1,
   });
 
@@ -71,10 +72,7 @@ export default function Createpage() {
   };
 
   const onSubmit = async (data: CreateEventSchema) => {
-    if (tickets.length === 0) {
-      alert("At least 1 ticket is required");
-      return;
-    }
+
     setIsloading(true);
     try {
       const formData = new FormData();
@@ -94,8 +92,8 @@ export default function Createpage() {
       });
       toast.success("Submission success");
       navigate("/");
-    } catch (error) {
-      toast.error("Submission failed");
+    } catch (error:any) {
+      toast.error(error?.response?.data?.message ?? "Network Error / Server Error");
     } finally {
       setIsloading(false);
     }
@@ -103,7 +101,7 @@ export default function Createpage() {
 
   return (
     <div className="w-full  flex min-h-screen">
-      <div className="flex flex-col bg-white px-10 py-8 md:w-[80%] max-w-250 overflow-y-auto">
+      <div className="flex flex-col  bg-white px-10 py-8 w-[80%] max-w-250 overflow-y-auto">
         <nav className="text-xs uppercase tracking-wide text-neutral-500 mb-1">
           <Link to="/" className="hover:text-neutral-900 cursor-pointer">
             Home
@@ -122,7 +120,7 @@ export default function Createpage() {
 
         <form onSubmit={handleSubmit(onSubmit)}>
           {/* Top section: fields + thumbnail */}
-          <div className="flex md:flex-row flex-col-reverse items-center md:items-start gap-8 mb-6">
+          <div className="flex gap-8 mb-6">
             {/* Left column — inputs */}
             <div className="flex-1 space-y-4">
               <FormText
@@ -135,7 +133,7 @@ export default function Createpage() {
                 error={errors.artist?.message}
                 {...register("artist")}
               />
-              <div className="grid md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-3 gap-4">
                 <FormText
                   label="Category"
                   error={errors.category?.message}
@@ -237,7 +235,10 @@ export default function Createpage() {
           <div className="flex items-center gap-6">
             <button
               type="button"
-              onClick={handleSubmit(() => setAreyousure(true))}
+              onClick={handleSubmit(() => {
+               
+                setAreyousure(true);
+              })}
               className={`${isloading ? "bg-neutral-500" : "bg-[#d4f531]"} hover:bg-[#c5e620] text-neutral-900 font-bold uppercase tracking-wider text-sm px-8 py-3 rounded-xl transition-colors`}
             >
               {isloading ? "Loading..." : "Submit Event"}

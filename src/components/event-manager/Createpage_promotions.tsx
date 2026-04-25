@@ -2,6 +2,7 @@ type Voucher = {
   discamount: number;
   amount: number;
   expiredDate: string;
+  startDate:string;
   userId: number;
 };
 
@@ -39,12 +40,12 @@ export default function Createpage_promotions({ promotoggle, voucher, onToggle, 
       <div
         className={`px-6 py-8 mb-10 rounded-2xl border-neutral-300 border-dashed border-2 ${promotoggle ? "" : "hidden"}`}
       >
-        <div className="flex w-full flex-col md:flex-row items-center gap-4">
-          <div className="md:w-[40%] w-full">
+        <div className="flex w-full items-center gap-4">
+          <div className="w-[40%]">
             <label className="block text-xs font-semibold uppercase tracking-wide text-neutral-700 mb-1">
               DISCOUNT AMOUNT
             </label>
-            <div className="border w-full flex rounded-xl gap-2 border-neutral-300 px-4 py-1.5">
+            <div className="border flex rounded-xl gap-2 border-neutral-300 px-4 py-1.5">
               <span className="text-neutral-400">IDR</span>
               <input
                 type="number"
@@ -54,7 +55,7 @@ export default function Createpage_promotions({ promotoggle, voucher, onToggle, 
               />
             </div>
           </div>
-          <div className="md:w-[20%] w-full">
+          <div className="w-[20%]">
             <label className="block text-xs font-semibold uppercase tracking-wide text-neutral-700 mb-1">
               TOTAL  VOUCHER
             </label>
@@ -67,7 +68,18 @@ export default function Createpage_promotions({ promotoggle, voucher, onToggle, 
               />
             </div>
           </div>
-          <div className="md:flex-1 w-full">
+          <div className="flex-1">
+            <label className="block text-xs font-semibold uppercase tracking-wide text-neutral-700 mb-1">
+              Start Date
+            </label>
+            <input
+              type="date"
+              value={voucher.startDate}
+              onChange={(e) => onVoucherChange("startDate", e.target.value)}
+              className="w-full rounded-xl border border-neutral-300 px-4 py-2 text-sm outline-none focus:border-neutral-500 transition-colors"
+            />
+          </div>
+          <div className="flex-1">
             <label className="block text-xs font-semibold uppercase tracking-wide text-neutral-700 mb-1">
               Expired Date
             </label>
