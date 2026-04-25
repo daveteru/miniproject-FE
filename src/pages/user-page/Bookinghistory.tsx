@@ -67,7 +67,6 @@ type BookingHistoryProps = {
 export default function Bookinghistory({
   txno,
   uuid,
-  id,
   expiredAt,
   paymentProof,
   coupon,
@@ -95,12 +94,12 @@ export default function Bookinghistory({
   //---> upload mechanic
 
   const handleProofUpload = async (file: File) => {
-    if (!id) return;
+    if (!uuid) return;
     setIsUploading(true);
     try {
       const formData = new FormData();
       formData.append("paymentProof", file);
-      await axiosInstance.patch(`/transactions/${id}/proof`, formData, {
+      await axiosInstance.patch(`/transactions/${uuid}/proof`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       toast.success("Upload Success!");

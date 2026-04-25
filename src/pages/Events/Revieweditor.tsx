@@ -23,7 +23,7 @@ export default function Revieweditor({
   useEffect(() => {
     async function fetchAttendance() {
       try {
-        const { data } = await axiosInstance.post(`/transactions/attendance/`, {
+        const { data } = await axiosInstance.get(`/transactions/attendance/`, {
           data: { eventId: eventId},
         });
         setAttendance(data);
