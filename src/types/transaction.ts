@@ -3,6 +3,8 @@ export interface Transaction {
   eventName: string;
   createdAt: string;
   email: string;
+  customerName: string;
+  customerAvatar: string;
   tickets: {
     level: string;
     amount: number;
