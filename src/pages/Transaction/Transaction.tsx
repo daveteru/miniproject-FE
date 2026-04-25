@@ -45,6 +45,7 @@ type eventdetails = {
   };
   vouchers: {
     id: number;
+    startDate: string;
     expiredDate: string;
     discamount: number;
     amount: number;
@@ -86,6 +87,7 @@ export default function Transaction() {
         const { data } = await axiosInstance.get(`/events/detail/${eventId}`);
         setTickets(data.tickets);
         setEventdetails(data);
+        console.log("vouchers from API:", data.vouchers);
       } catch (err) {
         console.error(err);
       }
@@ -320,7 +322,10 @@ export default function Transaction() {
             </div>
 
             {/* voucher module */}
-            {eventdetails?.vouchers ? (
+            {eventdetails?.vouchers.some((v) => {
+              const now = new Date();
+              return v.amount > 0 && new Date(v.startDate) <= now && new Date(v.expiredDate) >= now;
+            }) ? (
               <div className="w-full h-20 border  justify-between rounded-lg text-neutral-500 font-[inter] flex items-center border-neutral-300 p-5 drop-shadow-lg bg-white">
                 <img src={discountticket} className="mr-2" />
                 <p>Use Event Voucher?</p>{" "}

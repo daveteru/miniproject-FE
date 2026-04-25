@@ -29,14 +29,11 @@ export default function Events() {
         setEvent(data);
         setFromprice(data.tickets?.map((t) => t.price) ?? []);
         const now = new Date();
-        setIspromo(
-          data.vouchers.some(
-            (v) =>
-              v.amount > 0 &&
-              new Date(v.startDate) <= now &&
-              new Date(v.expiredDate) >= now,
-          ),
-        );
+        setIspromo(data.vouchers.some((voucher) =>
+          voucher.amount > 0 &&
+          new Date(voucher.startDate) <= now &&
+          new Date(voucher.expiredDate) >= now
+        ));
       } catch (err) {
         console.error(err);
       }

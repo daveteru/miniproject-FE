@@ -169,13 +169,13 @@ export default function Bookinghistory({
           <div className="flex gap-5">
             <button
               onClick={() => handleCancel()}
-              className="border-2 border-amber-400 rounded-md px-5 py-1 cursor-pointer"
+              className="border-2 border-amber-400 rounded-md px-5 py-1 cursor-pointer transition ease-in hover:bg-amber-400"
             >
               Yes
             </button>
             <button
               onClick={() => setConfirm(false)}
-              className="bg-amber-400 rounded-md px-5 py-1 cursor-pointer hover:bg-amber-500"
+              className="border-2 border-amber-400 rounded-md px-5 py-1 cursor-pointer transition ease-in hover:bg-amber-400"
             >
               No
             </button>
