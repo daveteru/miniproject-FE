@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router";
 import ticketicon from "../../assets/icons/Ticket_use_fill.svg";
-import Landingpagecategory from "../home/Landingpagecategory";
-import Partners from "../home/Partners";
+import Landingpagecategory from "../Home/Landingpagecategory";
+import Partners from "../Home/Partners";
 import Review from "./Review";
 import Revieweditor from "./Revieweditor";
 import { default as Smalldetails } from "../../components/Smalldetails";
@@ -83,7 +83,7 @@ export default function Events() {
               <h1 className="text-xl">{event?.name}</h1>
               <p>{event?.artist}</p>
             </div>
-            <div className="border-l-2 border-gray-100 lg:w-[30%] w-[50%] h-20 md:flex justify-between gap-5 p-3 items-center bg-white hidden  md:relative ">
+{    user?.role == "USER"?         <div className="border-l-2 border-gray-100 lg:w-[30%] w-[50%] h-20 md:flex justify-between gap-5 p-3 items-center bg-white hidden  md:relative ">
               <div className="w-fit h-full  ">
                 <small className="text-[10px]">TICKET PRICE FROM</small>
                 <div className="font-bold">
@@ -103,7 +103,7 @@ export default function Events() {
               >
                 GET TICKETS
               </button>
-            </div>
+            </div>:""}
           </div>
         </div>
         {/* //------>  */}
@@ -167,6 +167,7 @@ export default function Events() {
                   eventId={id}
                   ticketId={t.id}
                   availableTicket={t.availableTicket}
+                  role={user?.role}
                 />
               ))}
             </div>
@@ -298,9 +299,9 @@ export default function Events() {
           {/* end of sticky bar parent */}
 
           {/* //----->sidebar sticky ticket window */}
-          <div className="flex-1 lg:sticky top-20 h-fit hidden lg:block  ">
+          <div className="w-[30%] lg:sticky top-20 h-fit hidden lg:block   ">
             <div className="flex bg-white flex-1 h-fit rounded-b-2xl  overflow-hidden drop-shadow-md flex-col">
-              <div className="w-full h-72 aspect-16/10 bg-gray-400 hidden lg:block ">
+              <div className="w-full h- aspect-16/10 bg-gray-400 hidden lg:block ">
                 <img
                   src={event?.thumbnail}
                   alt=""

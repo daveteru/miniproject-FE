@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { axiosInstance } from "../../lib/axios";
 import { formatDate } from "../../utility/utils";
 import Cardsoon from "../../components/Cardsoon";
+import { Link } from "react-router";
 
 type Eventsprops = {
   id: number;
@@ -44,7 +45,7 @@ export default function Landingpagesoon() {
         <div className="h-full flex flex-col gap-5">
           <div className="font-krona-one flex justify-between gap-5 items-center ">
             <span className="w-fit  text-xl uppercase">EVENTS COMING SOON</span>
-            <span className="underline hover:text-blue-700">VIEW ALL</span>
+            <Link to="/discover"><span className="underline hover:text-blue-700 cursor-pointer">VIEW ALL</span></Link>
           </div>
           <div className="w-full h-full  grid grid-rows-3 md:grid-cols-1 lg:grid-cols-2 gap-2 text-white">
             {soonEvents.map((e) => (

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router";
 import YellowButton from "./Buttons";
 import DiscoverCard from "./DiscoverCard";
-import { Searchbar2 } from "../home/Searchbar";
+import { Searchbar2 } from "../Home/Searchbar";
 import { axiosInstance } from "../../lib/axios";
 import toast from "react-hot-toast";
 
@@ -42,7 +42,7 @@ export default function Discover() {
     const timeout = setTimeout(() => {
       axiosInstance
         .get<EventsAPI>(
-          `/events?take=${take}&page=${page}}&search=${search}&category=${category}&city=${city}`,
+          `/events?take=${take}&page=${page}&search=${search}&category=${category}&city=${city}`,
         )
         .then(({ data }) => {
           setEvents(data.data);
@@ -124,7 +124,7 @@ export default function Discover() {
                 if (page == 1 ) return toast("You are on the First Page")
                 setPage(prev=>prev-1)}}
               className="bg-[#e5ff07] px-3 py-1 rounded-full hover:bg-amber-500 transition-colors ease-in">Prev</button>
-              <p>Page {page} / {totalpage} </p>
+              <p> {page} / {totalpage} </p>
               <button
                onClick={()=> {
                 if (page == totalpage ) return toast("You are on the Last Page")
