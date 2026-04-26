@@ -83,7 +83,7 @@ export default function Events() {
               <h1 className="text-xl">{event?.name}</h1>
               <p>{event?.artist}</p>
             </div>
-{    user?.role == "USER"?         <div className="border-l-2 border-gray-100 lg:w-[30%] w-[50%] h-20 md:flex justify-between gap-5 p-3 items-center bg-white hidden  md:relative ">
+{    user?.role !== "ORGANIZER" ?         <div className="border-l-2 border-gray-100 lg:w-[30%] w-[50%] h-20 md:flex justify-between gap-5 p-3 items-center bg-white hidden  md:relative ">
               <div className="w-fit h-full  ">
                 <small className="text-[10px]">TICKET PRICE FROM</small>
                 <div className="font-bold">

@@ -33,7 +33,7 @@ export default function Ticketcontent({
         </div>
       </div>
       <div className="h-full w-full md:w-[50%] lg:w-75 flex items-center justify-end">
-{ role == "USER"?       <button
+{ role !== "ORGANIZER" ?       <button
           className="w-full h-fit px-5 py-2 bg-[#E6FF06]  hover:bg-amber-300 rounded-xl cursor-pointer transition ease-in"
           onClick={() =>
             navigate(
