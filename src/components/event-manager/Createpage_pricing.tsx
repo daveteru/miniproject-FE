@@ -25,12 +25,13 @@ export default function Createpage_pricing({ tickets,  onTicketChange, onAddTick
       <div
         className={`border-2 border-dashed border-neutral-300 rounded-2xl p-6 space-y-4 `}
       >
+        {tickets.length == 0 ? <span className="text-red-300 italic  text-sm w-full flex justify-center">Having no tickets means this events will be "Open For Public"</span>:""}
         {tickets.map((ticket, i) => (
           <Eventticketform
             key={i}
             index={i}
             ticket={ticket}
-            showRemove={tickets.length > 1}
+            showRemove={tickets.length >= 0}
             onChange={onTicketChange}
             onRemove={onRemoveTicket}
           />

@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router";
 import YellowButton from "./Buttons";
 import DiscoverCard from "./DiscoverCard";
-import { Searchbar2 } from "../home/Searchbar";
+import { Searchbar2 } from "../Home/Searchbar";
 import { axiosInstance } from "../../lib/axios";
+import toast from "react-hot-toast";
 
 type Eventsprops = {
   id: number;
@@ -32,22 +33,26 @@ export default function Discover() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState(searchParams.get("search") ?? "");
   const [city, setCity] = useState("");
+  const [page, setPage] = useState(1);
+  const [take, _] = useState(9);
+  const [totalpage, setTotalPage] = useState(1);
   const [category, setCategory] = useState(searchParams.get("category") ?? "");
 
   useEffect(() => {
     const timeout = setTimeout(() => {
       axiosInstance
         .get<EventsAPI>(
-          `/events?take=20&search=${search}&category=${category}&city=${city}`,
+          `/events?take=${take}&page=${page}&search=${search}&category=${category}&city=${city}`,
         )
         .then(({ data }) => {
           setEvents(data.data);
+          setTotalPage(Math.ceil(data.meta.total/take))
         })
         .catch((err) => console.error(err))
         .finally(() => setLoading(false));
     }, 500);
     return () => clearTimeout(timeout);
-  }, [search, category, city]);
+  }, [search, category, city, page]);
 
   return (
     <div className="bg-[#262626]">
@@ -109,9 +114,23 @@ export default function Discover() {
         {" "}
         <div className=" container mx-auto gap-5  flex flex-col px-5 md:px-30 py-10">
           {" "}
-          <h1 className="text-2xl uppercase">
-            Explore {category || "events"}{" "}
-          </h1>
+<div className="flex w-full justify-between">
+            <h1 className="text-2xl uppercase">
+              Explore {category || "events"}{" "}
+            </h1>
+            <div className="flex text-sm gap-5 items-center">
+              <button 
+              onClick={()=> {
+                if (page == 1 ) return toast("You are on the First Page")
+                setPage(prev=>prev-1)}}
+              className="bg-[#e5ff07] px-3 py-1 rounded-full hover:bg-amber-500 transition-colors ease-in">Prev</button>
+              <p> {page} / {totalpage} </p>
+              <button
+               onClick={()=> {
+                if (page == totalpage ) return toast("You are on the Last Page")
+                setPage(prev=>prev+1)}}
+              className="bg-[#e5ff07] px-3 py-1 rounded-full hover:bg-amber-500 transition-colors ease-in">Next</button></div> 
+</div>
           {!loading && events.length === 0 ? (
             <div className="flex justify-center items-center py-20 border-2 border-dashed rounded-3xl border-neutral-200 h-[40vh] text-gray-400 text-lg">
               <p>cannot find events searched 😅</p>
