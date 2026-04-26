@@ -21,7 +21,7 @@ export default function Navbar() {
         {/* //---->MOBILE MENU */}
         <div className="relative z-1 w-full bg-[#E6FF06] border-b border-dashed h-80">
           <div className="h-full w-full flex flex-col lg:hidden font-krona-one">
-            <Navbarbuttton label="ABOUT" />
+            {/* <Navbarbuttton label="ABOUT" /> */}
             <Navbarbuttton
               link="/discover"
               label="DISCOVER"
@@ -48,7 +48,7 @@ export default function Navbar() {
             />
           </Link>
           <div className="h-full lg:flex hidden font-krona-one">
-            <Navbarbuttton label="ABOUT" />
+            {/* <Navbarbuttton label="ABOUT" /> */}
             <Navbarbuttton link="/discover" label="DISCOVER" />
             <Navbarbuttton label="HELP" />
             {isLoggedIn ? (
