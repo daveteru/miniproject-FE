@@ -12,7 +12,7 @@ import type { MyEvent } from "../../types/myEvent";
 
 export default function MyEventDetailEdit() {
   const event = useOutletContext<MyEvent>();
-  
+
   const {
     register,
     handleSubmit,
@@ -35,7 +35,9 @@ export default function MyEventDetailEdit() {
     }
   }, [event, setValue]);
 
-  const { mutateAsync: editEventMutation, isPending } = useEditEvent(event?.id as string);
+  const { mutateAsync: editEventMutation, isPending } = useEditEvent(
+    event?.id as string,
+  );
 
   const onSubmit = async (data: EditEventSchema) => {
     await editEventMutation(data);
@@ -49,7 +51,7 @@ export default function MyEventDetailEdit() {
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* Top section: fields + thumbnail */}
-        <div className="flex gap-8 mb-6">
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 mb-6">
           {/* Left column — inputs */}
           <div className="flex-1 space-y-4">
             <div className="w-full h-fit flex flex-col">
@@ -84,7 +86,7 @@ export default function MyEventDetailEdit() {
               )}
             </div>
 
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               <div className="w-full h-fit flex flex-col">
                 <label className="block text-xs uppercase font-medium text-neutral-600 mb-1">
                   Category
@@ -134,7 +136,7 @@ export default function MyEventDetailEdit() {
               </div>
             </div>
 
-            <div className="flex gap-5">
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-5">
               <div className="w-full h-fit flex flex-col">
                 <label className="block text-xs uppercase font-medium text-neutral-600 mb-1">
                   City
@@ -170,7 +172,7 @@ export default function MyEventDetailEdit() {
           </div>
 
           {/* Thumbnail upload */}
-          <div className="shrink-0">
+          <div className="shrink-0 w-full sm:w-48">
             <label className="block text-xs font-semibold uppercase tracking-wide text-neutral-700 mb-1">
               Thumbnail
             </label>
@@ -193,7 +195,7 @@ export default function MyEventDetailEdit() {
           </label>
           <textarea
             rows={8}
-            className="w-full rounded-2xl border border-neutral-300 px-4 py-3 text-sm outline-none focus:border-neutral-500 transition-colors resize-none"
+            className="w-full rounded-2xl border border-neutral-300 px-4 py-3 text-sm sm:text-base outline-none focus:border-neutral-500 transition-colors resize-none"
             {...register("description")}
           />
           {errors.description && (
@@ -203,10 +205,10 @@ export default function MyEventDetailEdit() {
           )}
         </div>
 
-        <div className="flex items-center gap-6">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
           <button
             type="submit"
-            className="bg-[#d4f531] hover:bg-[#c5e620] text-neutral-900 font-bold uppercase tracking-wider text-sm px-8 py-3 rounded-full transition-colors"
+            className="bg-[#d4f531] hover:bg-[#c5e620] text-neutral-900 font-bold uppercase tracking-wider text-sm px-8 py-3 rounded-full transition-colors w-full sm:w-auto"
           >
             {isPending ? "Loading" : "Save Changes"}
           </button>
