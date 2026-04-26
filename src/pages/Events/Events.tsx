@@ -151,7 +151,7 @@ export default function Events() {
                 </div>
 
                 {fromprice.length === 0 ? (
-                  <button className="font-krona-one w-full md:w-fit bg-[#e5ff07] px-5 py-2 rounded-2xl hover:bg-amber-300 transition ease-in">
+                  <button className="font-krona-one w-full md:w-fit bg-[#e5ff07] px-5 py-2 rounded-2xl  transition ease-in">
                     OPEN FOR PUBLIC
                   </button>
                 ) : (
