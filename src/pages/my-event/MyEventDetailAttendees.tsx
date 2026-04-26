@@ -14,7 +14,6 @@ export default function MyEventDetailAttendees() {
   return (
     <div>
       <div className="flex flex-col">
-        {/* Header row */}
         <div className="grid grid-cols-2 sm:grid-cols-4 text-center border-y border-black py-3 sm:py-4 bg-[#f2ff7b] font-krona-one text-xs sm:text-sm md:text-[14px]">
           <p>Name</p>
           <p>Email</p>
