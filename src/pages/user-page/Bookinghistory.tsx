@@ -186,8 +186,8 @@ export default function Bookinghistory({
         <div className="flex justify-between items-center">
           <h1>Transaction Details</h1>
           <div className="text-[12px] font-bold text-red-500 flex gap-2">
-            {paymentStatus === "WAITING_FOR_PAYMENT"
-              ? "expires in : " + formatCountdown(expiredAt ?? "")
+            {paymentStatus === "WAITING_FOR_PAYMENT" || "WAITING_FOR_CONFIRM"
+              ? "Expires in : " + formatCountdown(expiredAt ?? "")
               : ""}
           </div>
         </div>
