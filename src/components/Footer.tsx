@@ -1,5 +1,5 @@
-import logowhite from ".src/assets/Logo_white.svg"
-import logoemblem from ".src/assets/footer_icon.svg"
+import logowhite from "../assets/Logo_white.svg"
+import logoemblem from "../assets/footer_icon.svg"
 
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
