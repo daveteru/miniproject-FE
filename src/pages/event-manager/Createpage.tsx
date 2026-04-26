@@ -101,7 +101,7 @@ export default function Createpage() {
   };
 
   return (
-    <div className="w-full flex flex-col lg:flex-row min-h-screen">
+    <div className="w-full flex  lg:flex-row min-h-screen">
       <div className="flex flex-col bg-white px-4 sm:px-6 lg:px-10 py-6 lg:py-8 w-full lg:w-[80%] max-w-250 overflow-y-auto">
         <nav className="text-xs uppercase tracking-wide text-neutral-500 mb-1">
           <Link to="/" className="hover:text-neutral-900 cursor-pointer">
@@ -124,7 +124,7 @@ export default function Createpage() {
 
         <form onSubmit={handleSubmit(onSubmit)}>
           {/* Top section: fields + thumbnail */}
-          <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 mb-6">
+          <div className="flex flex-col-reverse lg:flex-row gap-6 lg:gap-8 mb-6">
             {/* Left column — inputs */}
             <div className="flex-1 space-y-4">
               <FormText
