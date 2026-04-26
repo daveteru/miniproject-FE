@@ -31,7 +31,7 @@ export default function Createpage() {
     amount: 0,
     discamount: 0,
     expiredDate: "",
-    startDate:"",
+    startDate: "",
     userId: 1,
   });
 
@@ -72,7 +72,6 @@ export default function Createpage() {
   };
 
   const onSubmit = async (data: CreateEventSchema) => {
-
     setIsloading(true);
     try {
       const formData = new FormData();
@@ -92,22 +91,27 @@ export default function Createpage() {
       });
       toast.success("Submission success");
       navigate("/");
-    } catch (error:any) {
-      toast.error(error?.response?.data?.message ?? "Network Error / Server Error");
+    } catch (error: any) {
+      toast.error(
+        error?.response?.data?.message ?? "Network Error / Server Error",
+      );
     } finally {
       setIsloading(false);
     }
   };
 
   return (
-    <div className="w-full  flex min-h-screen">
-      <div className="flex flex-col  bg-white px-10 py-8 w-[80%] max-w-250 overflow-y-auto">
+    <div className="w-full flex flex-col lg:flex-row min-h-screen">
+      <div className="flex flex-col bg-white px-4 sm:px-6 lg:px-10 py-6 lg:py-8 w-full lg:w-[80%] max-w-250 overflow-y-auto">
         <nav className="text-xs uppercase tracking-wide text-neutral-500 mb-1">
           <Link to="/" className="hover:text-neutral-900 cursor-pointer">
             Home
           </Link>
           <span className="mx-1">&gt;</span>
-          <Link to="/event-manager/stats" className="hover:text-neutral-900 cursor-pointer">
+          <Link
+            to="/event-manager/stats"
+            className="hover:text-neutral-900 cursor-pointer"
+          >
             Event Manager
           </Link>
           <span className="mx-1">&gt;</span>
@@ -120,7 +124,7 @@ export default function Createpage() {
 
         <form onSubmit={handleSubmit(onSubmit)}>
           {/* Top section: fields + thumbnail */}
-          <div className="flex gap-8 mb-6">
+          <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 mb-6">
             {/* Left column — inputs */}
             <div className="flex-1 space-y-4">
               <FormText
@@ -133,7 +137,7 @@ export default function Createpage() {
                 error={errors.artist?.message}
                 {...register("artist")}
               />
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 <FormText
                   label="Category"
                   error={errors.category?.message}
@@ -150,7 +154,7 @@ export default function Createpage() {
                   {...register("endDate")}
                 />
               </div>
-              <div className="flex gap-5">
+              <div className="flex flex-col sm:flex-row gap-4 sm:gap-5">
                 <FormText
                   label="City"
                   error={errors.city?.message}
@@ -165,13 +169,13 @@ export default function Createpage() {
             </div>
 
             {/* Thumbnail upload */}
-            <div className="shrink-0">
+            <div className="shrink-0 w-full sm:w-48">
               <label className="block text-xs font-semibold uppercase tracking-wide text-neutral-700 mb-1">
                 Thumbnail
               </label>
               <div
                 onClick={() => fileInputRef.current?.click()}
-                className={`w-48 h-40 rounded-lg border ${errors.thumbnail ? "border-red-400" : "border-neutral-300"} bg-neutral-200 overflow-hidden cursor-pointer hover:ring-2 hover:ring-neutral-300 transition-shadow flex items-center justify-center`}
+                className={`w-full h-40 rounded-lg border ${errors.thumbnail ? "border-red-400" : "border-neutral-300"} bg-neutral-200 overflow-hidden cursor-pointer hover:ring-2 hover:ring-neutral-300 transition-shadow flex items-center justify-center`}
               >
                 {thumbnailPreview ? (
                   <img
@@ -208,7 +212,7 @@ export default function Createpage() {
             <textarea
               rows={8}
               {...register("description")}
-              className={`w-full rounded-2xl border ${errors.description ? "border-red-400" : "border-neutral-300"} px-4 py-3 text-sm outline-none focus:border-neutral-500 transition-colors resize-none`}
+              className={`w-full rounded-2xl border ${errors.description ? "border-red-400" : "border-neutral-300"} px-4 py-3 text-sm sm:text-base outline-none focus:border-neutral-500 transition-colors resize-none`}
             />
             {errors.description && (
               <p className="text-xs text-red-500 mt-1">
@@ -232,21 +236,20 @@ export default function Createpage() {
             onVoucherChange={handleVoucherChange}
           />
 
-          <div className="flex items-center gap-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
             <button
               type="button"
               onClick={handleSubmit(() => {
-               
                 setAreyousure(true);
               })}
-              className={`${isloading ? "bg-neutral-500" : "bg-[#d4f531]"} hover:bg-[#c5e620] text-neutral-900 font-bold uppercase tracking-wider text-sm px-8 py-3 rounded-xl transition-colors`}
+              className={`${isloading ? "bg-neutral-500" : "bg-[#d4f531]"} hover:bg-[#c5e620] text-neutral-900 font-bold uppercase tracking-wider text-sm px-8 py-3 rounded-xl transition-colors w-full sm:w-auto`}
             >
               {isloading ? "Loading..." : "Submit Event"}
             </button>
             {areyousure ? (
               <button
                 type="submit"
-                className="w-fit h-fit bg-[#d4f531] rounded-xl px-5 py-[10px] hover:bg-amber-500 transition ease-in"
+                className="w-full sm:w-fit h-fit bg-[#d4f531] rounded-xl px-5 py-2.5 hover:bg-amber-500 transition ease-in"
               >
                 Confirm
               </button>
