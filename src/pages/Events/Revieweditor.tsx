@@ -21,10 +21,11 @@ export default function Revieweditor({
   const [attendance, setAttendance] = useState([]);
 
   useEffect(() => {
+    if (!eventId) return;
     async function fetchAttendance() {
       try {
-        const { data } = await axiosInstance.get(`/transactions/attendance/`, {
-          data: { eventId: eventId},
+        const { data } = await axiosInstance.get(`/transactions/attendance`, {
+          params: { eventId },
         });
         setAttendance(data);
       } catch (error) {
@@ -32,7 +33,7 @@ export default function Revieweditor({
       }
     }
     fetchAttendance();
-  }, [userId]);
+  }, [userId, eventId]);
 
   const postreview = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
