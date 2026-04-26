@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router";
 import YellowButton from "./Buttons";
 import DiscoverCard from "./DiscoverCard";
-import { Searchbar2 } from "../home/Searchbar";
+import { Searchbar2 } from "../Home/Searchbar";
 import { axiosInstance } from "../../lib/axios";
 import toast from "react-hot-toast";
 
