@@ -39,7 +39,7 @@ const router = createBrowserRouter([
       {
         path:"/",
         lazy: async () => {
-          const { default: Home } = await import("./pages/Home/Home");
+          const { default: Home } = await import("./pages/home/Home");
           return { Component: Home };
         },
       },
@@ -47,14 +47,14 @@ const router = createBrowserRouter([
         path: "/discover",
         lazy: async () => {
           const { default: Discover } =
-            await import("./pages/Discover/Discover");
+            await import("./pages/discover/Discover");
           return { Component: Discover };
         },
       },
       {
         path: "/events/:id",
         lazy: async () => {
-          const { default: Events } = await import("./pages/Events/Events");
+          const { default: Events } = await import("./pages/events/Events");
           return { Component: Events };
         },
       },
@@ -73,7 +73,7 @@ const router = createBrowserRouter([
         path: "/transaction",
         lazy: async () => {
           const { default: Transaction } =
-            await import("./pages/Transaction/Transaction");
+            await import("./pages/transaction/Transaction");
           return { Component: Transaction, loader: authLoader(["USER"]) };
         },
       },
