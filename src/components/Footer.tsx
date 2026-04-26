@@ -1,3 +1,6 @@
+import logowhite from ".src/assets/Logo_white.svg"
+import logoemblem from ".src/assets/footer_icon.svg"
+
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { useRef } from "react";
@@ -46,7 +49,7 @@ export default function Footer() {
             <div className=" flex flex-col justify-end">
               <img
                 className="w-30 -translate-y-1"
-                src="src/assets/Logo_white.svg"
+                src={logowhite}
                 alt=""
               />
             </div>
@@ -69,7 +72,7 @@ export default function Footer() {
             <div ref={container1} className="flex flex-col justify-end">
               <img
                 className="w-15 GSAProtate"
-                src="src/assets/footer_icon.svg"
+                src={logoemblem}
                 alt=""
               />
             </div>
