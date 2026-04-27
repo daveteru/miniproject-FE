@@ -10,7 +10,7 @@ import { useAppStore } from "../../store/useAppStore";
 
 type TransactionItem = {
   id: string;
-  uuid:string;
+  uuid: string;
   transactionId: number;
   ticketId: number;
   quantity: number;
@@ -34,7 +34,7 @@ type TransactionItem = {
 
 type txhistoryprops = {
   id: number;
-  uuid:string;
+  uuid: string;
   expiredAt: string;
   paymentProof: string | null;
   paymentStatus:
@@ -86,15 +86,18 @@ export default function formpage() {
     fetchTransactions();
   }, [user?.id]);
 
-  
-
   return (
     <div className="w-full h-full flex min-h-screen">
       <Sidebar burger={burger} setBurger={setBurger} />
       <div className="flex-1 flex overflow-y-auto bg-neutral-100">
         <div className="w-full lg:w-[70%] lg:max-w-275 flex flex-col  bg-white md:px-10 px-5  py-8 ">
           {/* Breadcrumb */}
-          <button onClick={()=>setBurger(true)} className="md:hidden px-2 py-1 bg-amber-300 w-fit rounded-full text-sm mb-2">SIDE MENU</button>
+          <button
+            onClick={() => setBurger(true)}
+            className="md:hidden px-2 py-1 bg-amber-300 w-fit rounded-full text-sm mb-2"
+          >
+            SIDE MENU
+          </button>
           <nav className="text-xs uppercase tracking-wide text-neutral-500 mb-1">
             <Link to="/">
               <span className="hover:text-neutral-900 cursor-pointer">
@@ -109,40 +112,45 @@ export default function formpage() {
             Profile Page
           </h1>
           <UserpageProfile />
-          <hr className="my-5 border-neutral-200"></hr>
-          <UserpageRewards />
-          <hr className="my-5 border-neutral-200"></hr>
 
-          {/* My Bookings Section */}
-          <div>
-            <h2 className="text-2xl font-bold text-neutral-900 mb-2">
-              My Bookings
-            </h2>
-          </div>
-          <div className="w-full  flex-col min-h-25 flex rounded-2xl border border-neutral-300 mb-10 overflow-hidden">
-            {/* Bookings content goes here */}
-            {txhistory ? (
-              txhistory.map((data, index) => (
-                <Bookinghistory
-                  txno={index + 1}
-                  uuid={data.uuid}
-                  expiredAt={data.expiredAt}
-                  paymentProof={data.paymentProof}
-                  paymentStatus={data.paymentStatus}
-                  pointsUsed={data.pointsUsed}
-                  coupon={data.coupon?.amount}
-                  event={data.event}
-                  voucher={data.voucher}
-                  items={data.items}
-                  totalPrice={data.totalPrice}
-                  totalbeforecoupon={data.totalbeforecoupon}
-                  coupondisc={data.coupondisc}
-                />
-              ))
-            ) : (
-              <p>no items found here</p>
-            )}
-          </div>
+          {user?.role == "USER" && (
+            <div>
+              <hr className="my-5 border-neutral-200"></hr>
+              <UserpageRewards />
+              <hr className="my-5 border-neutral-200"></hr>
+
+              {/* My Bookings Section */}
+              <div>
+                <h2 className="text-2xl font-bold text-neutral-900 mb-2">
+                  My Bookings
+                </h2>
+              </div>
+              <div className="w-full  flex-col min-h-25 flex rounded-2xl border border-neutral-300 mb-10 overflow-hidden">
+                {/* Bookings content goes here */}
+                {txhistory ? (
+                  txhistory.map((data, index) => (
+                    <Bookinghistory
+                      txno={index + 1}
+                      uuid={data.uuid}
+                      expiredAt={data.expiredAt}
+                      paymentProof={data.paymentProof}
+                      paymentStatus={data.paymentStatus}
+                      pointsUsed={data.pointsUsed}
+                      coupon={data.coupon?.amount}
+                      event={data.event}
+                      voucher={data.voucher}
+                      items={data.items}
+                      totalPrice={data.totalPrice}
+                      totalbeforecoupon={data.totalbeforecoupon}
+                      coupondisc={data.coupondisc}
+                    />
+                  ))
+                ) : (
+                  <p>no items found here</p>
+                )}
+              </div>
+            </div>
+          )}
 
           <hr className="mb-5 border-neutral-200" />
         </div>
