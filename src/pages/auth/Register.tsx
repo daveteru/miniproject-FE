@@ -20,7 +20,7 @@ export default function Register() {
   };
 
   return (
-    <div className="w-full h-screen bg-black ">
+    <div className="w-full h-full bg-black ">
       <div className="w-full h-full flex justify-center items-center m-auto container">
         <section className="md:w-fit w-screen h-fit mt-20 border text-left px-5 py-20 justify-center items-center border-neutral-200 rounded-3xl drop-shadow-2xl flex bg-white -translate-y-8">
           <div className="flex flex-col w-full items-center">
