@@ -29,11 +29,14 @@ export default function Events() {
         setEvent(data);
         setFromprice(data.tickets?.map((t) => t.price) ?? []);
         const now = new Date();
-        setIspromo(data.vouchers.some((voucher) =>
-          voucher.amount > 0 &&
-          new Date(voucher.startDate) <= now &&
-          new Date(voucher.expiredDate) >= now
-        ));
+        setIspromo(
+          data.vouchers.some(
+            (voucher) =>
+              voucher.amount > 0 &&
+              new Date(voucher.startDate) <= now &&
+              new Date(voucher.expiredDate) >= now,
+          ),
+        );
       } catch (err) {
         console.error(err);
       }
@@ -83,27 +86,37 @@ export default function Events() {
               <h1 className="text-xl">{event?.name}</h1>
               <p>{event?.artist}</p>
             </div>
-{    user?.role !== "ORGANIZER" ?         <div className="border-l-2 border-gray-100 lg:w-[30%] w-[50%] h-20 md:flex justify-between gap-5 p-3 items-center bg-white hidden  md:relative ">
-              <div className="w-fit h-full  ">
-                <small className="text-[10px]">TICKET PRICE FROM</small>
-                <div className="font-bold">
-                  <p className="font-bold">
-                    IDR{" "}
-                    {fromprice[0] === 0
-                      ? "-"
-                      : formatThousand(Math.min(...fromprice))}
-                  </p>
+            {user?.role !== "ORGANIZER" ? (
+              <div className="border-l-2 border-gray-100 lg:w-[30%] w-[50%] h-20 md:flex justify-between gap-5 p-3 items-center bg-white hidden  md:relative ">
+                <div className="w-fit h-full  ">
+                  <small className="text-[10px]">TICKET PRICE FROM</small>
+                  <div className="font-bold">
+                    <p className="font-bold">
+                      {" "}
+                      {fromprice.length === 0
+                        ? "OPEN FOR PUBLIC"
+                        : fromprice[0] === 0
+                          ? "IDR -"
+                          : ` IDR ${formatThousand(Math.min(...fromprice))}`}
+                    </p>
+                  </div>
                 </div>
+                {fromprice.length === 0 ? (
+                  ""
+                ) : (
+                  <button
+                    className="w-fit h-fit font-krona-one px-5 py-2 bg-[#E6FF06] hover:bg-amber-400 transition-colors  rounded-xl"
+                    onClick={() =>
+                      targetRef.current?.scrollIntoView({ behavior: "smooth" })
+                    }
+                  >
+                    GET TICKETS
+                  </button>
+                )}
               </div>
-              <button
-                className="w-fit h-fit font-krona-one px-5 py-2 bg-[#E6FF06] hover:bg-amber-400 transition-colors  rounded-xl"
-                onClick={() =>
-                  targetRef.current?.scrollIntoView({ behavior: "smooth" })
-                }
-              >
-                GET TICKETS
-              </button>
-            </div>:""}
+            ) : (
+              ""
+            )}
           </div>
         </div>
         {/* //------>  */}
