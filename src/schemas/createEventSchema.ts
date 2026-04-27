@@ -27,7 +27,7 @@ export const createEventSchema = z
     name: z.string().min(1, "Event name is required"),
     artist: z.string().min(1, "Artist name is required"),
     category: z.string().min(1, "Category is required"),
-    startDate: z.string().min(1, "Start date is required"),
+    startDate: z.iso.date().min(1, "Start date is required").refine((data)=> new Date(data) > new Date(), { message: "New Event Date cannot before today"}  ),
     endDate: z.string().min(1, "End date is required"),
     city: z.string().min(1, "City is required"),
     location: z.string().min(1, "Location is required"),
@@ -41,8 +41,7 @@ export const createEventSchema = z
         message: "Only .png, .jpg, .jpeg allowed",
       }),
   })
-  .refine(
-    (data) =>
+  .refine((data) =>
       !data.startDate ||
       !data.endDate ||
       new Date(data.endDate) > new Date(data.startDate),
